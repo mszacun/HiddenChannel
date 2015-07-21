@@ -3,7 +3,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
         <style>
-            #queue {
+            #queue1 {
                 width: 200px;
                 height: 300px;
                 position: absolute;
@@ -15,10 +15,35 @@
                 border-bottom: solid 2px red;
             }
 
+            #queue2 {
+                width: 200px;
+                height: 300px;
+                position: absolute;
+                top: 200px;
+                left: 700px;
+
+                border-left: solid 2px red;
+                border-right: solid 2px red;
+                border-bottom: solid 2px red;
+            }
+
             .message {
                 width: 180px;
                 position: absolute;
                 background-color: forestgreen;
+            }
+
+            #link {
+                position: absolute;
+                top: 550px;
+                left: 250px;
+            }
+
+            hr {
+                position: absolute;
+                top: 600px;
+                left: 220px;
+                width: 40%;
             }
         </style>
 
@@ -70,22 +95,45 @@
                     });
             }
 
+            function Link($el) {
+                this.$el = $el;
+            }
 
+            Link.prototype.sendPacket = function () {
+                var $packet = $('<div>', {class: 'message', height: 40});
+                this.$el.append($packet);
+
+                $packet.animate({left: '+=450'}, 2000);
+            }
 
             $(document).ready(function() {
-                var queue = new Queue($('#queue'));
+                var queue1 = new Queue($('#queue1'));
+                var queue2 = new Queue($('#queue2'));
+                var link = new Link($('#link'));
                 var packetsLength = [];
-                for (var i = 0; i < 6; ++i)
+                var packetsLength2 = [];
+                for (var i = 0; i < 6; ++i) {
                     packetsLength.push(Math.floor(Math.random() * 50) + 15 )
-                fillQueueWithPackets(queue, packetsLength, 0);
-                setTimeout(function() {queue.removePacket();}, 7000);
+                    packetsLength2.push(Math.floor(Math.random() * 50) + 15 )
+                }
+                fillQueueWithPackets(queue1, packetsLength, 0);
+                fillQueueWithPackets(queue2, packetsLength2, 0);
+                setTimeout(function() {queue1.removePacket();}, 7000);
+                setTimeout(function() {queue2.removePacket();}, 6000);
+
+                link.sendPacket();
 
             });
         </script>
     </head>
     <body>
         <div id='container'>
-            <div id='queue'>
+            <div id='queue1'>
+            </div>
+            <div id='link'>
+            </div>
+            <hr/>
+            <div id='queue2'>
             </div>
         </div>
     </body>
