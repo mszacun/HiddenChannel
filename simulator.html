@@ -17,55 +17,67 @@
 
             .message {
                 width: 180px;
-                height: 30px;
                 position: absolute;
                 background-color: forestgreen;
             }
         </style>
 
         <script>
-            function Queue() {
-                this.$el = $('#queue');
+            function Queue($el) {
+                this.$el = $el
                 this.height = 300;
+                this.packets = [];
                 this.numberOfItems = 0;
-                this.singleMessageHeight = 30;
                 this.padding = 5;
             }
 
-            Queue.prototype.addMessage = function(completeCallback) {
+            Queue.prototype.addMessage = function(size, completeCallback) {
                 this.numberOfItems++;
+                var animationStopY = this.padding;
 
-                var animationStopY = this.height - this.numberOfItems * this.singleMessageHeight - this.numberOfItems * this.padding;
+                for (var i = 0; i < this.packets.length; i++) {
+                    var pac = $(this.packets[i]);
+                    var w = pac.height();
+                    animationStopY += w + this.padding;
+                }
 
                 var $div = $('<div>', {class: 'message'});
-                var $queue = $('#queue');
+                var $queue = this.$el
 
                 $queue.append($div);
+                this.packets.push($div);
                 $div.css('left', 10);
+                $div.css('height', size);
                 
-                $div.animate({top: animationStopY, left: 10}, 1000, completeCallback);
+                $div.animate({bottom: animationStopY, left: 10}, 1000, completeCallback);
             }
 
             Queue.prototype.removePacket = function() {
                 var packets = this.$el.find('.message');
                 var $packetToRemove = $(packets[0]);
+                var heightToShiftOtherPackets = $packetToRemove.height();
 
-                $packetToRemove.animate({height: 0, top: "+=30"});
+                $packetToRemove.animate({height: 0});
                 for (var i = 1; i < this.numberOfItems; i++)
-                    $(packets[i]).animate({top: '+=30'});
+                    $(packets[i]).animate({bottom: '-=' + heightToShiftOtherPackets});
 
             }
 
-            function fillQueue(queue, alreadySend, toSend) {
-                if (alreadySend < toSend)
-                    queue.addMessage(function () {
-                        fillQueue(queue, alreadySend + 1, toSend);
+            function fillQueueWithPackets(queue, packetsLength, i) {
+                if (i < packetsLength.length)
+                    queue.addMessage(packetsLength[i], function () {
+                        fillQueueWithPackets(queue, packetsLength, i + 1);
                     });
             }
 
+
+
             $(document).ready(function() {
-                var queue = new Queue();
-                fillQueue(queue, 0, 5);
+                var queue = new Queue($('#queue'));
+                var packetsLength = [];
+                for (var i = 0; i < 6; ++i)
+                    packetsLength.push(Math.floor(Math.random() * 50) + 15 )
+                fillQueueWithPackets(queue, packetsLength, 0);
                 setTimeout(function() {queue.removePacket();}, 7000);
 
             });
