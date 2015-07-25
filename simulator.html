@@ -8,7 +8,7 @@
                 height: 400px;
                 position: absolute;
                 top: 100px;
-                left: 300px;
+                left: 600px;
 
                 border-left: solid 2px red;
                 border-right: solid 2px red;
@@ -20,19 +20,23 @@
                 height: 400px;
                 position: absolute;
                 top: 100px;
-                left: 700px;
+                left: 1300px;
 
                 border-left: solid 2px red;
                 border-right: solid 2px red;
                 border-bottom: solid 2px red;
             }
 
+            body {
+                background-color: #E9EAED;
+            }
+
             #hidden-message-queue {
                 width: 300;
                 height: 40px;
                 position: absolute;
-                top: 200px;
-                left: 1200px;
+                top: 400px;
+                left: 100px;
                 font-size: 20pt;
 
                 border-left: solid 2px red;
@@ -53,15 +57,42 @@
 
             #link {
                 position: absolute;
-                top: 550px;
-                left: 250px;
+                top: 730px;
+                left: 550px;
             }
 
             hr {
                 position: absolute;
-                top: 600px;
-                left: 220px;
-                width: 40%;
+                top: 780px;
+                left: 520px;
+                width: 55%;
+            }
+
+            #source-network-stack-table {
+                position: absolute;
+                top: 530px;
+                left: 600px;
+                border: solid 2px blue;
+                border-collapse: collapse;
+                font-size: 20pt;
+                width: 200px;
+                text-align: center;
+            }
+
+            #destination-network-stack-table {
+                position: absolute;
+                top: 530px;
+                left: 1300px;
+                border: solid 2px blue;
+                border-collapse: collapse;
+                font-size: 20pt;
+                width: 200px;
+                text-align: center;
+            }
+
+            td {
+                border: solid 2px blue;
+                padding: 8px;
             }
         </style>
 
@@ -174,7 +205,7 @@
                 var $packet = $('<div>', {class: 'message', height: 40});
                 this.$el.append($packet);
 
-                $packet.animate({left: '+=450'}, 2000);
+                $packet.animate({left: '+=750'}, 2000);
             }
 
             $(document).ready(function() {
@@ -210,6 +241,16 @@
             </div>
             <div id='hidden-message-queue'>
             </div>
+            <table id='source-network-stack-table'>
+                <tr><td>UDP</td></tr>
+                <tr><td>IP</td></tr>
+                <tr><td>Ethernet</td></tr>
+            </table>
+            <table id='destination-network-stack-table'>
+                <tr><td>UDP</td></tr>
+                <tr><td>IP</td></tr>
+                <tr><td>Ethernet</td></tr>
+            </table>
         </div>
     </body>
 </html>
