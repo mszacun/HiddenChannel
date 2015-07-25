@@ -54,6 +54,8 @@
                 this.packets = [];
                 this.numberOfItems = 0;
                 this.padding = 5;
+                this.horizontalMargin = 10;
+                this.addRemoveAnimationTime = 1000;
             }
 
             Queue.prototype.addMessageOnTop = function(size, completeCallback) {
@@ -66,15 +68,15 @@
                     animationStopY += w + this.padding;
                 }
 
-                var $div = $('<div>', {class: 'message'});
+                var $newPacket = $('<div>', {class: 'message'});
                 var $queue = this.$el
 
-                $queue.append($div);
-                this.packets.push($div);
-                $div.css('left', 10);
-                $div.css('height', size);
+                $queue.append($newPacket);
+                this.packets.push($newPacket);
+                $newPacket.css('left', this.horizontalMargin);
+                $newPacket.css('height', size);
                 
-                $div.animate({bottom: animationStopY, left: 10}, 1000, completeCallback);
+                $newPacket.animate({bottom: animationStopY}, this.addRemoveAnimationTime, completeCallback);
             }
 
             Queue.prototype.addMessageOnBottom = function(size, completeCallback) {
@@ -86,13 +88,13 @@
 
                 $queue.append($newPacket);
                 this.packets.unshift($newPacket);
-                $newPacket.css('left', 10);
+                $newPacket.css('left', this.horizontalMargin);
                 $newPacket.css('bottom', this.padding);
                 $newPacket.css('height', 0);
 
-                $newPacket.animate({height: size, left: 10}, 1000, completeCallback);
-                for (var i = 0; i < this.numberOfItems; i++)
-                    $(packets[i]).animate({bottom: '+=' + (size + this.padding)}, 1000);
+                $newPacket.animate({height: size}, this.addRemoveAnimationTime, completeCallback);
+                for (var i = this.numberOfItems - 1; i >= 0; i--)
+                    $(packets[i]).animate({bottom: '+=' + (size + this.padding)}, this.addRemoveAnimationTime);
 
             }
 
