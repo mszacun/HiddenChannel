@@ -29,7 +29,7 @@
 
             #hidden-message-queue {
                 width: 300;
-                height: 70px;
+                height: 40px;
                 position: absolute;
                 top: 200px;
                 left: 1200px;
@@ -48,7 +48,7 @@
             
             .hidden-message {
                 position: absolute;
-                top: 0;
+                top: 4;
             }
 
             #link {
@@ -71,6 +71,7 @@
                 this.padding = 2;
                 this.messages = [];
                 this.addAnimationLenght = 1000;
+                this.removeAnimationLength = 1000;
             }
 
             HiddenMessageQueue.prototype.addToQueue = function(data, completeCallback) {
@@ -86,6 +87,16 @@
                 this.messages.push($newMessage);
 
                 $newMessage.animate({left: animationStopX}, this.addAnimationLenght, completeCallback);
+            }
+
+            HiddenMessageQueue.prototype.shift = function(completeCallback) {
+                var $removedMessage = $(this.messages.shift());
+
+                $removedMessage.animate({top: '+=40'}, this.removeAnimationLength);
+                for (var i = 0; i < this.messages.length; i++) 
+                    $(this.messages[i]).animate({left: '-=' + $removedMessage.width()}, this.removeAnimationLength);
+
+                return $removedMessage;
             }
             
             function Queue($el) {
@@ -181,7 +192,7 @@
                 fillQueueWithPackets(queue1, packetsLength, 0);
                 fillQueueWithPackets(queue2, packetsLength2, 0);
                 setTimeout(function() {queue1.removeBottomPacket();}, 7000);
-                setTimeout(function() {queue2.addMessageOnBottom(60);}, 6000);
+                setTimeout(function() {hiddenQueue.shift();}, 6000);
 
                 link.sendPacket();
 
