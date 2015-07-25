@@ -5,9 +5,9 @@
         <style>
             #queue1 {
                 width: 200px;
-                height: 300px;
+                height: 400px;
                 position: absolute;
-                top: 200px;
+                top: 100px;
                 left: 300px;
 
                 border-left: solid 2px red;
@@ -17,9 +17,9 @@
 
             #queue2 {
                 width: 200px;
-                height: 300px;
+                height: 400px;
                 position: absolute;
-                top: 200px;
+                top: 100px;
                 left: 700px;
 
                 border-left: solid 2px red;
@@ -56,7 +56,7 @@
                 this.padding = 5;
             }
 
-            Queue.prototype.addMessage = function(size, completeCallback) {
+            Queue.prototype.addMessageOnTop = function(size, completeCallback) {
                 this.numberOfItems++;
                 var animationStopY = this.padding;
 
@@ -77,7 +77,26 @@
                 $div.animate({bottom: animationStopY, left: 10}, 1000, completeCallback);
             }
 
-            Queue.prototype.removePacket = function() {
+            Queue.prototype.addMessageOnBottom = function(size, completeCallback) {
+                this.numberOfItems++;
+                var packets = this.$el.find('.message');
+
+                var $newPacket = $('<div>', {class: 'message'});
+                var $queue = this.$el;
+
+                $queue.append($newPacket);
+                this.packets.unshift($newPacket);
+                $newPacket.css('left', 10);
+                $newPacket.css('bottom', this.padding);
+                $newPacket.css('height', 0);
+
+                $newPacket.animate({height: size, left: 10}, 1000, completeCallback);
+                for (var i = 0; i < this.numberOfItems; i++)
+                    $(packets[i]).animate({bottom: '+=' + (size + this.padding)}, 1000);
+
+            }
+
+            Queue.prototype.removeBottomPacket = function() {
                 var packets = this.$el.find('.message');
                 var $packetToRemove = $(packets[0]);
                 var heightToShiftOtherPackets = $packetToRemove.height();
@@ -90,7 +109,7 @@
 
             function fillQueueWithPackets(queue, packetsLength, i) {
                 if (i < packetsLength.length)
-                    queue.addMessage(packetsLength[i], function () {
+                    queue.addMessageOnTop(packetsLength[i], function () {
                         fillQueueWithPackets(queue, packetsLength, i + 1);
                     });
             }
@@ -118,8 +137,8 @@
                 }
                 fillQueueWithPackets(queue1, packetsLength, 0);
                 fillQueueWithPackets(queue2, packetsLength2, 0);
-                setTimeout(function() {queue1.removePacket();}, 7000);
-                setTimeout(function() {queue2.removePacket();}, 6000);
+                setTimeout(function() {queue1.removeBottomPacket();}, 7000);
+                setTimeout(function() {queue2.addMessageOnBottom(60);}, 6000);
 
                 link.sendPacket();
 
