@@ -27,10 +27,28 @@
                 border-bottom: solid 2px red;
             }
 
+            #hidden-message-queue {
+                width: 300;
+                height: 70px;
+                position: absolute;
+                top: 200px;
+                left: 1200px;
+                font-size: 20pt;
+
+                border-left: solid 2px red;
+                border-top: solid 2px red;
+                border-bottom: solid 2px red;
+            }
+
             .message {
                 width: 180px;
                 position: absolute;
                 background-color: forestgreen;
+            }
+            
+            .hidden-message {
+                position: absolute;
+                top: 0;
             }
 
             #link {
@@ -48,9 +66,30 @@
         </style>
 
         <script>
+            function HiddenMessageQueue($el) {
+                this.$el = $el;
+                this.padding = 2;
+                this.messages = [];
+                this.addAnimationLenght = 1000;
+            }
+
+            HiddenMessageQueue.prototype.addToQueue = function(data, completeCallback) {
+                $newMessage = $('<div>', {class: 'hidden-message'}).text(data);
+                $newMessage.css('left', 200)
+
+                var animationStopX = this.padding;
+
+                for (var i = 0; i < this.messages.length; i++)
+                    animationStopX += $(this.messages[i]).width() + this.padding;
+
+                this.$el.append($newMessage);
+                this.messages.push($newMessage);
+
+                $newMessage.animate({left: animationStopX}, this.addAnimationLenght, completeCallback);
+            }
+            
             function Queue($el) {
                 this.$el = $el
-                this.height = 300;
                 this.packets = [];
                 this.numberOfItems = 0;
                 this.padding = 5;
@@ -131,6 +170,8 @@
                 var queue1 = new Queue($('#queue1'));
                 var queue2 = new Queue($('#queue2'));
                 var link = new Link($('#link'));
+                var hiddenQueue = new HiddenMessageQueue($('#hidden-message-queue'));
+                hiddenQueue.addToQueue('1010101', function() { hiddenQueue.addToQueue('1010101')});
                 var packetsLength = [];
                 var packetsLength2 = [];
                 for (var i = 0; i < 6; ++i) {
@@ -155,6 +196,8 @@
             </div>
             <hr/>
             <div id='queue2'>
+            </div>
+            <div id='hidden-message-queue'>
             </div>
         </div>
     </body>
