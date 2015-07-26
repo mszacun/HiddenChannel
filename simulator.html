@@ -1,239 +1,18 @@
 <html>
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="simulator.js"></script>
+         <link rel="stylesheet" type="text/css" href="simulator.css" />
 
-        <style>
-            #queue1 {
-                width: 200px;
-                height: 400px;
-                position: absolute;
-                top: 100px;
-                left: 600px;
 
-                border-left: solid 2px red;
-                border-right: solid 2px red;
-                border-bottom: solid 2px red;
-            }
-
-            #queue2 {
-                width: 200px;
-                height: 400px;
-                position: absolute;
-                top: 100px;
-                left: 1300px;
-
-                border-left: solid 2px red;
-                border-right: solid 2px red;
-                border-bottom: solid 2px red;
-            }
-
-            body {
-                background-color: #E9EAED;
-            }
-
-            #hidden-message-queue {
-                width: 300;
-                height: 40px;
-                position: absolute;
-                top: 400px;
-                left: 100px;
-                font-size: 20pt;
-
-                border-left: solid 2px red;
-                border-top: solid 2px red;
-                border-bottom: solid 2px red;
-            }
-
-            .packet {
-                width: 180px;
-                position: absolute;
-                background-color: forestgreen;
-            }
-
-            .header {
-                background-color: red;
-                width: 30px;
-                float: left;
-            }
-            
-            .hidden-message {
-                position: absolute;
-                top: 4;
-            }
-
-            #message-source {
-                position: absolute;
-                top: 5;
-                left: 650;
-            }
-
-            #message-destination {
-                position: absolute;
-                top: 5;
-                left: 1350;
-            }
-
-            #link {
-                position: absolute;
-                top: 730px;
-                left: 550px;
-            }
-
-            hr {
-                position: absolute;
-                top: 780px;
-                left: 520px;
-                width: 55%;
-            }
-
-            #source-network-stack-table {
-                position: absolute;
-                top: 530px;
-                left: 600px;
-                border: solid 2px blue;
-                border-collapse: collapse;
-                font-size: 20pt;
-                width: 200px;
-                text-align: center;
-            }
-
-            #destination-network-stack-table {
-                position: absolute;
-                top: 530px;
-                left: 1300px;
-                border: solid 2px blue;
-                border-collapse: collapse;
-                font-size: 20pt;
-                width: 200px;
-                text-align: center;
-            }
-
-            td {
-                border: solid 2px blue;
-                padding: 8px;
-            }
-        </style>
 
         <script>
-            function HiddenMessageQueue($el) {
-                this.$el = $el;
-                this.padding = 2;
-                this.messages = [];
-                this.addAnimationLenght = 1000;
-                this.removeAnimationLength = 1000;
-            }
-
-            HiddenMessageQueue.prototype.addToQueue = function(data, completeCallback) {
-                $newMessage = $('<div>', {class: 'hidden-message'}).text(data);
-                $newMessage.css('left', 200)
-
-                var animationStopX = this.padding;
-
-                for (var i = 0; i < this.messages.length; i++)
-                    animationStopX += $(this.messages[i]).width() + this.padding;
-
-                this.$el.append($newMessage);
-                this.messages.push($newMessage);
-
-                $newMessage.animate({left: animationStopX}, this.addAnimationLenght, completeCallback);
-            }
-
-            HiddenMessageQueue.prototype.shift = function(completeCallback) {
-                var $removedMessage = $(this.messages.shift());
-
-                $removedMessage.animate({top: '+=40'}, this.removeAnimationLength);
-                for (var i = 0; i < this.messages.length; i++) 
-                    $(this.messages[i]).animate({left: '-=' + $removedMessage.width()}, this.removeAnimationLength);
-
-                return $removedMessage;
-            }
-            
-            function Queue($el) {
-                this.$el = $el
-                this.packets = [];
-                this.numberOfItems = 0;
-                this.padding = 5;
-                this.horizontalMargin = 10;
-                this.addRemoveAnimationTime = 1000;
-            }
-
-            Queue.prototype.addMessageOnTop = function(size, completeCallback) {
-                this.numberOfItems++;
-                var animationStopY = this.padding;
-
-                for (var i = 0; i < this.packets.length; i++) {
-                    var pac = $(this.packets[i]);
-                    var w = pac.height();
-                    animationStopY += w + this.padding;
-                }
-
-                var $newPacket = $('<div>', {class: 'message'});
-                var $queue = this.$el
-
-                $queue.append($newPacket);
-                this.packets.push($newPacket);
-                $newPacket.css('left', this.horizontalMargin);
-                $newPacket.css('height', size);
-                
-                $newPacket.animate({bottom: animationStopY}, this.addRemoveAnimationTime, completeCallback);
-            }
-
-            Queue.prototype.addMessageOnBottom = function(size, completeCallback) {
-                this.numberOfItems++;
-                var packets = this.$el.find('.message');
-
-                var $newPacket = $('<div>', {class: 'message'});
-                var $queue = this.$el;
-
-                $queue.append($newPacket);
-                this.packets.unshift($newPacket);
-                $newPacket.css('left', this.horizontalMargin);
-                $newPacket.css('bottom', this.padding);
-                $newPacket.css('height', 0);
-
-                $newPacket.animate({height: size}, this.addRemoveAnimationTime, completeCallback);
-                for (var i = this.numberOfItems - 1; i >= 0; i--)
-                    $(packets[i]).animate({bottom: '+=' + (size + this.padding)}, this.addRemoveAnimationTime);
-
-            }
-
-            Queue.prototype.removeBottomPacket = function() {
-                var packets = this.$el.find('.message');
-                var $packetToRemove = $(packets[0]);
-                var heightToShiftOtherPackets = $packetToRemove.height();
-
-                $packetToRemove.animate({height: 0});
-                for (var i = 1; i < this.numberOfItems; i++)
-                    $(packets[i]).animate({bottom: '-=' + heightToShiftOtherPackets});
-
-            }
-
-            function fillQueueWithPackets(queue, packetsLength, i) {
-                if (i < packetsLength.length)
-                    queue.addMessageOnTop(packetsLength[i], function () {
-                        fillQueueWithPackets(queue, packetsLength, i + 1);
-                    });
-            }
-
-            function Link($el) {
-                this.$el = $el;
-            }
-
-            Link.prototype.sendPacket = function () {
-                var $packet = $('<div>', {class: 'message', height: 40});
-                var $header = $('<div>', {class: 'header', height: 40});
-                var $together = $('<div>', {class: 'packet'}).append($header).append($packet);
-                this.$el.append($together);
-
-                $together.animate({left: '+=750'}, 2000);
-            }
-
             $(document).ready(function() {
                 var queue1 = new Queue($('#queue1'));
                 var queue2 = new Queue($('#queue2'));
                 var link = new Link($('#link'));
                 var hiddenQueue = new HiddenMessageQueue($('#hidden-message-queue'));
-                hiddenQueue.addToQueue('1010101', function() { hiddenQueue.addToQueue('1010101')});
+                hiddenQueue.addOnTheRight('1010101', function() { hiddenQueue.addOnTheRight('1010101')});
                 var packetsLength = [];
                 var packetsLength2 = [];
                 for (var i = 0; i < 6; ++i) {
@@ -243,7 +22,7 @@
                 fillQueueWithPackets(queue1, packetsLength, 0);
                 fillQueueWithPackets(queue2, packetsLength2, 0);
                 setTimeout(function() {queue1.removeBottomPacket();}, 7000);
-                setTimeout(function() {hiddenQueue.shift();}, 6000);
+                //setTimeout(function() {hiddenQueue.shift();}, 6000);
 
                 link.sendPacket();
 

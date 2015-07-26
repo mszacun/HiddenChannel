@@ -1,0 +1,118 @@
+#queue1 {
+    width: 200px;
+    height: 400px;
+    position: absolute;
+    top: 100px;
+    left: 600px;
+
+    border-left: solid 2px red;
+    border-right: solid 2px red;
+    border-bottom: solid 2px red;
+}
+
+#queue2 {
+    width: 200px;
+    height: 400px;
+    position: absolute;
+    top: 100px;
+    left: 1300px;
+
+    border-left: solid 2px red;
+    border-right: solid 2px red;
+    border-bottom: solid 2px red;
+}
+
+body {
+    background-color: #E9EAED;
+}
+
+#hidden-message-queue {
+    width: 300;
+    height: 40px;
+    position: absolute;
+    top: 400px;
+    left: 100px;
+    font-size: 20pt;
+
+    border-right: solid 2px red;
+    border-top: solid 2px red;
+    border-bottom: solid 2px red;
+}
+
+.message {
+    width: 180px;
+    position: absolute;
+    background-color: forestgreen;
+}
+
+#link .message {
+    left: 30px;
+}
+
+.packet {
+    position: absolute;
+    width: 200;
+}
+
+.header {
+    background-color: red;
+    width: 30px;
+    float: left;
+}
+
+.hidden-message {
+    position: absolute;
+    top: 4;
+}
+
+#message-source {
+    position: absolute;
+    top: 5;
+    left: 650;
+}
+
+#message-destination {
+    position: absolute;
+    top: 5;
+    left: 1350;
+}
+
+#link {
+    position: absolute;
+    top: 730px;
+    left: 550px;
+}
+
+hr {
+    position: absolute;
+    top: 780px;
+    left: 520px;
+    width: 55%;
+}
+
+#source-network-stack-table {
+    position: absolute;
+    top: 530px;
+    left: 600px;
+    border: solid 2px blue;
+    border-collapse: collapse;
+    font-size: 20pt;
+    width: 200px;
+    text-align: center;
+}
+
+#destination-network-stack-table {
+    position: absolute;
+    top: 530px;
+    left: 1300px;
+    border: solid 2px blue;
+    border-collapse: collapse;
+    font-size: 20pt;
+    width: 200px;
+    text-align: center;
+}
+
+td {
+    border: solid 2px blue;
+    padding: 8px;
+}
