@@ -1,21 +1,13 @@
-#queue1 {
+#destination {
+    position: absolute;
+    left: 600px;
+}
+.queue {
     width: 200px;
     height: 400px;
     position: absolute;
     top: 100px;
     left: 600px;
-
-    border-left: solid 2px red;
-    border-right: solid 2px red;
-    border-bottom: solid 2px red;
-}
-
-#queue2 {
-    width: 200px;
-    height: 400px;
-    position: absolute;
-    top: 100px;
-    left: 1300px;
 
     border-left: solid 2px red;
     border-right: solid 2px red;
@@ -65,7 +57,7 @@ body {
     top: 4;
 }
 
-#message-source {
+.communication-participant {
     position: absolute;
     top: 5;
     left: 650;
@@ -90,21 +82,10 @@ hr {
     width: 55%;
 }
 
-#source-network-stack-table {
+.network-stack-table {
     position: absolute;
     top: 530px;
     left: 600px;
-    border: solid 2px blue;
-    border-collapse: collapse;
-    font-size: 20pt;
-    width: 200px;
-    text-align: center;
-}
-
-#destination-network-stack-table {
-    position: absolute;
-    top: 530px;
-    left: 1300px;
     border: solid 2px blue;
     border-collapse: collapse;
     font-size: 20pt;

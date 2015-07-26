@@ -8,8 +8,8 @@
 
         <script>
             $(document).ready(function() {
-                var queue1 = new Queue($('#queue1'));
-                var queue2 = new Queue($('#queue2'));
+                var queue1 = new Queue($('#source .queue'));
+                var queue2 = new Queue($('#destination .queue'));
                 var link = new Link($('#link'));
                 var hiddenQueue = new HiddenMessageQueue($('#hidden-message-queue'));
                 hiddenQueue.addOnTheRight('1010101', function() { hiddenQueue.addOnTheRight('1010101')});
@@ -31,31 +31,36 @@
     </head>
     <body>
         <div id='container'>
-            <div id='queue1'>
+            <div id='source'>
+                 <svg class='communication-participant' height="100" width="100">
+                       <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="red" />
+                 </svg> 
+                <div class='queue'>
+                </div>
+                <table class='network-stack-table'>
+                    <tr><td>UDP</td></tr>
+                    <tr><td>IP</td></tr>
+                    <tr><td>Ethernet</td></tr>
+                </table>
+                <div id='hidden-message-queue'>
+                </div>
             </div>
+
             <div id='link'>
             </div>
             <hr/>
-            <div id='queue2'>
+            <div id='destination'>
+                 <svg class='communication-participant' height="100" width="100">
+                       <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="blue" />
+                 </svg> 
+                <div class='queue'>
+                </div>
+                <table class='network-stack-table'>
+                    <tr><td>UDP</td></tr>
+                    <tr><td>IP</td></tr>
+                    <tr><td>Ethernet</td></tr>
+                </table>
             </div>
-            <div id='hidden-message-queue'>
-            </div>
-            <table id='source-network-stack-table'>
-                <tr><td>UDP</td></tr>
-                <tr><td>IP</td></tr>
-                <tr><td>Ethernet</td></tr>
-            </table>
-            <table id='destination-network-stack-table'>
-                <tr><td>UDP</td></tr>
-                <tr><td>IP</td></tr>
-                <tr><td>Ethernet</td></tr>
-            </table>
-             <svg id='message-source' height="100" width="100">
-                   <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="red" />
-             </svg> 
-             <svg id='message-destination' height="100" width="100">
-                   <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="blue" />
-             </svg> 
         </div>
     </body>
 </html>
