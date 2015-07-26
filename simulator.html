@@ -44,15 +44,33 @@
                 border-bottom: solid 2px red;
             }
 
-            .message {
+            .packet {
                 width: 180px;
                 position: absolute;
                 background-color: forestgreen;
+            }
+
+            .header {
+                background-color: red;
+                width: 30px;
+                float: left;
             }
             
             .hidden-message {
                 position: absolute;
                 top: 4;
+            }
+
+            #message-source {
+                position: absolute;
+                top: 5;
+                left: 650;
+            }
+
+            #message-destination {
+                position: absolute;
+                top: 5;
+                left: 1350;
             }
 
             #link {
@@ -203,9 +221,11 @@
 
             Link.prototype.sendPacket = function () {
                 var $packet = $('<div>', {class: 'message', height: 40});
-                this.$el.append($packet);
+                var $header = $('<div>', {class: 'header', height: 40});
+                var $together = $('<div>', {class: 'packet'}).append($header).append($packet);
+                this.$el.append($together);
 
-                $packet.animate({left: '+=750'}, 2000);
+                $together.animate({left: '+=750'}, 2000);
             }
 
             $(document).ready(function() {
@@ -251,6 +271,12 @@
                 <tr><td>IP</td></tr>
                 <tr><td>Ethernet</td></tr>
             </table>
+             <svg id='message-source' height="100" width="100">
+                   <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="red" />
+             </svg> 
+             <svg id='message-destination' height="100" width="100">
+                   <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="blue" />
+             </svg> 
         </div>
     </body>
 </html>
