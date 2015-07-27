@@ -2,7 +2,9 @@
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="simulator.js"></script>
-         <link rel="stylesheet" type="text/css" href="simulator.css" />
+        <link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.min.css">
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" type="text/css" href="simulator.css" />
 
 
 
@@ -32,9 +34,13 @@
     <body>
         <div id='container'>
             <div id='source'>
-                 <svg class='communication-participant' height="100" width="100">
-                       <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="red" />
-                 </svg> 
+                <div class='communication-participant'>
+                    <div class='participant-name'>Nadawca wiadomosci podstawowych</div>
+                    <svg class='icon' height="100" width="100">
+                          <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="red" />
+                    </svg> 
+                    <i class="fa fa-arrow-down arrow-icon"></i>
+                </div>
                 <div class='queue'>
                 </div>
                 <table class='network-stack-table'>
@@ -43,16 +49,28 @@
                     <tr><td>Ethernet</td></tr>
                 </table>
                 <div id='hidden-message-queue'>
+                    <svg id='hidden-icon' height="100" width="100">
+                          <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="yellow" />
+                    </svg> 
+                    <div id='hidden-message-sender-name'>Nadawca wiadomosci ukrytych</div>
+                    <i class="fa fa-arrow-right hidden-arrow-icon"></i>
+                    <div id='window-separator'>
+                    </div>
                 </div>
             </div>
 
             <div id='link'>
+                <div class='description'>Kanal fizyczny ( Stopa bledow BER = 0% )</div>
             </div>
             <hr/>
             <div id='destination'>
-                 <svg class='communication-participant' height="100" width="100">
-                       <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="blue" />
-                 </svg> 
+                <div class='communication-participant'>
+                    <div class='participant-name'>Odbiorca wiadomosci podstawowych</div>
+                    <svg class='icon' height="100" width="100">
+                          <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="blue" />
+                    </svg> 
+                    <i class="fa fa-arrow-up arrow-icon"></i>
+                </div>
                 <div class='queue'>
                 </div>
                 <table class='network-stack-table'>

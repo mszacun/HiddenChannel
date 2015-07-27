@@ -1,3 +1,6 @@
+* {
+    font-family: 'Open Sans', sans-serif;
+}
 #destination {
     position: absolute;
     left: 600px;
@@ -23,7 +26,7 @@ body {
     height: 40px;
     position: absolute;
     top: 400px;
-    left: 100px;
+    left: 250px;
     font-size: 20pt;
 
     border-right: solid 2px red;
@@ -75,6 +78,20 @@ body {
     left: 550px;
 }
 
+.arrow-icon {
+    font-size: 20pt;
+    position: absolute;
+    top: 160px;
+    left: 38px;
+}
+
+.hidden-arrow-icon {
+    font-size: 20pt;
+    position: absolute;
+    top: 5px;
+    left: -35px;
+}
+
 hr {
     position: absolute;
     top: 780px;
@@ -96,4 +113,39 @@ hr {
 td {
     border: solid 2px blue;
     padding: 8px;
+}
+
+#window-separator {
+    position: absolute;
+    border-left: solid 2px blue;
+    width: 40px;
+    height: 40px;
+    right: 67px;
+}
+
+.participant-name {
+    width: 70px;
+}
+
+#hidden-message-sender-name {
+    position: absolute;
+    font-size: 13pt;
+
+    left: -220px;
+    top: -20px;
+    width: 40px;
+}
+
+#hidden-icon {
+    position: absolute;
+    left: -130px;
+    top: -30px;
+}
+
+
+#link .description {
+    position: absolute;
+    width: 350px;
+    left: 300px;
+    top: 80px;
 }
