@@ -55,6 +55,13 @@ body {
     float: left;
 }
 
+.packet-arrow {
+    position: absolute;
+    left: 220px;
+    top: 5px;
+    font-size: 20pt;
+}
+
 .hidden-message {
     position: absolute;
     top: 4;
