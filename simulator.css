@@ -142,6 +142,27 @@ td {
     top: 370px;
 }
 
+#secret-receiver {
+    position: absolute;
+    left: 600px;
+}
+
+#secret-receiver #hidden-icon {
+    position: absolute;
+    left: 580px;
+    top: 370px;
+}
+
+#secret-receiver  .hidden-arrow-icon {
+    left: 560px;
+}
+
+#secret-receiver #hidden-message-receiver-name {
+    position: absolute;
+    left: 700px;
+    top: 380px;
+}
+
 
 #link .description {
     position: absolute;
