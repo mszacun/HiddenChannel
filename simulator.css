@@ -88,8 +88,8 @@ body {
 .hidden-arrow-icon {
     font-size: 20pt;
     position: absolute;
-    top: 5px;
-    left: -35px;
+    top: 405px;
+    left: 220px;
 }
 
 hr {
@@ -131,15 +131,15 @@ td {
     position: absolute;
     font-size: 13pt;
 
-    left: -220px;
-    top: -20px;
+    left: 35px;
+    top: 380px;
     width: 40px;
 }
 
 #hidden-icon {
     position: absolute;
-    left: -130px;
-    top: -30px;
+    left: 120px;
+    top: 370px;
 }
 
 
