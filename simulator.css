@@ -67,6 +67,12 @@ body {
     top: 4;
 }
 
+.hidden-message.ready-to-send {
+    top: 195px;
+    right: -30px;
+    font-size: 20pt;
+}
+
 .communication-participant {
     position: absolute;
     top: 5;
@@ -81,7 +87,7 @@ body {
 
 #link {
     position: absolute;
-    top: 730px;
+    top: 950px;
     left: 550px;
 }
 
@@ -90,6 +96,20 @@ body {
     position: absolute;
     top: 160px;
     left: 38px;
+}
+
+.steganography-unit {
+    position: absolute;
+    top: 520px;
+    left: 600px;
+    font-size: 14pt;
+}
+
+.queue-to-steganography-arrow {
+    position: absolute;
+    top: 515px;
+    left: 690px;
+    font-size: 15pt;
 }
 
 .hidden-arrow-icon {
@@ -101,18 +121,18 @@ body {
 
 hr {
     position: absolute;
-    top: 780px;
-    left: 520px;
-    width: 55%;
+    top: 50px;
+    left: 0px;
+    width: 1000px;
 }
 
 .network-stack-table {
     position: absolute;
-    top: 530px;
+    top: 730px;
     left: 600px;
     border: solid 2px blue;
     border-collapse: collapse;
-    font-size: 20pt;
+    font-size: 15pt;
     width: 200px;
     text-align: center;
 }
@@ -130,17 +150,30 @@ td {
     right: 67px;
 }
 
+.window-description {
+    font-size: 13pt;
+    width: 120px;
+    text-align: center;
+    position: absolute;
+
+    left: 185px;
+    top: 60px;
+}
+
 .participant-name {
-    width: 70px;
+    width: 380px;
+    margin-left: -130px;
+    text-align: center;
 }
 
 #hidden-message-sender-name {
     position: absolute;
     font-size: 13pt;
+    text-align: center;
 
-    left: 35px;
-    top: 380px;
-    width: 40px;
+    left: 10px;
+    top: 300px;
+    width: 380px;
 }
 
 #hidden-icon {
@@ -170,10 +203,16 @@ td {
     top: 380px;
 }
 
+.hidden-message.ready-to-receive {
+    top: 195px;
+    right: 165px;
+    font-size: 20pt;
+}
+
 
 #link .description {
     position: absolute;
     width: 350px;
     left: 300px;
-    top: 80px;
+    top: 70px;
 }
