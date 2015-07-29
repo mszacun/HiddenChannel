@@ -17,6 +17,13 @@
     border-bottom: solid 2px red;
 }
 
+#queues-desc {
+    position: absolute;
+    left: 900px;
+    top: 300px;
+    font-size: 16pt;
+}
+
 body {
     background-color: #E9EAED;
 }
@@ -161,7 +168,8 @@ td {
 }
 
 .participant-name {
-    width: 380px;
+    width: 400px;
+    height: 70px;
     margin-left: -130px;
     text-align: center;
 }
@@ -173,7 +181,7 @@ td {
 
     left: 10px;
     top: 300px;
-    width: 380px;
+    width: 400px;
 }
 
 #hidden-icon {

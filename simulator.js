@@ -124,5 +124,5 @@ Link.prototype.sendPacket = function () {
     var $together = $('<div>', {class: 'packet'}).append($header).append($packet).append($arrow);
     this.$el.append($together);
 
-    $together.animate({left: '+=750'}, 2000);
+    $together.animate({left: '+=350'}, 2000);
 }
