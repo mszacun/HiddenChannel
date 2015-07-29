@@ -120,8 +120,9 @@ function Link($el) {
 Link.prototype.sendPacket = function () {
     var $packet = $('<div>', {class: 'message', height: 40});
     var $header = $('<div>', {class: 'header', height: 40});
+    var $desc = $('<div>', {class: 'packet-description'}).text('Rozmiar: 97 bajtow [a]');
     var $arrow = $('<i>', {class: 'fa fa-arrow-right packet-arrow'})
-    var $together = $('<div>', {class: 'packet'}).append($header).append($packet).append($arrow);
+    var $together = $('<div>', {class: 'packet'}).append($desc).append($header).append($packet).append($arrow);
     this.$el.append($together);
 
     $together.animate({left: '+=350'}, 2000);

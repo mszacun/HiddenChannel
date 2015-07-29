@@ -62,6 +62,13 @@ body {
     float: left;
 }
 
+.packet-description {
+    position: absolute;
+    top: -30px;
+    width: 230px;
+    text-align: center;
+}
+
 .packet-arrow {
     position: absolute;
     left: 220px;
