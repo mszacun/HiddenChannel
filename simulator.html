@@ -43,26 +43,45 @@
                     <svg class='icon' height="100" width="100">
                           <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="red" />
                     </svg> 
-                    <i class="fa fa-arrow-down arrow-icon"></i>
+                    <div class='participant-queue-arrow'>
+                        <i class="fa fa-arrow-down arrow-icon"></i>
+                        <div class='process-step'>1</div>
+                    </div>
                 </div>
                 <div class='queue'>
                 </div>
                 <i class="fa fa-arrow-down queue-to-steganography-arrow"></i>
-                <svg width="200" height="200" class='steganography-unit'>
-                      <rect x="90" y="-50" width="100" height="100" transform='rotate(45)'
-                        style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
-                      <text x='40' y='105'>Fragmentacja</text>
-                </svg>
-                <table class='network-stack-table'>
-                    <tr><td>UDP</td></tr>
-                    <tr><td>IP</td></tr>
-                    <tr><td>Ethernet</td></tr>
-                </table>
+                <div class='steganography-unit'>
+                    <svg width="200" height="200">
+                          <rect x="90" y="-50" width="100" height="100" transform='rotate(45)'
+                            style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
+                          <text x='40' y='105'>Fragmentacja</text>
+                    </svg>
+                    <div class='process-step' style='font-size: 20pt; top: 75px; left: 185px; position: absolute;'>3</div>
+                    <i class="fa fa-arrow-down steganography-to-network-arrow"></i>
+
+                </div>
+
+                <div class='network-stack'>
+                    <table class='network-stack-table'>
+                        <tr><td>UDP</td></tr>
+                        <tr><td>IP</td></tr>
+                        <tr><td>Ethernet</td></tr>
+                    </table>
+                    <div style='position: absolute; left: 100px; top: 150px; font-size: 16pt'>
+                        <i class="fa fa-arrow-down"></i>
+                        <div class='process-step'>4</div>
+                    </div>
+                </div>
                 <div id='secret-sender'>
                     <div id='hidden-message-queue'>
                         <div id='window-separator'>
                         </div>
                         <div class='window-description'>Bity ukryte w pojednyczym pakiecie</div>
+                        <div style='position: absolute; left: 235px; top: 150px;'>
+                            <i class="fa fa-arrow-down"></i>
+                            <div class='process-step'>2</div>
+                        </div>
                         <div class='hidden-message ready-to-send'>1010100    <i class="fa fa-arrow-right"></i></div>
                     </div>
                     <svg id='hidden-icon' height="100" width="100">
@@ -94,21 +113,28 @@
                     <svg class='icon' height="100" width="100">
                           <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="blue" />
                     </svg> 
-                    <i class="fa fa-arrow-up arrow-icon"></i>
+                    <div class='participant-queue-arrow'>
+                        <i class="fa fa-arrow-up arrow-icon"></i>
+                    </div>
                 </div>
                 <div class='queue'>
                 </div>
                 <i class="fa fa-arrow-up queue-to-steganography-arrow"></i>
-                <svg width="200" height="200" class='steganography-unit'>
-                      <rect x="90" y="-50" width="100" height="100" transform='rotate(45)'
-                        style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
-                      <text x='40' y='105'>Dekodowanie</text>
-                </svg>
-                <table class='network-stack-table'>
-                    <tr><td>UDP</td></tr>
-                    <tr><td>IP</td></tr>
-                    <tr><td>Ethernet</td></tr>
-                </table>
+                <div class='steganography-unit'>
+                    <svg width="200" height="200">
+                          <rect x="90" y="-50" width="100" height="100" transform='rotate(45)'
+                            style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
+                          <text x='40' y='105'>Dekodowanie</text>
+                    </svg>
+                    <i class="fa fa-arrow-up steganography-to-network-arrow"></i>
+                </div>
+                <div class='network-stack'>
+                    <table class='network-stack-table'>
+                        <tr><td>UDP</td></tr>
+                        <tr><td>IP</td></tr>
+                        <tr><td>Ethernet</td></tr>
+                    </table>
+                </div>
                 <div id='secret-receiver'>
                     <div id='hidden-message-queue'>
                         <div id='window-separator'> </div>

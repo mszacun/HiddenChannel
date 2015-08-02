@@ -93,6 +93,18 @@ body {
     left: 650;
 }
 
+.process-step {
+    position: absolute;
+    top: -6px;
+    left: 30px;
+    border: 3px solid rgb(81, 201, 210);
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    border-radius: 35px;
+    font-size: 20pt;
+}
+
 #message-destination {
     position: absolute;
     top: 5;
@@ -105,7 +117,7 @@ body {
     left: 550px;
 }
 
-.arrow-icon {
+.participant-queue-arrow {
     font-size: 20pt;
     position: absolute;
     top: 160px;
@@ -140,10 +152,19 @@ hr {
     width: 1000px;
 }
 
-.network-stack-table {
+.steganography-to-network-arrow {
+    position: absolute;
+    top: 180px;
+    left: 90px;
+}
+
+.network-stack {
     position: absolute;
     top: 730px;
     left: 600px;
+}
+
+.network-stack-table {
     border: solid 2px blue;
     border-collapse: collapse;
     font-size: 15pt;
