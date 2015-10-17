@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <script src="lib/lodash.js"></script>
+        <script src="lib/backbone.js"></script>
+        <script src="models.js"></script>
+        <script src="symulator.js"></script>
+
+        <script>
+            var symulator = new Symulator({symulationTime: 15});
+            for (var i = 0; i < 15; i++) {
+                console.log(symulator.step());
+            }
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
