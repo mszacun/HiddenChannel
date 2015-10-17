@@ -17,10 +17,12 @@ function rpoisson(lambda) {
 function Symulator(options) {
     this.basicPackets = [
         new BasicPacket({ apperanceTime: 1, length: 300 }),
-        new BasicPacket({ apperanceTime: 7, length: 310 })
+        new BasicPacket({ apperanceTime: 7, length: 310 }),
+        new BasicPacket({ apperanceTime: 13, length: 500 })
     ];
     this.hiddenPackets = [
-        new HiddenPacket({ apperanceTime: 5, segments: [ 128 ]})
+        new HiddenPacket({ apperanceTime: 5, segments: [ 128 ]}),
+        new HiddenPacket({ apperanceTime: 6, segments: [ 221 ]})
     ];
 
     this.symulationTime = options.symulationTime;
@@ -89,17 +91,21 @@ HiddenChannel.prototype.execute = function() {
 
     // sending hidden packets
     while (this.canSendHiddenPacket()) {
-        var packetToSend = this.hiddenPacketsQueue.pop();
+        var packetToSend = this.hiddenPacketsQueue.shift();
         var neededData = packetToSend.get('segments')[0];
+        var basicPacketUsed = this.basicPacketsQueue.shift();
 
-        var dataSources = this.basicPacketsQueue.getData(neededData);
+        basicPacketUsed.getData(neededData);
 
-        happenedEvents.push(new PacketWithHiddenData(packetToSend,dataSources));
-
+        happenedEvents.push(new PacketWithHiddenData(
+            packetToSend,
+            [{packet: basicPacketUsed, length: neededData, hasMoreFragments: true}]
+        ));
+        happenedEvents.push(new PacketWithoutHiddenData(basicPacketUsed));
     }
 
     while (!this.basicPacketsQueue.isEmpty()) {
-        var packetToSend = this.basicPacketsQueue.pop();
+        var packetToSend = this.basicPacketsQueue.shift();
 
         happenedEvents.push(new PacketWithoutHiddenData(packetToSend));
     }

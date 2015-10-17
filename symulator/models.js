@@ -35,31 +35,6 @@ var BasicPacketsQueue = Backbone.Collection.extend({
         return this.reduce(sumPacketsReamingData, 0);
     },
 
-    getData: function (amount) {
-        var result = [];
-        var collectedData = 0;
-
-        while (collectedData < amount) {
-            var basicPacket = this.at(0);
-            var dataAviableFromPacket = basicPacket.getReamingDataToSend();
-            var reamingNeededData = amount - collectedData;
-
-            if (reamingNeededData >= dataAviableFromPacket) {
-                collectedData += dataAviableFromPacket;
-                basicPacket.getData(dataAviableFromPacket);
-                this.pop();
-
-                result.push({packet: basicPacket, length: dataAviableFromPacket, hasMoreFragments: false});
-            }
-            else {
-                collectedData += reamingNeededData;
-                basicPacket.getData(reamingNeededData);
-                result.push({packet: basicPacket, length: reamingNeededData, hasMoreFragments: true});
-            }
-        }
-
-        return result;
-    },
 });
 
 
