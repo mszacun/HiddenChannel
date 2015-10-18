@@ -23,10 +23,13 @@
                 }
                 fillQueueWithPackets(queue1, packetsLength, 0);
                 fillQueueWithPackets(queue2, packetsLength2, 0);
-                setTimeout(function() {queue1.removeBottomPacket();}, 7000);
-                //setTimeout(function() {hiddenQueue.shift();}, 6000);
 
                 link.sendPacket();
+                setTimeout(function() {
+                    queue1.removeData(160).done(function() {
+                        console.log('removed');
+                    });
+                }, 10000);
 
             });
         </script>

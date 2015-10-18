@@ -65,15 +65,39 @@ Queue.prototype.addMessageOnTop = function(size, completeCallback) {
         animationStopY += w + this.padding;
     }
 
-    var $newPacket = $('<div>', {class: 'message'});
+    var $newPacket = $('<div>', {class: 'message'}).text(size);
     var $queue = this.$el
 
     $queue.append($newPacket);
     this.packets.push($newPacket);
     $newPacket.css('left', this.horizontalMargin);
-    $newPacket.css('height', size);
 
     $newPacket.animate({bottom: animationStopY}, this.addRemoveAnimationTime, completeCallback);
+}
+
+Queue.prototype.removeData = function(amount) {
+    var deferred = new $.Deferred();
+    var that = this;
+    var countdown = function () {
+        amount -= 1;
+        if (amount > 0) {
+            that.removeByte();
+            setTimeout(countdown, 50);
+        }
+        else
+            deferred.resolve();
+    };
+
+    countdown();
+
+    return deferred.promise();
+}
+
+Queue.prototype.removeByte = function() {
+    var $packetToRemoveFrom = $(this.packets[0]);
+    $packetToRemoveFrom.text($packetToRemoveFrom.text() - 1);
+    if ($packetToRemoveFrom.text() <= 0)
+        this.removeBottomPacket();
 }
 
 Queue.prototype.addMessageOnBottom = function(size, completeCallback) {
@@ -96,14 +120,13 @@ Queue.prototype.addMessageOnBottom = function(size, completeCallback) {
 }
 
 Queue.prototype.removeBottomPacket = function() {
-    var packets = this.$el.find('.message');
-    var $packetToRemove = $(packets[0]);
+    var $packetToRemove = $(this.packets.shift());
+    this.numberOfItems--;
     var heightToShiftOtherPackets = $packetToRemove.height();
 
-    $packetToRemove.animate({height: 0});
-    for (var i = 1; i < this.numberOfItems; i++)
-        $(packets[i]).animate({bottom: '-=' + heightToShiftOtherPackets});
-
+    $packetToRemove.animate({height: 0}, function() { $packetToRemove.remove(); });
+    for (var i = 0; i < this.numberOfItems; i++)
+        $(this.packets[i]).animate({bottom: '-=' + heightToShiftOtherPackets});
 }
 
 function fillQueueWithPackets(queue, packetsLength, i) {
