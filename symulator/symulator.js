@@ -21,9 +21,12 @@ function Symulator(options) {
         new BasicPacket({ id: 'p3', apperanceTime: 13, length: 500 })
     ];
     this.hiddenPackets = [
-        new HiddenPacket({ id: 'u2', apperanceTime: 5, segments: [ 128 ]}),
+        new HiddenPacket({ id: 'u1', apperanceTime: 5, segments: [ 128 ]}),
         new HiddenPacket({ id: 'u2', apperanceTime: 6, segments: [ 221 ]})
     ];
+
+    this.allBasicPackets = this.basicPackets.slice(0);
+    this.allHiddenPackets = this.hiddenPackets.slice(0);
 
     this.symulationTime = options.symulationTime;
     this.hiddenChannel = new HiddenChannel();
@@ -157,8 +160,6 @@ HiddenChannel.prototype.execute = function() {
 }
 
 HiddenChannel.prototype.canSendHiddenPacket = function() {
-    if (!this.hiddenPacketsQueue.isEmpty())
-
     return !this.hiddenPacketsQueue.isEmpty() &&
         this.basicPacketsQueue.getAviableDataLength() >= this.hiddenPacketsQueue.at(0).get('segments')[0];
 }
