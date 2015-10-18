@@ -1,5 +1,14 @@
+var Packet = Backbone.Model.extend({
+    initialize: function(options) {
 
-var BasicPacket = Backbone.Model.extend({
+    },
+
+    calculateDelay: function (receiveTime) {
+        this.receiveTime = receiveTime;
+        this.delay = receiveTime - this.apperanceTime;
+    },
+});
+var BasicPacket = Packet.extend({
     initialize: function (options) {
         this.apperanceTime = options.apperanceTime;
         this.length = options.length;
@@ -38,8 +47,8 @@ var BasicPacketsQueue = Backbone.Collection.extend({
 });
 
 
-var HiddenPacket = Backbone.Model.extend({
-    initialie: function (options) {
+var HiddenPacket = Packet.extend({
+    initialize: function (options) {
         this.apperanceTime = options.apperanceTime;
         this.segments = options.segments;
     },
