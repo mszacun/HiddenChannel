@@ -1,4 +1,4 @@
-var Packet = Backbone.Model.extend({
+var Message = Backbone.Model.extend({
     initialize: function(options) {
 
     },
@@ -8,7 +8,7 @@ var Packet = Backbone.Model.extend({
         this.delay = receiveTime - this.apperanceTime;
     },
 });
-var BasicPacket = Packet.extend({
+var BasicMessage = Message.extend({
     initialize: function (options) {
         this.apperanceTime = options.apperanceTime;
         this.length = options.length;
@@ -21,12 +21,12 @@ var QueuedBasicPacked = Backbone.Model.extend({
         alreadyTakenDataLength: 0
     },
 
-    initialize: function (basicPacket) {
-        this.basicPacket = basicPacket;
+    initialize: function (basicMessage) {
+        this.basicMessage = basicMessage;
     },
 
     getReamingDataToSend: function () {
-        return this.basicPacket.length - this.get('alreadyTakenDataLength');
+        return this.basicMessage.length - this.get('alreadyTakenDataLength');
     },
 
     getData: function (amount) {
@@ -35,19 +35,19 @@ var QueuedBasicPacked = Backbone.Model.extend({
 });
 
 
-var BasicPacketsQueue = Backbone.Collection.extend({
+var BasicMessagesQueue = Backbone.Collection.extend({
     getAviableDataLength: function () {
-        function sumPacketsReamingData(acc, packet) {
+        function sumMessagesReamingData(acc, packet) {
             return acc + packet.getReamingDataToSend();
         }
 
-        return this.reduce(sumPacketsReamingData, 0);
+        return this.reduce(sumMessagesReamingData, 0);
     },
 
 });
 
 
-var HiddenPacket = Packet.extend({
+var HiddenMessage = Message.extend({
     initialize: function (options) {
         this.apperanceTime = options.apperanceTime;
         this.segments = options.segments;
@@ -55,7 +55,7 @@ var HiddenPacket = Packet.extend({
 });
 
 
-var HiddenPacketsQueue = Backbone.Collection.extend({
+var HiddenMessagesQueue = Backbone.Collection.extend({
     initialize: function(options) {
 
     },

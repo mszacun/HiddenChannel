@@ -15,18 +15,18 @@ function rpoisson(lambda) {
 }
 
 function Symulator(options) {
-    this.basicPackets = [
-        new BasicPacket({ id: 'p1', apperanceTime: 1, length: 300 }),
-        new BasicPacket({ id: 'p2', apperanceTime: 7, length: 310 }),
-        new BasicPacket({ id: 'p3', apperanceTime: 13, length: 500 })
+    this.basicMessages = [
+        new BasicMessage({ id: 'p1', apperanceTime: 1, length: 300 }),
+        new BasicMessage({ id: 'p2', apperanceTime: 7, length: 310 }),
+        new BasicMessage({ id: 'p3', apperanceTime: 13, length: 500 })
     ];
-    this.hiddenPackets = [
-        new HiddenPacket({ id: 'u1', apperanceTime: 5, segments: [ 128 ]}),
-        new HiddenPacket({ id: 'u2', apperanceTime: 6, segments: [ 221 ]})
+    this.hiddenMessages = [
+        new HiddenMessage({ id: 'u1', apperanceTime: 5, segments: [ 128 ]}),
+        new HiddenMessage({ id: 'u2', apperanceTime: 6, segments: [ 221 ]})
     ];
 
-    this.allBasicPackets = this.basicPackets.slice(0);
-    this.allHiddenPackets = this.hiddenPackets.slice(0);
+    this.allBasicMessages = this.basicMessages.slice(0);
+    this.allHiddenMessages = this.hiddenMessages.slice(0);
 
     this.symulationTime = options.symulationTime;
     this.hiddenChannel = new HiddenChannel();
@@ -38,19 +38,19 @@ Symulator.prototype.step = function() {
     var currentTime = this.currentTime;
 
     if (currentTime < this.symulationTime) {
-        function hasPacketAppeared(packet) { return packet.get('apperanceTime') <= currentTime; }
+        function hasMessageAppeared(message) { return message.get('apperanceTime') <= currentTime; }
 
-        var hiddenPacketsArrived = _.filter(this.hiddenPackets, hasPacketAppeared);
-        var basicPacketsArrived = _.filter(this.basicPackets, hasPacketAppeared);
+        var hiddenMessagesArrived = _.filter(this.hiddenMessages, hasMessageAppeared);
+        var basicMessagesArrived = _.filter(this.basicMessages, hasMessageAppeared);
 
-        this.hiddenPackets= _.reject(this.hiddenPackets, hasPacketAppeared);
-        this.basicPackets = _.reject(this.basicPackets, hasPacketAppeared);
+        this.hiddenMessages = _.reject(this.hiddenMessages, hasMessageAppeared);
+        this.basicMessages = _.reject(this.basicMessages, hasMessageAppeared);
 
-        _.each(hiddenPacketsArrived, function(packet) {
-            this.hiddenChannel.addHiddenPacket(packet);
+        _.each(hiddenMessagesArrived, function(message) {
+            this.hiddenChannel.addHiddenMessage(message);
         }, this);
-        _.each(basicPacketsArrived, function(packet) {
-            this.hiddenChannel.addBasicPacket(packet);
+        _.each(basicMessagesArrived, function(packet) {
+            this.hiddenChannel.addBasicMessage(packet);
         }, this);
 
         var packetsGenerated = this.hiddenChannel.execute();
@@ -105,7 +105,7 @@ var PacketWithHiddenData = Backbone.Model.extend({
 var PacketWithoutHiddenData = Backbone.Model.extend({
     initialize: function(options) {
         this.set('dataLength', options.basicPacket.getReamingDataToSend());
-        this.set('basicPacket', options.basicPacket.basicPacket);
+        this.set('basicMessage', options.basicPacket.basicMessage);
         this.set('padding', Math.max(0, MIN_DATA_PACKET_SIZE - this.get('dataLength')));
     },
 
@@ -114,22 +114,22 @@ var PacketWithoutHiddenData = Backbone.Model.extend({
     },
 
     calculateDelay: function (receiveTime) {
-        this.get('basicPacket').calculateDelay(receiveTime);
+        this.get('basicMessage').calculateDelay(receiveTime);
     },
 });
 
 
 function HiddenChannel() {
-    this.hiddenPacketsQueue = new HiddenPacketsQueue();
-    this.basicPacketsQueue = new BasicPacketsQueue();
+    this.hiddenMessagesQueue = new HiddenMessagesQueue();
+    this.basicMessagesQueue = new BasicMessagesQueue();
 }
 
-HiddenChannel.prototype.addBasicPacket = function(packet) {
-    this.basicPacketsQueue.add(new QueuedBasicPacked(packet));
+HiddenChannel.prototype.addBasicMessage = function(packet) {
+    this.basicMessagesQueue.add(new QueuedBasicPacked(packet));
 }
 
-HiddenChannel.prototype.addHiddenPacket = function(packet) {
-    this.hiddenPacketsQueue.add(packet);
+HiddenChannel.prototype.addHiddenMessage = function(packet) {
+    this.hiddenMessagesQueue.add(packet);
 }
 
 HiddenChannel.prototype.execute = function() {
@@ -137,9 +137,9 @@ HiddenChannel.prototype.execute = function() {
 
     // sending hidden packets
     while (this.canSendHiddenPacket()) {
-        var packetToSend = this.hiddenPacketsQueue.shift();
+        var packetToSend = this.hiddenMessagesQueue.shift();
         var neededData = packetToSend.get('segments')[0];
-        var basicPacketUsed = this.basicPacketsQueue.shift();
+        var basicPacketUsed = this.basicMessagesQueue.shift();
 
         basicPacketUsed.getData(neededData);
 
@@ -150,8 +150,8 @@ HiddenChannel.prototype.execute = function() {
         sentPackets.push(new PacketWithoutHiddenData({basicPacket: basicPacketUsed}));
     }
 
-    while (!this.basicPacketsQueue.isEmpty()) {
-        var packetToSend = this.basicPacketsQueue.shift();
+    while (!this.basicMessagesQueue.isEmpty()) {
+        var packetToSend = this.basicMessagesQueue.shift();
 
         sentPackets.push(new PacketWithoutHiddenData({basicPacket: packetToSend}));
     }
@@ -160,8 +160,8 @@ HiddenChannel.prototype.execute = function() {
 }
 
 HiddenChannel.prototype.canSendHiddenPacket = function() {
-    return !this.hiddenPacketsQueue.isEmpty() &&
-        this.basicPacketsQueue.getAviableDataLength() >= this.hiddenPacketsQueue.at(0).get('segments')[0];
+    return !this.hiddenMessagesQueue.isEmpty() &&
+        this.basicMessagesQueue.getAviableDataLength() >= this.hiddenMessagesQueue.at(0).get('segments')[0];
 }
 
 

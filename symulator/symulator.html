@@ -17,24 +17,24 @@
             }
 
             $(document).ready(function() {
-                _.each(symulator.allBasicPackets, function(packet) {
-                    var $packetRow = $('<tr>')
-                        .append($('<td>').text(packet.get('id')))
-                        .append($('<td>').text(packet.apperanceTime))
-                        .append($('<td>').text(packet.receiveTime))
-                        .append($('<td>').text(packet.delay));
+                _.each(symulator.allBasicMessages, function(message) {
+                    var $messageRow = $('<tr>')
+                        .append($('<td>').text(message.get('id')))
+                        .append($('<td>').text(message.apperanceTime))
+                        .append($('<td>').text(message.receiveTime))
+                        .append($('<td>').text(message.delay));
 
-                    $packetRow.appendTo('#basic-messages-table tbody');
+                    $messageRow.appendTo('#basic-messages-table tbody');
                 });
 
-                _.each(symulator.allHiddenPackets, function(packet) {
-                    var $packetRow = $('<tr>')
-                        .append($('<td>').text(packet.get('id')))
-                        .append($('<td>').text(packet.apperanceTime))
-                        .append($('<td>').text(packet.receiveTime))
-                        .append($('<td>').text(packet.delay));
+                _.each(symulator.allHiddenMessages, function(message) {
+                    var $messageRow = $('<tr>')
+                        .append($('<td>').text(message.get('id')))
+                        .append($('<td>').text(message.apperanceTime))
+                        .append($('<td>').text(message.receiveTime))
+                        .append($('<td>').text(message.delay));
 
-                    $packetRow.appendTo('#hidden-messages-table tbody');
+                    $messageRow.appendTo('#hidden-messages-table tbody');
                 });
 
                 $('#basic-messages-table').DataTable({
