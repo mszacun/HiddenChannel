@@ -14,23 +14,19 @@
                 var queue2 = new Queue($('#destination .queue'));
                 var link = new Link($('#link'));
                 var hiddenQueue = new HiddenMessageQueue($('#hidden-message-queue'));
-                hiddenQueue.addOnTheRight('1010101', function() { hiddenQueue.addOnTheRight('1010101')});
+                hiddenQueue.addOnTheRight('34 56 12', function() { hiddenQueue.addOnTheRight('120 230')});
                 var packetsLength = [];
-                var packetsLength2 = [];
                 for (var i = 0; i < 6; ++i) {
-                    packetsLength.push(Math.floor(Math.random() * 50) + 15 )
-                    packetsLength2.push(Math.floor(Math.random() * 50) + 15 )
+                    packetsLength.push(Math.floor(Math.random() * 50) + 15 );
                 }
-                fillQueueWithPackets(queue1, packetsLength, 0);
-                fillQueueWithPackets(queue2, packetsLength2, 0);
+                fillQueueWithPackets(queue1, packetsLength, 0).then(function() {
+                    $.when(queue1.removeData(160), hiddenQueue.shiftSegment()).then(function() {
+                        link.sendPacket().then(function() {
+                            console.log('done');
+                        });
 
-                link.sendPacket();
-                setTimeout(function() {
-                    queue1.removeData(160).done(function() {
-                        console.log('removed');
                     });
-                }, 10000);
-
+                });
             });
         </script>
     </head>
@@ -45,7 +41,7 @@
                     </div>
                     <svg class='icon' height="100" width="100">
                           <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="red" />
-                    </svg> 
+                    </svg>
                     <div class='participant-queue-arrow'>
                         <i class="fa fa-arrow-down arrow-icon"></i>
                         <div class='process-step near-arrow'>1</div>
@@ -78,18 +74,16 @@
                 </div>
                 <div id='secret-sender'>
                     <div id='hidden-message-queue'>
-                        <div id='window-separator'>
-                        </div>
                         <div class='window-description'>Bity ukryte w pojednyczym pakiecie</div>
                         <div style='position: absolute; left: 235px; top: 150px;'>
                             <i class="fa fa-arrow-down"></i>
                             <div class='process-step near-arrow'>2</div>
                         </div>
-                        <div class='hidden-message ready-to-send'>1010100    <i class="fa fa-arrow-right"></i></div>
+                        <i class="fa fa-arrow-right"></i>
                     </div>
                     <svg id='hidden-icon' height="100" width="100">
                           <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="yellow" />
-                    </svg> 
+                    </svg>
                     <div id='hidden-message-sender-name'>
                         Nadawca wiadomosci ukrytych<br>
                         Rozklad czasu pojawiania sie wiadomosci: <b>f(k<sub>3</sub>, &lambda;<sub>3</sub>)</b><br>
@@ -115,7 +109,7 @@
                     <div class='participant-name'>Odbiorca wiadomosci podstawowych</div>
                     <svg class='icon' height="100" width="100">
                           <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="blue" />
-                    </svg> 
+                    </svg>
                     <div class='participant-queue-arrow'>
                         <i class="fa fa-arrow-up arrow-icon"></i>
                     </div>
@@ -140,12 +134,11 @@
                 </div>
                 <div id='secret-receiver'>
                     <div id='hidden-message-queue'>
-                        <div id='window-separator'> </div>
                         <div class='hidden-message ready-to-receive'>1110101    <i class="fa fa-arrow-right"></i></div>
                     </div>
                     <svg id='hidden-icon' height="100" width="100">
                           <circle cx="50" cy="50" r="30" stroke="black" stroke-width="3" fill="white" />
-                    </svg> 
+                    </svg>
                     <div id='hidden-message-receiver-name'>Odbiorca wiadomosci ukrytych</div>
                     <i class="fa fa-arrow-right hidden-arrow-icon"></i>
                 </div>

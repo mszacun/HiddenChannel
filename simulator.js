@@ -1,6 +1,6 @@
 function HiddenMessageQueue($el) {
     this.$el = $el;
-    this.padding = 2;
+    this.padding = 12;
     this.messages = [];
     this.addAnimationLenght = 1000;
     this.removeAnimationLength = 1000;
@@ -34,6 +34,32 @@ HiddenMessageQueue.prototype.addOnTheRight = function(data, completeCallback) {
     this.messages.push($newMessage);
 
     $newMessage.animate({right: animationStopX}, this.addAnimationLenght, completeCallback);
+}
+
+HiddenMessageQueue.prototype.shiftSegment = function(completeCallback) {
+    var deferred = new $.Deferred();
+
+    var that = this;
+    var $messageToRemovesegmentFrom = $(this.messages[0]);
+    var originalWidth = $messageToRemovesegmentFrom.width();
+    var aviableSegments = $messageToRemovesegmentFrom.text().split(' ')
+    var $removedSegement = $('<div>', {class: 'hidden-message'}).text(aviableSegments.pop());
+    $removedSegement.css('right', $messageToRemovesegmentFrom.css('right'));
+    $removedSegement.animate({top: '+=189'}, 1000,function() {
+        $removedSegement.animate({left: '+=50'}, 1000, function() {
+            $messageToRemovesegmentFrom.text(aviableSegments.join(' '));
+            var toMove = originalWidth - $messageToRemovesegmentFrom.width();
+            for (var i = 1; i < that.messages.length; i++) {
+                $(that.messages[i]).animate({right: '-=' + toMove});
+            }
+            $removedSegement.remove();
+            deferred.resolve();
+        });
+    });
+
+    this.$el.append($removedSegement);
+
+    return deferred.promise();
 }
 
 HiddenMessageQueue.prototype.shift = function(completeCallback) {
@@ -130,10 +156,19 @@ Queue.prototype.removeBottomPacket = function() {
 }
 
 function fillQueueWithPackets(queue, packetsLength, i) {
-    if (i < packetsLength.length)
-        queue.addMessageOnTop(packetsLength[i], function () {
-            fillQueueWithPackets(queue, packetsLength, i + 1);
-        });
+    var deferred = new $.Deferred();
+
+    function doIt(queue, packetsLength, i) {
+        if (i < packetsLength.length)
+            queue.addMessageOnTop(packetsLength[i], function () {
+                doIt(queue, packetsLength, i + 1);
+            });
+        else
+            deferred.resolve();
+    }
+
+    doIt(queue, packetsLength, i);
+    return deferred;
 }
 
 function Link($el) {
@@ -141,12 +176,21 @@ function Link($el) {
 }
 
 Link.prototype.sendPacket = function () {
+    var deferred = new $.Deferred();
     var $packet = $('<div>', {class: 'message', height: 40});
     var $header = $('<div>', {class: 'header', height: 40});
     var $desc = $('<div>', {class: 'packet-description'}).text('Rozmiar: 97 bajtow [a]');
     var $arrow = $('<i>', {class: 'fa fa-arrow-right packet-arrow'})
     var $together = $('<div>', {class: 'packet'}).append($desc).append($header).append($packet).append($arrow);
+    $together.css('top', '-350px').css('left', '40px');
     this.$el.append($together);
 
-    $together.animate({left: '+=350'}, 2000);
+    $together.animate({top: '+=350'}, 2000, function() {
+        $together.animate({left: '+=600'}, 2000, function() {
+            $together.remove();
+            deferred.resolve();
+        });
+    });
+
+    return deferred.promise();
 }
