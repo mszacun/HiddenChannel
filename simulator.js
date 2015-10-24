@@ -6,7 +6,9 @@ function HiddenMessageQueue($el) {
     this.removeAnimationLength = 1000;
 }
 
-HiddenMessageQueue.prototype.addToQueue = function(data, completeCallback) {
+HiddenMessageQueue.prototype.addToQueue = function(segments) {
+    var deferred = new $.Deferred();
+    var data = segments.join(' ');
     $newMessage = $('<div>', {class: 'hidden-message'}).text(data);
     $newMessage.css('left', 200)
 
@@ -18,10 +20,17 @@ HiddenMessageQueue.prototype.addToQueue = function(data, completeCallback) {
     this.$el.append($newMessage);
     this.messages.push($newMessage);
 
-    $newMessage.animate({left: animationStopX}, this.addAnimationLenght, completeCallback);
+    $newMessage.animate({left: animationStopX}, this.addAnimationLenght,function() {
+        deferred.resolve();
+    });
+
+    return deferred.promise();
 }
 
-HiddenMessageQueue.prototype.addOnTheRight = function(data, completeCallback) {
+HiddenMessageQueue.prototype.addOnTheRight = function(segments) {
+    var deferred = new $.Deferred();
+    var data = segments.join(' ');
+
     $newMessage = $('<div>', {class: 'hidden-message'}).text(data);
     $newMessage.css('right', 200)
 
@@ -33,7 +42,11 @@ HiddenMessageQueue.prototype.addOnTheRight = function(data, completeCallback) {
     this.$el.append($newMessage);
     this.messages.push($newMessage);
 
-    $newMessage.animate({right: animationStopX}, this.addAnimationLenght, completeCallback);
+    $newMessage.animate({right: animationStopX}, this.addAnimationLenght, function() {
+        deferred.resolve();
+    });
+
+    return deferred.promise();
 }
 
 HiddenMessageQueue.prototype.shiftSegment = function(completeCallback) {
@@ -53,6 +66,11 @@ HiddenMessageQueue.prototype.shiftSegment = function(completeCallback) {
                 $(that.messages[i]).animate({right: '-=' + toMove});
             }
             $removedSegement.remove();
+
+            if (aviableSegments.length == 0) {
+                $messageToRemovesegmentFrom.remove();
+                that.messages.shift();
+            }
             deferred.resolve();
         });
     });
@@ -81,7 +99,9 @@ function Queue($el) {
     this.addRemoveAnimationTime = 1000;
 }
 
-Queue.prototype.addMessageOnTop = function(size, completeCallback) {
+Queue.prototype.addMessageOnTop = function(size) {
+    var deferred = new $.Deferred;
+
     this.numberOfItems++;
     var animationStopY = this.padding;
 
@@ -98,7 +118,11 @@ Queue.prototype.addMessageOnTop = function(size, completeCallback) {
     this.packets.push($newPacket);
     $newPacket.css('left', this.horizontalMargin);
 
-    $newPacket.animate({bottom: animationStopY}, this.addRemoveAnimationTime, completeCallback);
+    $newPacket.animate({bottom: animationStopY}, this.addRemoveAnimationTime, function() {
+        deferred.resolve();
+    });
+
+    return deferred;
 }
 
 Queue.prototype.removeData = function(amount) {

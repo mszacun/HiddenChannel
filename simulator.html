@@ -1,10 +1,17 @@
 <html>
     <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="simulator.js"></script>
         <link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.min.css">
         <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="simulator.css" />
+
+        <script src="symulator/lib/jquery.js"></script>
+        <script src="symulator/lib/lodash.js"></script>
+        <script src="symulator/lib/backbone.js"></script>
+        <script src="symulator/lib/datatables/datatables.min.js"></script>
+        <script src="symulator/lib/metro/metro.min.js"></script>
+        <script src="symulator/models.js"></script>
+        <script src="symulator/symulator.js"></script>
 
 
 
@@ -14,24 +21,112 @@
                 var queue2 = new Queue($('#destination .queue'));
                 var link = new Link($('#link'));
                 var hiddenQueue = new HiddenMessageQueue($('#hidden-message-queue'));
-                hiddenQueue.addOnTheRight('34 56 12', function() { hiddenQueue.addOnTheRight('120 230')});
-                var packetsLength = [];
-                for (var i = 0; i < 6; ++i) {
-                    packetsLength.push(Math.floor(Math.random() * 50) + 15 );
-                }
-                fillQueueWithPackets(queue1, packetsLength, 0).then(function() {
-                    $.when(queue1.removeData(160), hiddenQueue.shiftSegment()).then(function() {
-                        link.sendPacket().then(function() {
-                            console.log('done');
-                        });
+                var symulator = new Symulator({symulationTime: 15});
 
-                    });
-                });
+                function symulationStep() {
+                    var events = symulator.step();
+
+                    return addBasicMessages(events.arrivedBasicMessages)
+                        .then(function() { return addHiddenMessages(events.arrivedHiddenMessages); })
+                        .then(function() { return createAndSendPackets(events.packetsGenerated, events.packetsThatReachedTarget); });
+                }
+
+                function addBasicMessages(basicMessages) {
+                    var deferred = new $.Deferred();
+
+                    if (basicMessages.length == 0)
+                        deferred.resolve();
+                    else {
+                        var promise = queue1.addMessageOnTop(basicMessages[0].length)
+                        _.each(_.rest(basicMessages), function(message) {
+                            promise = promise.then(function() {
+                                return queue1.addMessageOnTop(message.length);
+                            });
+                        });
+                        promise.then(function() {
+                            deferred.resolve();
+                        });
+                    }
+                    return deferred;
+                }
+
+                function addHiddenMessages(hiddenMessages) {
+                    var deferred = new $.Deferred();
+
+                    if (hiddenMessages.length == 0)
+                        deferred.resolve();
+                    else {
+                        var promise = hiddenQueue.addOnTheRight(hiddenMessages[0].segments)
+                        _.each(_.rest(hiddenMessages), function(message) {
+                            promise = promise.then(function() {
+                                return hiddenQueue.addOnTheRight(message.segments);
+                            });
+                        });
+                        promise.then(function() {
+                            deferred.resolve();
+                        });
+                    }
+                    return deferred;
+                }
+
+                function createAndSendPackets(packetsGenerated, packetsThatReachedTarget) {
+                    var deferred = new $.Deferred();
+
+                    if (packetsGenerated.length == 0)
+                        deferred.resolve();
+                    else {
+                        var hasReached = _.find(packetsThatReachedTarget, {cid: packetsGenerated[0].cid});
+                        var promise = createAndSendPacket(packetsGenerated[0], hasReached);
+                        _.each(_.rest(packetsGenerated), function(message) {
+                            var hasReached = _.find(packetsThatReachedTarget, {cid: message.cid});
+                            promise = promise.then(function() {
+                                return createAndSendPacket(message, hasReached);
+                            });
+                        });
+                        promise.then(function() {
+                            deferred.resolve();
+                        });
+                    }
+
+                    return deferred.promise();
+                }
+
+                function createAndSendPacket(packet, hasReached) {
+                    var promise = undefined;
+                    var sizeWithoutHeader = packet.getSizeWithoutHeader();
+                    if (packet.get('hasHiddenData')) {
+                        promise = $.when(
+                            queue1.removeData(sizeWithoutHeader),
+                            hiddenQueue.shiftSegment()
+                        );
+                    }
+                    else
+                        promise = queue1.removeData(sizeWithoutHeader);
+
+                    if (hasReached) {
+                        return promise.then(function() {
+                            return link.sendPacket();
+                        });
+                    }
+                    else
+                        return promise;
+                }
+
+                function runSymulation(currentTime, symulationTime) {
+                    $('#time').text('Czas: ' + currentTime);
+                    symulationStep().then(function() {
+                        if (currentTime < symulationTime)
+                            runSymulation(currentTime + 1, symulationTime);
+                    })
+                }
+
+                runSymulation(0, 15);
             });
         </script>
     </head>
     <body>
         <div id='container'>
+            <div id='time'>Czas: 1</div>
             <div id='source'>
                 <div class='communication-participant'>
                     <div class='participant-name'>

@@ -62,6 +62,8 @@ Symulator.prototype.step = function() {
         this.currentTime += 1;
 
         return {
+            arrivedBasicMessages: basicMessagesArrived,
+            arrivedHiddenMessages: hiddenMessagesArrived,
             packetsGenerated: packetsGenerated,
             packetsThatReachedTarget: packetsThatReachedTarget
         };
@@ -83,11 +85,19 @@ var HEADER_SIZE = 30;
 var MIN_DATA_PACKET_SIZE = 256;
 
 var PacketWithHiddenData = Backbone.Model.extend({
+    defaults: {
+        hasHiddenData: true
+    },
+
     initialize: function(options) {
     },
 
     getFullSize: function () {
         return this.get('hiddenPacket').get('segments')[0] + HEADER_SIZE;
+    },
+
+    getSizeWithoutHeader: function() {
+        return this.get('hiddenPacket').get('segments')[0];
     },
 
     calculateDelay: function (receiveTime) {
@@ -103,6 +113,10 @@ var PacketWithHiddenData = Backbone.Model.extend({
 
 
 var PacketWithoutHiddenData = Backbone.Model.extend({
+    defaults: {
+        hasHiddenData: false
+    },
+
     initialize: function(options) {
         this.set('dataLength', options.basicPacket.getReamingDataToSend());
         this.set('basicMessage', options.basicPacket.basicMessage);
@@ -111,6 +125,10 @@ var PacketWithoutHiddenData = Backbone.Model.extend({
 
     getFullSize: function () {
         return HEADER_SIZE + this.get('dataLength') + this.get('padding');
+    },
+
+    getSizeWithoutHeader: function() {
+        return this.get('dataLength') + this.get('padding');
     },
 
     calculateDelay: function (receiveTime) {
