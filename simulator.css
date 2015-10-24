@@ -5,6 +5,14 @@
     position: absolute;
     left: 600px;
 }
+
+#time {
+    position: absolute;
+    top: 350px;
+    left:950px;
+    font-size: 16pt;
+}
+
 .queue {
     width: 200px;
     height: 400px;

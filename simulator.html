@@ -23,12 +23,24 @@
                 var hiddenQueue = new HiddenMessageQueue($('#hidden-message-queue'));
                 var symulator = new Symulator({symulationTime: 15});
 
+                function wait(time) {
+                    var deferred = new $.Deferred();
+
+                    setTimeout(function() {
+                        deferred.resolve();
+                    }, time);
+
+                    return deferred.promise();
+                }
+
                 function symulationStep() {
                     var events = symulator.step();
 
-                    return addBasicMessages(events.arrivedBasicMessages)
-                        .then(function() { return addHiddenMessages(events.arrivedHiddenMessages); })
-                        .then(function() { return createAndSendPackets(events.packetsGenerated, events.packetsThatReachedTarget); });
+                    return $.when(
+                        addBasicMessages(events.arrivedBasicMessages)
+                            .then(function() { return addHiddenMessages(events.arrivedHiddenMessages); })
+                            .then(function() { return createAndSendPackets(events.packetsGenerated, events.packetsThatReachedTarget); }),
+                        wait(1500));
                 }
 
                 function addBasicMessages(basicMessages) {
