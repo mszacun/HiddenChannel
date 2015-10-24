@@ -58,6 +58,7 @@ HiddenMessageQueue.prototype.shiftSegment = function(completeCallback) {
     var aviableSegments = $messageToRemovesegmentFrom.text().split(' ')
     var $removedSegement = $('<div>', {class: 'hidden-message'}).text(aviableSegments.pop());
     $removedSegement.css('right', $messageToRemovesegmentFrom.css('right'));
+
     $removedSegement.animate({top: '+=189'}, 1000,function() {
         $removedSegement.animate({left: '+=50'}, 1000, function() {
             $messageToRemovesegmentFrom.text(aviableSegments.join(' '));
@@ -126,13 +127,15 @@ Queue.prototype.addMessageOnTop = function(size) {
 }
 
 Queue.prototype.removeData = function(amount) {
+    var animationTime = 2000;
+    var delayBetweenTaking = animationTime / amount;
     var deferred = new $.Deferred();
     var that = this;
     var countdown = function () {
-        amount -= 1;
         if (amount > 0) {
             that.removeByte();
-            setTimeout(countdown, 50);
+            amount -= 1;
+            setTimeout(countdown, delayBetweenTaking);
         }
         else
             deferred.resolve();
