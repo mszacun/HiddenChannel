@@ -37,10 +37,39 @@
                     var events = symulator.step();
 
                     return $.when(
-                        addBasicMessages(events.arrivedBasicMessages)
+                        sendBufferedPackets(events.packetsGenerated, events.packetsThatReachedTarget)
+                            .then(function() { return addBasicMessages(events.arrivedBasicMessages); })
                             .then(function() { return addHiddenMessages(events.arrivedHiddenMessages); })
                             .then(function() { return createAndSendPackets(events.packetsGenerated, events.packetsThatReachedTarget); }),
                         wait(1500));
+                }
+
+                function sendBufferedPackets(packetsGeneratedNow, packetsThatReachedTarget) {
+                    var bufferedPacketThatReachedTarget = _.filter(packetsThatReachedTarget, function(packetReachedTarget) {
+                        var dupa = _.findIndex(packetsGeneratedNow, function(packetGenerated) {
+                            return packetGenerated.cid === packetReachedTarget.cid;
+                        });
+                        return dupa === -1;
+                    })
+
+                    var deferred = new $.Deferred();
+
+
+                    if (bufferedPacketThatReachedTarget.length == 0)
+                        deferred.resolve();
+                    else {
+                        var promise = link.sendPacket(bufferedPacketThatReachedTarget[0]);
+                        _.each(_.rest(bufferedPacketThatReachedTarget), function(packet) {
+                            promise = promise.then(function() {
+                                return link.sendPacket(packet);
+                            });
+                        });
+                        promise.then(function() {
+                            deferred.resolve();
+                        });
+                    }
+
+                    return deferred.promise();
                 }
 
                 function addBasicMessages(basicMessages) {

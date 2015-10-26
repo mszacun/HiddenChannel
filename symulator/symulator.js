@@ -30,7 +30,7 @@ function Symulator(options) {
 
     this.symulationTime = options.symulationTime;
     this.hiddenChannel = new HiddenChannel();
-    this.channel = new Channel(1000);
+    this.channel = new Channel(200);
     this.currentTime = 0;
 }
 
