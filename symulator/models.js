@@ -44,6 +44,35 @@ var BasicMessagesQueue = Backbone.Collection.extend({
         return this.reduce(sumMessagesReamingData, 0);
     },
 
+    getData: function (amount) {
+        var dataSources = [];
+
+        while (amount > 0) {
+            var basicPacketUsed = this.at(0);
+            var aviableDataFromPacket = basicPacketUsed.getReamingDataToSend();
+
+            if (amount >= aviableDataFromPacket) {
+                this.shift();
+                dataSources.push({
+                    packet: basicPacketUsed,
+                    length: aviableDataFromPacket,
+                    hasMoreFragments: false
+                });
+                amount -= aviableDataFromPacket;
+            }
+            else {
+                dataSources.push({
+                    packet: basicPacketUsed,
+                    length: amount,
+                    hasMoreFragments: true
+                });
+                basicPacketUsed.getData(amount);
+                amount = 0;
+            }
+        }
+        return dataSources;
+    },
+
 });
 
 

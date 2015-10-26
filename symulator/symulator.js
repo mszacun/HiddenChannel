@@ -157,15 +157,12 @@ HiddenChannel.prototype.execute = function() {
     while (this.canSendHiddenPacket()) {
         var packetToSend = this.hiddenMessagesQueue.shift();
         var neededData = packetToSend.get('segments')[0];
-        var basicPacketUsed = this.basicMessagesQueue.shift();
-
-        basicPacketUsed.getData(neededData);
+        var dataSources = this.basicMessagesQueue.getData(neededData);
 
         sentPackets.push(new PacketWithHiddenData({
             hiddenPacket: packetToSend,
-            dataSources: [{packet: basicPacketUsed, length: neededData, hasMoreFragments: true}]
+            dataSources: dataSources
         }));
-        sentPackets.push(new PacketWithoutHiddenData({basicPacket: basicPacketUsed}));
     }
 
     while (!this.basicMessagesQueue.isEmpty()) {
