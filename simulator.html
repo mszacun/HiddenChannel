@@ -202,6 +202,28 @@
                         $messageRow.appendTo('#hidden-messages-table tbody');
                     });
 
+                    $('#basic-messages-table .avg-delay').text(calculateAvgDelay(allBasicMessages));
+                    $('#hidden-messages-table .avg-delay').text(calculateAvgDelay(allHiddenMessages));
+
+                }
+
+                function calculateAvgDelay(messages) {
+                    var delaySum = 0;
+                    var receivedMessages = 0;
+
+                    _.each(messages, function(message) {
+                        if (message.delay != undefined) {
+                            delaySum += message.delay;
+                            receivedMessages++;
+                        }
+
+                    });
+
+                    var result = 0;
+                    if (receivedMessages > 0)
+                        result = delaySum / receivedMessages
+
+                    return result.toFixed(3);
                 }
 
                 runSymulation(0, 15);
@@ -351,6 +373,12 @@
                             </thead>
                             <tbody>
                             </tbody>
+                            <tfoot>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th class='avg-delay'></th>
+                            </tfoot>
                         </table>
 
                         <table id='hidden-messages-table' class='stripped'>
@@ -362,6 +390,12 @@
                             </thead>
                             <tbody>
                             </tbody>
+                            <tfoot>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th class='avg-delay'></th>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
