@@ -29,6 +29,8 @@ HiddenMessageQueue.prototype.addToQueue = function(segments) {
 
 HiddenMessageQueue.prototype.addOnTheRight = function(segments) {
     var deferred = new $.Deferred();
+    segments = _.clone(segments);
+    segments.reverse();
     var data = segments.join(' ');
 
     $newMessage = $('<div>', {class: 'hidden-message'}).text(data);

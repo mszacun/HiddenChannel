@@ -18,10 +18,11 @@ function Symulator(options) {
     this.basicMessages = [
         new BasicMessage({ id: 'p1', apperanceTime: 1, length: 300 }),
         new BasicMessage({ id: 'p2', apperanceTime: 7, length: 310 }),
-        new BasicMessage({ id: 'p3', apperanceTime: 13, length: 500 })
+        new BasicMessage({ id: 'p3', apperanceTime: 9, length: 250 }),
+        new BasicMessage({ id: 'p4', apperanceTime: 13, length: 500 })
     ];
     this.hiddenMessages = [
-        new HiddenMessage({ id: 'u1', apperanceTime: 5, segments: [ 128 ]}),
+        new HiddenMessage({ id: 'u1', apperanceTime: 5, segments: [ 128, 230 ]}),
         new HiddenMessage({ id: 'u2', apperanceTime: 6, segments: [ 221 ]})
     ];
 
@@ -93,11 +94,11 @@ var PacketWithHiddenData = Backbone.Model.extend({
     },
 
     getFullSize: function () {
-        return this.get('hiddenPacket').get('segments')[0] + HEADER_SIZE;
+        return this.get('segment') + HEADER_SIZE;
     },
 
     getSizeWithoutHeader: function() {
-        return this.get('hiddenPacket').get('segments')[0];
+        return this.get('segment');
     },
 
     calculateDelay: function (receiveTime) {
@@ -106,7 +107,8 @@ var PacketWithHiddenData = Backbone.Model.extend({
                 dataSource.packet.calculateDelay(receiveTime);
         });
 
-        this.get('hiddenPacket').calculateDelay(receiveTime);
+        if (!this.get('hasMoreFragments'))
+            this.get('hiddenPacket').calculateDelay(receiveTime);
     },
 
 });
@@ -155,12 +157,13 @@ HiddenChannel.prototype.execute = function() {
 
     // sending hidden packets
     while (this.canSendHiddenPacket()) {
-        var packetToSend = this.hiddenMessagesQueue.shift();
-        var neededData = packetToSend.get('segments')[0];
-        var dataSources = this.basicMessagesQueue.getData(neededData);
+        var packetInfo = this.hiddenMessagesQueue.getSegmentToSend();
+        var dataSources = this.basicMessagesQueue.getData(packetInfo.segment);
 
         sentPackets.push(new PacketWithHiddenData({
-            hiddenPacket: packetToSend,
+            hiddenPacket: packetInfo.hiddenPacket,
+            hasMoreFragments: packetInfo.hasMoreFragments,
+            segment: packetInfo.segment,
             dataSources: dataSources
         }));
     }
@@ -176,7 +179,7 @@ HiddenChannel.prototype.execute = function() {
 
 HiddenChannel.prototype.canSendHiddenPacket = function() {
     return !this.hiddenMessagesQueue.isEmpty() &&
-        this.basicMessagesQueue.getAviableDataLength() >= this.hiddenMessagesQueue.at(0).get('segments')[0];
+        this.basicMessagesQueue.getAviableDataLength() >= this.hiddenMessagesQueue.peekSegmentToSend();
 }
 
 

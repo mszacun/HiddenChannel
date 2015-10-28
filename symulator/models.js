@@ -80,14 +80,38 @@ var HiddenMessage = Message.extend({
     initialize: function (options) {
         this.apperanceTime = options.apperanceTime;
         this.segments = options.segments;
+        this.sentSegments = 0;
+    },
+
+    getNextSegmentToSend: function () {
+        return this.segments[this.sentSegments++];
+    },
+
+    hasMoreSegmentsToSend: function () {
+        return this.sentSegments < this.segments.length;
+    },
+
+    peekNextSegmentToSend: function () {
+        return this.segments[this.sentSegments];
     },
 });
 
 
 var HiddenMessagesQueue = Backbone.Collection.extend({
-    initialize: function(options) {
+    getSegmentToSend: function () {
+        var packet = this.at(0);
+        var returnedSegment = packet.getNextSegmentToSend();
+        if (!packet.hasMoreSegmentsToSend())
+            this.shift();
 
+        return {
+            hiddenPacket: packet,
+            segment: returnedSegment,
+            hasMoreFragments: packet.hasMoreSegmentsToSend()
+        };
     },
 
-
+    peekSegmentToSend: function () {
+        return this.at(0).peekNextSegmentToSend();
+    },
 });
