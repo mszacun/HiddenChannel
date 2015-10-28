@@ -215,7 +215,7 @@ hr {
     text-align: center;
 }
 
-td {
+.network-stack-table td {
     border: solid 2px blue;
     padding: 8px;
 }
@@ -294,4 +294,9 @@ td {
     width: 350px;
     left: 300px;
     top: 70px;
+}
+
+#tables-container {
+    top: 1100px;
+    position: absolute;
 }

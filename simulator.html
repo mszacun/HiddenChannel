@@ -8,12 +8,15 @@
         <script src="symulator/lib/jquery.js"></script>
         <script src="symulator/lib/lodash.js"></script>
         <script src="symulator/lib/backbone.js"></script>
+        <script src="symulator/lib/metro/metro.min.js"></script>
         <script src="symulator/lib/datatables/datatables.min.js"></script>
         <script src="symulator/lib/metro/metro.min.js"></script>
         <script src="symulator/models.js"></script>
         <script src="symulator/symulator.js"></script>
 
-
+        <link rel="stylesheet" type="text/css" href="symulator/lib/datatbles/datatables.min.css"/>
+        <link rel="stylesheet" type="text/css" href="symulator/lib/metro/metro-icons.min.css"/>
+        <link rel="stylesheet" type="text/css" href="symulator/lib/metro/metro.min.css"/>
 
         <script>
             $(document).ready(function() {
@@ -22,6 +25,18 @@
                 var link = new Link($('#link'));
                 var hiddenQueue = new HiddenMessageQueue($('#hidden-message-queue'));
                 var symulator = new Symulator({symulationTime: 15});
+
+                $('#basic-messages-table').DataTable({
+                    paging: false,
+                    info: false,
+                    searching: false
+                });
+
+                $('#hidden-messages-table').DataTable({
+                    paging: false,
+                    searching: false,
+                    info: false
+                });
 
                 function wait(time) {
                     var deferred = new $.Deferred();
@@ -40,7 +55,8 @@
                         sendBufferedPackets(events.packetsGenerated, events.packetsThatReachedTarget)
                             .then(function() { return addBasicMessages(events.arrivedBasicMessages); })
                             .then(function() { return addHiddenMessages(events.arrivedHiddenMessages); })
-                            .then(function() { return createAndSendPackets(events.packetsGenerated, events.packetsThatReachedTarget); }),
+                            .then(function() { return createAndSendPackets(events.packetsGenerated, events.packetsThatReachedTarget); })
+                            .then(function() { updateTables(symulator.allBasicMessages, symulator.allHiddenMessages); }),
                         wait(1500));
                 }
 
@@ -159,6 +175,33 @@
                         if (currentTime < symulationTime)
                             runSymulation(currentTime + 1, symulationTime);
                     })
+                }
+
+                function updateTables(allBasicMessages, allHiddenMessages) {
+
+                    $('#basic-messages-table tbody').empty();
+                    $('#hidden-messages-table tbody').empty();
+
+                    _.each(allBasicMessages, function(message) {
+                        var $messageRow = $('<tr>')
+                        .append($('<td>').text(message.get('id')))
+                        .append($('<td>').text(message.apperanceTime))
+                        .append($('<td>').text(message.receiveTime))
+                        .append($('<td>').text(message.delay));
+
+                        $messageRow.appendTo('#basic-messages-table tbody');
+                    });
+
+                    _.each(allHiddenMessages, function(message) {
+                        var $messageRow = $('<tr>')
+                        .append($('<td>').text(message.get('id')))
+                        .append($('<td>').text(message.apperanceTime))
+                        .append($('<td>').text(message.receiveTime))
+                        .append($('<td>').text(message.delay));
+
+                        $messageRow.appendTo('#hidden-messages-table tbody');
+                    });
+
                 }
 
                 runSymulation(0, 15);
@@ -294,6 +337,33 @@
                 <div class='step-description'>
                     <div class='process-step' style='float: left'>4</div>
                     <div class='step-content'>Wyslij pakiet o dlugosc dec(dane_do_ukrycia) bajtow</div>
+                </div>
+            </div>
+            <div class='grid' id='tables-container'>
+                <div class='row cells5'>
+                    <div class='cell colspan5'>
+                        <table id='basic-messages-table' class='stripped'>
+                            <thead>
+                                <th>Id wiadomosci</th>
+                                <th>Czas naplywu</th>
+                                <th>Czas odbioru</th>
+                                <th>Opoznienie</th>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+
+                        <table id='hidden-messages-table' class='stripped'>
+                            <thead>
+                                <th>Id wiadomosci</th>
+                                <th>Czas naplywu</th>
+                                <th>Czas odbioru</th>
+                                <th>Opoznienie</th>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
