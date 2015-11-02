@@ -62,10 +62,10 @@
 
                 function sendBufferedPackets(packetsGeneratedNow, packetsThatReachedTarget) {
                     var bufferedPacketThatReachedTarget = _.filter(packetsThatReachedTarget, function(packetReachedTarget) {
-                        var dupa = _.findIndex(packetsGeneratedNow, function(packetGenerated) {
+                        var position = _.findIndex(packetsGeneratedNow, function(packetGenerated) {
                             return packetGenerated.cid === packetReachedTarget.cid;
                         });
-                        return dupa === -1;
+                        return position === -1;
                     })
 
                     var deferred = new $.Deferred();
@@ -75,8 +75,10 @@
                         deferred.resolve();
                     else {
                         var promise = link.sendPacket(bufferedPacketThatReachedTarget[0]);
+                        $('#number-of-packets-queued').text(parseInt($('#number-of-packets-queued').text()) - 1);
                         _.each(_.rest(bufferedPacketThatReachedTarget), function(packet) {
                             promise = promise.then(function() {
+                                $('#number-of-packets-queued').text(parseInt($('#number-of-packets-queued').text()) - 1);
                                 return link.sendPacket(packet);
                             });
                         });
@@ -165,8 +167,10 @@
                             return link.sendPacket();
                         });
                     }
-                    else
+                    else {
+                        $('#number-of-packets-queued').text(parseInt($('#number-of-packets-queued').text()) + 1);
                         return promise;
+                    }
                 }
 
                 function runSymulation(currentTime, symulationTime) {
@@ -257,7 +261,7 @@
                             style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:0.1;stroke-opacity:0.9" />
                           <text x='40' y='105'>Fragmentacja</text>
                     </svg>
-                    <div class='process-step' style='position:absolute; top: 75px; left: 185px;'>3</div>
+                    <div class='process-step' id='number-of-packets-queued' style='position:absolute; top: 75px; left: 185px;'>0</div>
                     <i class="fa fa-arrow-down steganography-to-network-arrow"></i>
 
                 </div>
