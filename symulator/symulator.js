@@ -14,6 +14,10 @@ function rpoisson(lambda) {
   return k - 1;
 }
 
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 function Symulator(options) {
     this.basicMessages = [
         new BasicMessage({ id: 'p1', apperanceTime: 1, length: 300 }),
@@ -26,51 +30,93 @@ function Symulator(options) {
         new HiddenMessage({ id: 'u2', apperanceTime: 6, segments: [ 221 ]})
     ];
 
+
     this.allBasicMessages = this.basicMessages.slice(0);
     this.allHiddenMessages = this.hiddenMessages.slice(0);
 
-    this.symulationTime = options.symulationTime;
+    this.timeForGeneratingPackets = options.timeForGeneratingPackets;
     this.hiddenChannel = new HiddenChannel();
-    this.channel = new Channel(400);
+    this.channel = new Channel(1000);
     this.currentTime = 0;
+}
+
+Symulator.prototype.generateSymulationData = function() {
+    var hiddenDataAppearance = 2;
+    var hiddenDataContent = 255;
+    var basicDataAppearance = 3;
+    var basicDataLength = 300;
+    var hiddenPacketNumber = 0;
+    var basicPacketNumber = 0;
+
+    this.basicMessages = [];
+    this.hiddenMessages = [];
+
+    for (var t = 0; t < this.timeForGeneratingPackets; t++) {
+        var numberOfPackets = rpoisson(hiddenDataAppearance);
+        for (var i = 0; i < numberOfPackets; i++) {
+            var packetContent = getRandomInt(1, hiddenDataContent);
+            var data = {
+                id: 'u' + hiddenPacketNumber,
+                apperanceTime: t,
+                segments: [packetContent]
+            };
+            console.log(JSON.stringify(data));
+            this.hiddenMessages.push(new HiddenMessage(data));
+            hiddenPacketNumber++;
+        }
+    }
+
+    for (var t = 0; t < this.timeForGeneratingPackets; t++) {
+        var numberOfPackets = rpoisson(basicDataAppearance);
+        for (var i = 0; i < numberOfPackets; i++) {
+            var packetLength = getRandomInt(1, basicDataLength);
+            var data = {
+                id: 'p' + basicPacketNumber,
+                apperanceTime: t,
+                length: packetLength
+            }
+            console.log(JSON.stringify(data));
+            this.basicMessages.push(new BasicMessage(data));
+            basicPacketNumber++;
+        }
+    }
+
+    this.allBasicMessages = this.basicMessages.slice(0);
+    this.allHiddenMessages = this.hiddenMessages.slice(0);
 }
 
 Symulator.prototype.step = function() {
     var currentTime = this.currentTime;
 
-    if (currentTime < this.symulationTime) {
-        function hasMessageAppeared(message) { return message.get('apperanceTime') <= currentTime; }
+    function hasMessageAppeared(message) { return message.get('apperanceTime') <= currentTime; }
 
-        var hiddenMessagesArrived = _.filter(this.hiddenMessages, hasMessageAppeared);
-        var basicMessagesArrived = _.filter(this.basicMessages, hasMessageAppeared);
+    var hiddenMessagesArrived = _.filter(this.hiddenMessages, hasMessageAppeared);
+    var basicMessagesArrived = _.filter(this.basicMessages, hasMessageAppeared);
 
-        this.hiddenMessages = _.reject(this.hiddenMessages, hasMessageAppeared);
-        this.basicMessages = _.reject(this.basicMessages, hasMessageAppeared);
+    this.hiddenMessages = _.reject(this.hiddenMessages, hasMessageAppeared);
+    this.basicMessages = _.reject(this.basicMessages, hasMessageAppeared);
 
-        _.each(hiddenMessagesArrived, function(message) {
-            this.hiddenChannel.addHiddenMessage(message);
-        }, this);
-        _.each(basicMessagesArrived, function(packet) {
-            this.hiddenChannel.addBasicMessage(packet);
-        }, this);
+    _.each(hiddenMessagesArrived, function(message) {
+        this.hiddenChannel.addHiddenMessage(message);
+    }, this);
+    _.each(basicMessagesArrived, function(packet) {
+        this.hiddenChannel.addBasicMessage(packet);
+    }, this);
 
-        var packetsGenerated = this.hiddenChannel.execute();
-        _.each(packetsGenerated, _.bind(this.channel.addPacket, this.channel));
-        var packetsThatReachedTarget = this.channel.getPacketsReachTarget();
+    var packetsGenerated = this.hiddenChannel.execute();
+    _.each(packetsGenerated, _.bind(this.channel.addPacket, this.channel));
+    var packetsThatReachedTarget = this.channel.getPacketsReachTarget();
 
-        this.calculateDelayForPackets(packetsThatReachedTarget);
+    this.calculateDelayForPackets(packetsThatReachedTarget);
 
-        this.currentTime += 1;
+    this.currentTime += 1;
 
-        return {
-            arrivedBasicMessages: basicMessagesArrived,
-            arrivedHiddenMessages: hiddenMessagesArrived,
-            packetsGenerated: packetsGenerated,
-            packetsThatReachedTarget: packetsThatReachedTarget
-        };
-    }
-    else
-        return [];
+    return {
+        arrivedBasicMessages: basicMessagesArrived,
+        arrivedHiddenMessages: hiddenMessagesArrived,
+        packetsGenerated: packetsGenerated,
+        packetsThatReachedTarget: packetsThatReachedTarget
+    };
 }
 
 Symulator.prototype.calculateDelayForPackets = function(packets) {

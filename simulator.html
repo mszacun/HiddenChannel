@@ -24,7 +24,8 @@
                 var queue2 = new Queue($('#destination .queue'));
                 var link = new Link($('#link'));
                 var hiddenQueue = new HiddenMessageQueue($('#hidden-message-queue'));
-                var symulator = new Symulator({symulationTime: 15});
+                var symulator = new Symulator({timeForGeneratingPackets: 5});
+                symulator.generateSymulationData();
 
                 $('#basic-messages-table').DataTable({
                     paging: false,
