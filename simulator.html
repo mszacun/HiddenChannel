@@ -253,7 +253,6 @@
                     </svg>
                     <div class='participant-queue-arrow'>
                         <i class="fa fa-arrow-down arrow-icon"></i>
-                        <div class='process-step near-arrow'>1</div>
                     </div>
                 </div>
                 <div class='queue'>
@@ -278,15 +277,12 @@
                     </table>
                     <div style='position: absolute; left: 100px; top: 150px; font-size: 16pt'>
                         <i class="fa fa-arrow-down"></i>
-                        <div class='process-step near-arrow'>4</div>
                     </div>
                 </div>
                 <div id='secret-sender'>
                     <div id='hidden-message-queue'>
-                        <div class='window-description'>Bity ukryte w pojednyczym pakiecie</div>
-                        <div style='position: absolute; left: 235px; top: 150px;'>
+                        <div style='position: absolute; left: 210px; top: 70px;'>
                             <i class="fa fa-arrow-down"></i>
-                            <div class='process-step near-arrow'>2</div>
                         </div>
                     </div>
                     <svg id='hidden-icon' height="100" width="100">
@@ -348,25 +344,6 @@
                     </svg>
                     <div id='hidden-message-receiver-name'>Odbiorca wiadomosci ukrytych</div>
                     <i class="fa fa-arrow-right hidden-arrow-icon"></i>
-                </div>
-            </div>
-            <div id='legend'>
-                <div class='legend-header'>Opis protokolu kanalu ukrytego</div>
-                <div class='step-description'>
-                    <div class='process-step' style='float: left'>1</div>
-                    <div class='step-content'> Czekaj na wiadomosc podstawowa. Dodaj ja do kolejki</div>
-                </div>
-                <div class='step-description'>
-                    <div class='process-step' style='float: left'>2</div>
-                    <div class='step-content'>Pobierz bity, ktore zostana ukryte w kolejnym pakiecie</div>
-                </div>
-                <div class='step-description'>
-                    <div class='process-step' style='float: left'>3</div>
-                    <div class='step-content'>Jesli kolejka wiadomosci podstawowych zawiera wiecej danych niz wartosc liczbowa danych ukrytych przejdz do 4, w przeciwnym wypadku wroc do 1</div>
-                </div>
-                <div class='step-description'>
-                    <div class='process-step' style='float: left'>4</div>
-                    <div class='step-content'>Wyslij pakiet o dlugosc dec(dane_do_ukrycia) bajtow</div>
                 </div>
             </div>
             <div class='grid' id='tables-container'>
