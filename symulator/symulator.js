@@ -43,7 +43,7 @@ function Symulator(options) {
 Symulator.prototype.generateSymulationData = function() {
     var hiddenDataAppearance = 2;
     var hiddenDataContent = 255;
-    var basicDataAppearance = 3;
+    var basicDataAppearance = 1;
     var basicDataLength = 300;
     var hiddenPacketNumber = 0;
     var basicPacketNumber = 0;
@@ -66,7 +66,7 @@ Symulator.prototype.generateSymulationData = function() {
         }
     }
 
-    for (var t = 0; t < this.timeForGeneratingPackets; t++) {
+    for (var t = 0; t < this.timeForGeneratingPackets + 10; t++) {
         var numberOfPackets = rpoisson(basicDataAppearance);
         for (var i = 0; i < numberOfPackets; i++) {
             var packetLength = getRandomInt(1, basicDataLength);
