@@ -300,3 +300,13 @@ hr {
     top: 1100px;
     position: absolute;
 }
+
+#basic-messages-table {
+    margin: 5px;
+}
+
+#hidden-messages-table {
+    position: absolute;
+    left: 800px;
+    top: 0px;
+}
