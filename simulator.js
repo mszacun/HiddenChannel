@@ -135,9 +135,10 @@ Queue.prototype.removeData = function(amount) {
     var that = this;
     var countdown = function () {
         if (amount > 0) {
-            that.removeByte();
-            amount -= 1;
-            setTimeout(countdown, delayBetweenTaking);
+            $.when(that.removeByte()).then(function() {
+                amount -= 1;
+                setTimeout(countdown, delayBetweenTaking);
+            });
         }
         else
             deferred.resolve();
@@ -152,7 +153,7 @@ Queue.prototype.removeByte = function() {
     var $packetToRemoveFrom = $(this.packets[0]);
     $packetToRemoveFrom.text($packetToRemoveFrom.text() - 1);
     if ($packetToRemoveFrom.text() <= 0)
-        this.removeBottomPacket();
+        return this.removeBottomPacket();
 }
 
 Queue.prototype.addMessageOnBottom = function(size, completeCallback) {
@@ -175,13 +176,17 @@ Queue.prototype.addMessageOnBottom = function(size, completeCallback) {
 }
 
 Queue.prototype.removeBottomPacket = function() {
+    var deferred = new $.Deferred();
+
     var $packetToRemove = $(this.packets.shift());
     this.numberOfItems--;
     var heightToShiftOtherPackets = $packetToRemove.height();
 
-    $packetToRemove.animate({height: 0}, function() { $packetToRemove.remove(); });
+    $packetToRemove.animate({height: 0}, function() { $packetToRemove.remove(); deferred.resolve(); });
     for (var i = 0; i < this.numberOfItems; i++)
         $(this.packets[i]).animate({bottom: '-=' + heightToShiftOtherPackets});
+
+    return deferred.promise();
 }
 
 function fillQueueWithPackets(queue, packetsLength, i) {

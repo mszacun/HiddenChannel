@@ -154,7 +154,7 @@
 
                 function createAndSendPacket(packet, hasReached) {
                     var promise = undefined;
-                    var sizeWithoutHeader = packet.getSizeWithoutHeader();
+                    var sizeWithoutHeader = packet.getRealDataSize();
                     if (packet.get('hasHiddenData')) {
                         promise = $.when(
                             queue1.removeData(sizeWithoutHeader),

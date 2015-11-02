@@ -143,7 +143,7 @@ var PacketWithHiddenData = Backbone.Model.extend({
         return this.get('segment') + HEADER_SIZE;
     },
 
-    getSizeWithoutHeader: function() {
+    getRealDataSize: function() {
         return this.get('segment');
     },
 
@@ -179,8 +179,8 @@ var PacketWithoutHiddenData = Backbone.Model.extend({
         return HEADER_SIZE + this.get('dataLength') + this.get('padding');
     },
 
-    getSizeWithoutHeader: function() {
-        return this.get('dataLength') + this.get('padding');
+    getRealDataSize: function() {
+        return this.get('dataLength');
     },
 
     calculateDelay: function (receiveTime) {
