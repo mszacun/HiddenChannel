@@ -65,6 +65,8 @@ HiddenMessageQueue.prototype.shiftSegment = function(completeCallback) {
         $removedSegement.animate({left: '+=50'}, 1000, function() {
             $messageToRemovesegmentFrom.text(aviableSegments.join(' '));
             var toMove = originalWidth - $messageToRemovesegmentFrom.width();
+            if (aviableSegments.length == 0)
+                toMove += that.padding;
             for (var i = 1; i < that.messages.length; i++) {
                 $(that.messages[i]).animate({right: '-=' + toMove});
             }
