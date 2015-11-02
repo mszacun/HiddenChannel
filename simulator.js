@@ -204,11 +204,11 @@ function Link($el) {
     this.$el = $el;
 }
 
-Link.prototype.sendPacket = function () {
+Link.prototype.sendPacket = function (packet) {
     var deferred = new $.Deferred();
     var $packet = $('<div>', {class: 'message', height: 40});
     var $header = $('<div>', {class: 'header', height: 40});
-    var $desc = $('<div>', {class: 'packet-description'}).text('Rozmiar: 97 bajtow [a]');
+    var $desc = $('<div>', {class: 'packet-description'}).text(packet.getSizeDescription());
     var $arrow = $('<i>', {class: 'fa fa-arrow-right packet-arrow'})
     var $together = $('<div>', {class: 'packet'}).append($desc).append($header).append($packet).append($arrow);
     $together.css('top', '-350px').css('left', '40px');

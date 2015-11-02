@@ -111,6 +111,10 @@ var PacketWithHiddenData = Backbone.Model.extend({
             this.get('hiddenPacket').calculateDelay(receiveTime);
     },
 
+    getSizeDescription: function () {
+        return '[U] Dane: ' + this.get('segment') + ' naglowek: ' + HEADER_SIZE;
+    },
+
 });
 
 
@@ -135,6 +139,10 @@ var PacketWithoutHiddenData = Backbone.Model.extend({
 
     calculateDelay: function (receiveTime) {
         this.get('basicMessage').calculateDelay(receiveTime);
+    },
+
+    getSizeDescription: function () {
+        return '[P] Dane: ' + this.get('dataLength') + ' naglowek: ' + HEADER_SIZE + ' dopelnienie: ' + this.get('padding');
     },
 });
 

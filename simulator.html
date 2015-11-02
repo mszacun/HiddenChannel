@@ -164,7 +164,7 @@
 
                     if (hasReached) {
                         return promise.then(function() {
-                            return link.sendPacket();
+                            return link.sendPacket(packet);
                         });
                     }
                     else {
