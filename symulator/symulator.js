@@ -104,7 +104,7 @@ var PacketWithHiddenData = Backbone.Model.extend({
     calculateDelay: function (receiveTime) {
         _.each(this.get('dataSources'), function(dataSource) {
             if (!dataSource.hasMoreFragments)
-                dataSource.packet.calculateDelay(receiveTime);
+                dataSource.packet.basicMessage.calculateDelay(receiveTime);
         });
 
         if (!this.get('hasMoreFragments'))
