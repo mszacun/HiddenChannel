@@ -229,10 +229,9 @@ HiddenChannel.prototype.execute = function() {
         }));
     }
 
-    while (!this.basicMessagesQueue.isEmpty()) {
-        var dataAmount = this.basicMessagesQueue.at(0).getReamingDataToSend();
-        var dataSources = this.basicMessagesQueue.getData(dataAmount);
-
+    var dataAviable = this.basicMessagesQueue.getAviableDataLength();
+    if (dataAviable >= 256) {
+        var dataSources = this.basicMessagesQueue.getData(dataAviable);
         sentPackets.push(new PacketWithoutHiddenData({dataSources: dataSources}));
     }
 
