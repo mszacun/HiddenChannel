@@ -38,6 +38,7 @@
                     searching: false,
                     info: false
                 });
+                updateTables(symulator.allBasicMessages, symulator.allHiddenMessages);
 
                 function wait(time) {
                     var deferred = new $.Deferred();
@@ -192,6 +193,7 @@
                         .append($('<td>').text(message.get('id')))
                         .append($('<td>').text(message.apperanceTime))
                         .append($('<td>').text(message.receiveTime))
+                        .append($('<td>').text(message.length))
                         .append($('<td>').text(message.delay));
 
                         $messageRow.appendTo('#basic-messages-table tbody');
@@ -202,6 +204,7 @@
                         .append($('<td>').text(message.get('id')))
                         .append($('<td>').text(message.apperanceTime))
                         .append($('<td>').text(message.receiveTime))
+                        .append($('<td>').text('[ ' + message.segments.join(', ') + ' ]'))
                         .append($('<td>').text(message.delay));
 
                         $messageRow.appendTo('#hidden-messages-table tbody');
@@ -374,11 +377,13 @@
                                 <th>Id wiadomosci</th>
                                 <th>Czas naplywu</th>
                                 <th>Czas odbioru</th>
+                                <th>Rozmiar</th>
                                 <th>Opoznienie</th>
                             </thead>
                             <tbody>
                             </tbody>
                             <tfoot>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
@@ -391,11 +396,13 @@
                                 <th>Id wiadomosci</th>
                                 <th>Czas naplywu</th>
                                 <th>Czas odbioru</th>
+                                <th>Zawartosc</th>
                                 <th>Opoznienie</th>
                             </thead>
                             <tbody>
                             </tbody>
                             <tfoot>
+                                <th></th>
                                 <th></th>
                                 <th></th>
                                 <th></th>
