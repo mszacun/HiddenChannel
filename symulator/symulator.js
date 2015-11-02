@@ -170,8 +170,8 @@ var PacketWithoutHiddenData = Backbone.Model.extend({
     },
 
     initialize: function(options) {
-        this.set('dataLength', options.basicPacket.getReamingDataToSend());
-        this.set('basicMessage', options.basicPacket.basicMessage);
+        this.set('dataSources', options.dataSources);
+        this.set('dataLength', this.getRealDataSize());
         this.set('padding', Math.max(0, MIN_DATA_PACKET_SIZE - this.get('dataLength')));
     },
 
@@ -180,11 +180,18 @@ var PacketWithoutHiddenData = Backbone.Model.extend({
     },
 
     getRealDataSize: function() {
-        return this.get('dataLength');
+        function sumDataSourcesLenght(acc, dataSource) {
+            return acc + dataSource.length;
+        }
+
+        return _.reduce(this.get('dataSources'), sumDataSourcesLenght, 0);
     },
 
     calculateDelay: function (receiveTime) {
-        this.get('basicMessage').calculateDelay(receiveTime);
+        _.each(this.get('dataSources'), function(dataSource) {
+            if (!dataSource.hasMoreFragments)
+                dataSource.packet.basicMessage.calculateDelay(receiveTime);
+        });
     },
 
     getSizeDescription: function () {
@@ -223,9 +230,10 @@ HiddenChannel.prototype.execute = function() {
     }
 
     while (!this.basicMessagesQueue.isEmpty()) {
-        var packetToSend = this.basicMessagesQueue.shift();
+        var dataAmount = this.basicMessagesQueue.at(0).getReamingDataToSend();
+        var dataSources = this.basicMessagesQueue.getData(dataAmount);
 
-        sentPackets.push(new PacketWithoutHiddenData({basicPacket: packetToSend}));
+        sentPackets.push(new PacketWithoutHiddenData({dataSources: dataSources}));
     }
 
     return sentPackets;
