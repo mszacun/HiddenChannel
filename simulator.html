@@ -51,6 +51,11 @@
                 });
                 updateTables(symulator.allBasicMessages, symulator.allHiddenMessages);
 
+                function isAnimationRequested()
+                {
+                    return document.location.hash !== "";
+                }
+
                 function wait(time) {
                     var deferred = new $.Deferred();
 
@@ -64,13 +69,17 @@
                 function symulationStep() {
                     var events = symulator.step();
 
-                    return $.when(
-                        sendBufferedPackets(events.packetsGenerated, events.packetsThatReachedTarget)
+                    if (isAnimationRequested()) {
+                        return $.when(
+                            sendBufferedPackets(events.packetsGenerated, events.packetsThatReachedTarget)
                             .then(function() { return addBasicMessages(events.arrivedBasicMessages); })
                             .then(function() { return addHiddenMessages(events.arrivedHiddenMessages); })
                             .then(function() { return createAndSendPackets(events.packetsGenerated, events.packetsThatReachedTarget); })
                             .then(function() { updateTables(symulator.allBasicMessages, symulator.allHiddenMessages); }),
-                        wait(1500));
+                            wait(1500));
+                    }
+                    else
+                        updateTables(symulator.allBasicMessages, symulator.allHiddenMessages);
                 }
 
                 function sendBufferedPackets(packetsGeneratedNow, packetsThatReachedTarget) {
@@ -188,7 +197,7 @@
 
                 function runSymulation(currentTime, symulationTime) {
                     $('#time').text('Czas: ' + currentTime);
-                    symulationStep().then(function() {
+                    $.when(symulationStep()).then(function() {
                         if (currentTime < symulationTime)
                             runSymulation(currentTime + 1, symulationTime);
                     })
