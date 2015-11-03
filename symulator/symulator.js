@@ -36,7 +36,7 @@ function Symulator(options) {
 
     this.timeForGeneratingHiddenMessages = options.timeForGeneratingHiddenMessages;
     this.timeForGeneratingBasicMessages = options.timeForGeneratingBasicMessages;
-    this.hiddenChannel = new HiddenChannel();
+    this.hiddenChannel = new HiddenChannel(options.hiddenDataSegmentLength);
     this.channel = new Channel(options.channelBandwith);
     this.currentTime = 0;
 
@@ -44,6 +44,7 @@ function Symulator(options) {
     this.hiddenDataSegmentLength = options.hiddenDataSegmentLength;
     this.basicDataAppearance = options.basicDataAppearance;
     this.basicDataLength = options.basicDataLength;
+    this.hiddenMessageLength = options.hiddenMessageLength;
 }
 
 Symulator.prototype.generateSymulationData = function() {
@@ -56,11 +57,15 @@ Symulator.prototype.generateSymulationData = function() {
     for (var t = 0; t < this.timeForGeneratingHiddenMessages; t++) {
         var numberOfPackets = rpoisson(this.hiddenDataAppearance);
         for (var i = 0; i < numberOfPackets; i++) {
-            var packetContent = getRandomInt(1, Math.pow(2, this.hiddenDataSegmentLength) - 1);
+            var segments = [];
+            var numberOfSegments = Math.max(1, rpoisson(this.hiddenMessageLength));
+            for (var j = 0; j < numberOfSegments; j++) {
+                segments.push(getRandomInt(1, Math.pow(2, this.hiddenDataSegmentLength) - 1));
+            }
             var data = {
                 id: 'u' + hiddenPacketNumber,
                 apperanceTime: t,
-                segments: [packetContent]
+                segments: segments
             };
             console.log(JSON.stringify(data));
             this.hiddenMessages.push(new HiddenMessage(data));
@@ -208,9 +213,11 @@ var PacketWithoutHiddenData = Backbone.Model.extend({
 });
 
 
-function HiddenChannel() {
+function HiddenChannel(hiddenDataSegmentLength) {
     this.hiddenMessagesQueue = new HiddenMessagesQueue();
     this.basicMessagesQueue = new BasicMessagesQueue();
+
+    this.hiddenDataSegmentLength = hiddenDataSegmentLength;
 }
 
 HiddenChannel.prototype.addBasicMessage = function(packet) {
@@ -238,7 +245,7 @@ HiddenChannel.prototype.execute = function() {
     }
 
     var dataAviable = this.basicMessagesQueue.getAviableDataLength();
-    if (dataAviable >= 256) {
+    if (dataAviable >= Math.pow(2, this.hiddenDataSegmentLength)) {
         var dataSources = this.basicMessagesQueue.getData(dataAviable);
         sentPackets.push(new PacketWithoutHiddenData({dataSources: dataSources}));
     }
