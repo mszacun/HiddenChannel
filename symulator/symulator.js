@@ -34,27 +34,29 @@ function Symulator(options) {
     this.allBasicMessages = this.basicMessages.slice(0);
     this.allHiddenMessages = this.hiddenMessages.slice(0);
 
-    this.timeForGeneratingPackets = options.timeForGeneratingPackets;
+    this.timeForGeneratingHiddenMessages = options.timeForGeneratingHiddenMessages;
+    this.timeForGeneratingBasicMessages = options.timeForGeneratingBasicMessages;
     this.hiddenChannel = new HiddenChannel();
-    this.channel = new Channel(1000);
+    this.channel = new Channel(options.channelBandwith);
     this.currentTime = 0;
+
+    this.hiddenDataAppearance = options.hiddenDataAppearance;
+    this.hiddenDataSegmentLength = options.hiddenDataSegmentLength;
+    this.basicDataAppearance = options.basicDataAppearance;
+    this.basicDataLength = options.basicDataLength;
 }
 
 Symulator.prototype.generateSymulationData = function() {
-    var hiddenDataAppearance = 2;
-    var hiddenDataContent = 255;
-    var basicDataAppearance = 1;
-    var basicDataLength = 300;
     var hiddenPacketNumber = 0;
     var basicPacketNumber = 0;
 
     this.basicMessages = [];
     this.hiddenMessages = [];
 
-    for (var t = 0; t < this.timeForGeneratingPackets; t++) {
-        var numberOfPackets = rpoisson(hiddenDataAppearance);
+    for (var t = 0; t < this.timeForGeneratingHiddenMessages; t++) {
+        var numberOfPackets = rpoisson(this.hiddenDataAppearance);
         for (var i = 0; i < numberOfPackets; i++) {
-            var packetContent = getRandomInt(1, hiddenDataContent);
+            var packetContent = getRandomInt(1, Math.pow(2, this.hiddenDataSegmentLength) - 1);
             var data = {
                 id: 'u' + hiddenPacketNumber,
                 apperanceTime: t,
@@ -66,10 +68,10 @@ Symulator.prototype.generateSymulationData = function() {
         }
     }
 
-    for (var t = 0; t < this.timeForGeneratingPackets + 10; t++) {
-        var numberOfPackets = rpoisson(basicDataAppearance);
+    for (var t = 0; t < this.timeForGeneratingBasicMessages; t++) {
+        var numberOfPackets = rpoisson(this.basicDataAppearance);
         for (var i = 0; i < numberOfPackets; i++) {
-            var packetLength = getRandomInt(1, basicDataLength);
+            var packetLength = getRandomInt(1, this.basicDataLength);
             var data = {
                 id: 'p' + basicPacketNumber,
                 apperanceTime: t,
@@ -80,6 +82,12 @@ Symulator.prototype.generateSymulationData = function() {
             basicPacketNumber++;
         }
     }
+
+    this.basicMessages.push(new BasicMessage({
+        id: 'p' + basicPacketNumber,
+        apperanceTime: this.timeForGeneratingBasicMessages,
+        length: getRandomInt(250, 400)
+    }));
 
     this.allBasicMessages = this.basicMessages.slice(0);
     this.allHiddenMessages = this.hiddenMessages.slice(0);

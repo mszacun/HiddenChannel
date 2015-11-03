@@ -2,7 +2,6 @@
     <head>
         <script src="simulator.js"></script>
         <link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.min.css">
-        <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="simulator.css" />
 
         <script src="symulator/lib/jquery.js"></script>
@@ -24,8 +23,19 @@
                 var queue2 = new Queue($('#destination .queue'));
                 var link = new Link($('#link'));
                 var hiddenQueue = new HiddenMessageQueue($('#hidden-message-queue'));
-                var symulator = new Symulator({timeForGeneratingPackets: 5});
+                var simulationTime = 20;
+                var simulationParams = {
+                    hiddenDataAppearance: 2,
+                    channelBandwith: 1000,
+                    hiddenDataSegmentLength: 8,
+                    basicDataAppearance: 1,
+                    basicDataLength: 300,
+                    timeForGeneratingHiddenMessages: 5,
+                    timeForGeneratingBasicMessages: simulationTime
+                };
+                var symulator = new Symulator(simulationParams);
                 symulator.generateSymulationData();
+
 
                 $('#basic-messages-table').DataTable({
                     paging: false,
@@ -234,7 +244,7 @@
                     return result.toFixed(3);
                 }
 
-                runSymulation(0, 15);
+                runSymulation(0, simulationTime);
             });
         </script>
     </head>
