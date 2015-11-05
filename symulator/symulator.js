@@ -19,20 +19,6 @@ function getRandomInt(min, max) {
 }
 
 function Symulator(options) {
-    this.basicMessages = [
-        new BasicMessage({ id: 'p1', apperanceTime: 1, length: 300 }),
-        new BasicMessage({ id: 'p2', apperanceTime: 7, length: 310 }),
-        new BasicMessage({ id: 'p3', apperanceTime: 9, length: 250 }),
-        new BasicMessage({ id: 'p4', apperanceTime: 13, length: 500 })
-    ];
-    this.hiddenMessages = [
-        new HiddenMessage({ id: 'u1', apperanceTime: 5, segments: [ 128, 230 ]}),
-        new HiddenMessage({ id: 'u2', apperanceTime: 6, segments: [ 221 ]})
-    ];
-
-    this.allBasicMessages = this.basicMessages.slice(0);
-    this.allHiddenMessages = this.hiddenMessages.slice(0);
-
     this.timeForGeneratingHiddenMessages = options.timeForGeneratingHiddenMessages;
     this.timeForGeneratingBasicMessages = options.timeForGeneratingBasicMessages;
     this.hiddenChannel = new HiddenChannel(options.hiddenDataSegmentLength);
