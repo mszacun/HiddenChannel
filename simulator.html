@@ -23,17 +23,21 @@
                 var queue2 = new Queue($('#destination .queue'));
                 var link = new Link($('#link'));
                 var hiddenQueue = new HiddenMessageQueue($('#hidden-message-queue'));
-                var simulationTime = 20;
-                var simulationParams = {
+                var defaultSimulationParams = {
                     hiddenDataAppearance: 2,
                     channelBandwith: 1000,
                     hiddenDataSegmentLength: 8,
                     basicDataAppearance: 1,
                     basicDataLength: 300,
                     timeForGeneratingHiddenMessages: 5,
-                    timeForGeneratingBasicMessages: simulationTime,
-                    hiddenMessageLength: 1
+                    timeForGeneratingBasicMessages: 20,
+                    hiddenMessageLength: 1,
+                    animate: true
                 };
+                var simulationParams = getSymulationParamsFromHash() || defaultSimulationParams;
+                var simulationTime = simulationParams.timeForGeneratingBasicMessages;
+
+                document.location.hash = JSON.stringify(simulationParams);
                 var symulator = new Symulator(simulationParams);
                 symulator.generateSymulationData();
 
@@ -51,9 +55,14 @@
                 });
                 updateTables(symulator.allBasicMessages, symulator.allHiddenMessages);
 
+                function getSymulationParamsFromHash() {
+                    return document.location.hash === "" ? {} :
+                        JSON.parse(document.location.hash.substring(1));
+                }
+
                 function isAnimationRequested()
                 {
-                    return document.location.hash !== "";
+                    return simulationParams.animate;
                 }
 
                 function wait(time) {
@@ -214,7 +223,7 @@
                         .append($('<td>').text(message.apperanceTime))
                         .append($('<td>').text(message.receiveTime))
                         .append($('<td>').text(message.length))
-                        .append($('<td>').text(message.delay));
+                        .append($('<td>', {class: 'delay'}).text(message.delay));
 
                         $messageRow.appendTo('#basic-messages-table tbody');
                     });
@@ -225,7 +234,7 @@
                         .append($('<td>').text(message.apperanceTime))
                         .append($('<td>').text(message.receiveTime))
                         .append($('<td>').text('[ ' + message.segments.join(', ') + ' ]'))
-                        .append($('<td>').text(message.delay));
+                        .append($('<td>', {class: 'delay'}).text(message.delay));
 
                         $messageRow.appendTo('#hidden-messages-table tbody');
                     });
