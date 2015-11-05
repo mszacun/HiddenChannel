@@ -24,7 +24,7 @@
                 var link = new Link($('#link'));
                 var hiddenQueue = new HiddenMessageQueue($('#hidden-message-queue'));
                 var simulationTime = 20;
-                var simulationParams = {
+                var defaultSimulationParams = {
                     hiddenDataAppearance: 2,
                     channelBandwith: 1000,
                     hiddenDataSegmentLength: 8,
@@ -32,8 +32,12 @@
                     basicDataLength: 300,
                     timeForGeneratingHiddenMessages: 5,
                     timeForGeneratingBasicMessages: simulationTime,
-                    hiddenMessageLength: 1
+                    hiddenMessageLength: 1,
+                    animate: true
                 };
+                var simulationParams = getSymulationParamsFromHash() || defaultSimulationParams;
+
+                document.location.hash = JSON.stringify(simulationParams);
                 var symulator = new Symulator(simulationParams);
                 symulator.generateSymulationData();
 
@@ -51,9 +55,14 @@
                 });
                 updateTables(symulator.allBasicMessages, symulator.allHiddenMessages);
 
+                function getSymulationParamsFromHash() {
+                    return document.location.hash === "" ? {} :
+                        JSON.parse(document.location.hash.substring(1));
+                }
+
                 function isAnimationRequested()
                 {
-                    return document.location.hash !== "";
+                    return simulationParams.animate;
                 }
 
                 function wait(time) {
