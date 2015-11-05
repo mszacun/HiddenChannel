@@ -7,6 +7,10 @@ var Message = Backbone.Model.extend({
         this.receiveTime = receiveTime;
         this.delay = receiveTime - this.apperanceTime;
     },
+
+    isReceived: function () {
+        return this.delay !== undefined;
+    },
 });
 var BasicMessage = Message.extend({
     initialize: function (options) {

@@ -30,7 +30,6 @@ function Symulator(options) {
         new HiddenMessage({ id: 'u2', apperanceTime: 6, segments: [ 221 ]})
     ];
 
-
     this.allBasicMessages = this.basicMessages.slice(0);
     this.allHiddenMessages = this.hiddenMessages.slice(0);
 
@@ -54,48 +53,56 @@ Symulator.prototype.generateSymulationData = function() {
     this.basicMessages = [];
     this.hiddenMessages = [];
 
-    for (var t = 0; t < this.timeForGeneratingHiddenMessages; t++) {
-        var numberOfPackets = rpoisson(this.hiddenDataAppearance);
-        for (var i = 0; i < numberOfPackets; i++) {
-            var segments = [];
-            var numberOfSegments = Math.max(1, rpoisson(this.hiddenMessageLength));
-            for (var j = 0; j < numberOfSegments; j++) {
-                segments.push(getRandomInt(1, Math.pow(2, this.hiddenDataSegmentLength) - 1));
-            }
-            var data = {
-                id: 'u' + hiddenPacketNumber,
-                apperanceTime: t,
-                segments: segments
-            };
-            console.log(JSON.stringify(data));
-            this.hiddenMessages.push(new HiddenMessage(data));
-            hiddenPacketNumber++;
-        }
-    }
+    for (var t = 0; t < this.timeForGeneratingHiddenMessages; t++)
+        this.generateHiddenMessages(t);
 
-    for (var t = 0; t < this.timeForGeneratingBasicMessages; t++) {
-        var numberOfPackets = rpoisson(this.basicDataAppearance);
-        for (var i = 0; i < numberOfPackets; i++) {
-            var packetLength = getRandomInt(1, this.basicDataLength);
-            var data = {
-                id: 'p' + basicPacketNumber,
-                apperanceTime: t,
-                length: packetLength
-            }
-            console.log(JSON.stringify(data));
-            this.basicMessages.push(new BasicMessage(data));
-            basicPacketNumber++;
-        }
-    }
+    for (var t = 0; t < this.timeForGeneratingBasicMessages; t++)
+        this.generateBasicMessages(t);
 
     this.basicMessages.push(new BasicMessage({
-        id: 'p' + basicPacketNumber,
+        id: 'p' + this.basicMessages.length,
         apperanceTime: this.timeForGeneratingBasicMessages,
         length: getRandomInt(250, 400)
     }));
 
     this.allBasicMessages = this.basicMessages.slice(0);
     this.allHiddenMessages = this.hiddenMessages.slice(0);
+}
+
+Symulator.prototype.generateHiddenMessages = function(apperanceTime) {
+    var numberOfPackets = rpoisson(this.hiddenDataAppearance);
+    for (var i = 0; i < numberOfPackets; i++) {
+        var segments = [];
+        var numberOfSegments = Math.max(1, rpoisson(this.hiddenMessageLength));
+        for (var j = 0; j < numberOfSegments; j++) {
+            segments.push(getRandomInt(1, Math.pow(2, this.hiddenDataSegmentLength) - 1));
+        }
+        var data = {
+            id: 'u' + this.hiddenMessages.length,
+            apperanceTime: apperanceTime,
+            segments: segments
+        };
+        console.log(JSON.stringify(data));
+        this.hiddenMessages.push(new HiddenMessage(data));
+    }
+}
+
+Symulator.prototype.generateBasicMessages = function(apperanceTime) {
+    var numberOfPackets = rpoisson(this.basicDataAppearance);
+    for (var i = 0; i < numberOfPackets; i++) {
+        var packetLength = getRandomInt(1, this.basicDataLength);
+        var data = {
+            id: 'p' + this.basicMessages.length,
+            apperanceTime: apperanceTime,
+            length: packetLength
+        }
+        console.log(JSON.stringify(data));
+        this.basicMessages.push(new BasicMessage(data));
+    }
+}
+
+Symulator.prototype.hasAllMessageBeenReceived = function(messages) {
+    return _.every(messages, function(m) { return m.isReceived(); });
 }
 
 Symulator.prototype.step = function() {
