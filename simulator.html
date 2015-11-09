@@ -34,7 +34,10 @@
                     hiddenMessageLength: 1,
                     animate: true
                 };
-                var simulationParams = getSymulationParamsFromHash() || defaultSimulationParams;
+                var simulationParams = getSymulationParamsFromHash();
+                if (_.isEmpty(simulationParams))
+                    simulationParams = defaultSimulationParams;
+
                 var simulationTime = simulationParams.timeForGeneratingBasicMessages;
 
                 document.location.hash = JSON.stringify(simulationParams);
@@ -207,7 +210,7 @@
                 function runSymulation(currentTime, symulationTime) {
                     $('#time').text('Czas: ' + currentTime);
                     $.when(symulationStep()).then(function() {
-                        if (currentTime < symulationTime)
+                        if (!symulator.hasSymulationEnd())
                             runSymulation(currentTime + 1, symulationTime);
                     })
                 }

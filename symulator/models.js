@@ -98,6 +98,14 @@ var HiddenMessage = Message.extend({
     peekNextSegmentToSend: function () {
         return this.segments[this.sentSegments];
     },
+
+    getDataAmountNeeded: function () {
+        return _.chain(this.segments)
+            .slice(this.sentSegments)
+            .reduce(function(acc, segmentLength) {
+                return acc + segmentLength;
+            });
+    },
 });
 
 
@@ -117,5 +125,11 @@ var HiddenMessagesQueue = Backbone.Collection.extend({
 
     peekSegmentToSend: function () {
         return this.at(0).peekNextSegmentToSend();
+    },
+
+    getDataAmountNeeded: function () {
+        return this.reduce(function(acc, hiddenMessage) {
+            return acc + hiddenMessage.getDataAmountNeeded();
+        });
     },
 });
