@@ -19,7 +19,8 @@ function getRandomInt(min, max) {
 }
 
 function Symulator(options) {
-    this.timeForGeneratingHiddenMessages = options.timeForGeneratingHiddenMessages;
+    this.timeForGeneratingHiddenMessages = options.timeForGeneratingHiddenMessages || 0;
+    this.numberOfHiddenMessagesToGenerate = options.numberOfHiddenMessagesToGenerate || 0;
     this.timeForGeneratingBasicMessages = options.timeForGeneratingBasicMessages;
     this.hiddenChannel = new HiddenChannel(options.hiddenDataSegmentLength);
     this.channel = new Channel(options.channelBandwith);
@@ -41,8 +42,9 @@ Symulator.prototype.generateSymulationData = function() {
     this.hiddenMessages = [];
     this.allHiddenMessages = [];
 
-    for (var t = 0; t < this.timeForGeneratingHiddenMessages; t++)
-        this.generateHiddenMessages(t);
+    var t = 0;
+    while (t < this.timeForGeneratingHiddenMessages || this.allHiddenMessages.length < this.numberOfHiddenMessagesToGenerate)
+        this.generateHiddenMessages(t++);
 
     for (var t = 0; t < this.timeForGeneratingBasicMessages; t++)
         this.generateBasicMessages(t);
