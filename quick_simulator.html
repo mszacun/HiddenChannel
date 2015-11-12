@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <script src="simulator.js"></script>
+        <link rel="stylesheet" href="font-awesome-4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="simulator.css" />
+
+        <script src="symulator/lib/jquery.js"></script>
+        <script src="symulator/lib/lodash.js"></script>
+        <script src="symulator/lib/backbone.js"></script>
+        <script src="symulator/lib/metro/metro.min.js"></script>
+        <script src="symulator/lib/datatables/datatables.min.js"></script>
+        <script src="symulator/lib/metro/metro.min.js"></script>
+        <script src="symulator/models.js"></script>
+        <script src="symulator/symulator.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="symulator/lib/datatbles/datatables.min.css"/>
+        <link rel="stylesheet" type="text/css" href="symulator/lib/metro/metro-icons.min.css"/>
+        <link rel="stylesheet" type="text/css" href="symulator/lib/metro/metro.min.css"/>
+
+    </head>
+    <body>
+        <div id='hidden-messages-delay' width='200px' height='200px'></div>
+        <div id='basic-messages-delay' width='200px' height='200px'></div>
+        <div id='hidden-messages-number' width='200px' height='200px'></div>
+        <div id='basic-messages-number' width='200px' height='200px'></div>
+        <div id='time' width='200px' height='200px'></div>
+    </body>
+        <script>
+            function getSymulationParamsFromHash() {
+                return document.location.hash === "" ? {} :
+                    JSON.parse(document.location.hash.substring(1));
+            }
+
+                function calculateAvgDelay(messages) {
+                    var delaySum = 0;
+                    var receivedMessages = 0;
+
+                    _.each(messages, function(message) {
+                        if (message.delay != undefined) {
+                            delaySum += message.delay;
+                            receivedMessages++;
+                        }
+
+                    });
+
+                    var result = 0;
+                    if (receivedMessages > 0)
+                        result = delaySum / receivedMessages
+
+                    return result.toFixed(3);
+                }
+
+                var defaultSimulationParams = {
+                    hiddenDataAppearance: 2,
+                    channelBandwith: 1000,
+                    hiddenDataSegmentLength: 8,
+                    basicDataAppearance: 1,
+                    basicDataLength: 300,
+                    timeForGeneratingHiddenMessages: 5,
+                    numberOfHiddenMessagesToGenerate: 4,
+                    timeForGeneratingBasicMessages: 20,
+                    hiddenMessageLength: 1,
+                    animate: true
+                };
+                var simulationParams = getSymulationParamsFromHash();
+                if (_.isEmpty(simulationParams))
+                    simulationParams = defaultSimulationParams;
+
+                var simulationTime = simulationParams.timeForGeneratingBasicMessages;
+
+                document.location.hash = JSON.stringify(simulationParams);
+                var symulator = new Symulator(simulationParams);
+                symulator.generateSymulationData();
+
+                while (!symulator.hasSymulationEnd())
+                    symulator.step();
+
+                debugger;
+                $('#hidden-messages-delay').text(calculateAvgDelay(symulator.allHiddenMessages));
+                $('#basic-messages-delay').text(calculateAvgDelay(symulator.allBasicMessages));
+                $('#hidden-messages-number').text(symulator.allHiddenMessages.length);
+                $('#basic-messages-number').text(symulator.allBasicMessages.length);
+                $('#time').text(symulator.currentTime);
+
+        </script>
+</html>
+
