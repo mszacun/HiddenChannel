@@ -52,3 +52,27 @@ std::ostream& operator<<(std::ostream& os, DataSources& dataSources) {
 
     return os;
 }
+
+unsigned int HiddenMessage::GetDataAmountNeeded() {
+    return std::accumulate(segments.begin() + sentSegments, segments.end(), 0);
+}
+
+HiddenMessageSegment HiddenMessageQueue::GetSegmentToSend() {
+    HiddenMessagePtr message = messages.front();
+    unsigned int segment = message->GetNextSegmentToSend();
+
+    if (!message->HasMoreSegmentsToSend())
+        messages.erase(messages.begin());
+
+    return HiddenMessageSegment(message, segment, message->HasMoreSegmentsToSend());
+}
+
+unsigned int HiddenMessageQueue::GetDataAmountNeeded() {
+    unsigned int sum = 0;
+
+    for (auto hm : messages) {
+        sum += hm->GetDataAmountNeeded();
+    }
+
+    return sum;
+}

@@ -5,11 +5,12 @@
 #include <vector>
 #include <memory>
 #include <iostream>
+#include <algorithm>
 
 class Message
 {
     public:
-        Message(std::string& id, unsigned int appearanceTime): receiveTime(0), delay(0),
+        Message(const std::string& id, unsigned int appearanceTime): receiveTime(0), delay(0),
             appearanceTime(appearanceTime), isReceived(false) {}
 
         void CalculateDelay(unsigned int receiveTime) { this->receiveTime = receiveTime; delay = receiveTime - appearanceTime; }
@@ -32,7 +33,7 @@ class Message
 class BasicMessage : public Message
 {
     public:
-        BasicMessage(std::string id, unsigned int appearanceTime, unsigned int length): Message(id, appearanceTime), length(length) {}
+        BasicMessage(const std::string& id, unsigned int appearanceTime, unsigned int length): Message(id, appearanceTime), length(length) {}
 
         unsigned int  GetLength() { return length; }
 
@@ -89,5 +90,46 @@ class BasicMessagesQueue
 };
 
 std::ostream& operator<<(std::ostream& os, BasicMessagesQueue& queue);
+
+typedef std::vector<unsigned int> HiddenMessageSegments;
+
+class HiddenMessage : public Message
+{
+    public:
+        HiddenMessage(const std::string& id, unsigned int appearanceTime, HiddenMessageSegments segments):
+            Message(id, appearanceTime), segments(segments), sentSegments(0) {}
+
+        unsigned int GetNextSegmentToSend() { return segments[sentSegments++]; }
+        bool HasMoreSegmentsToSend() { return sentSegments < segments.size(); }
+        unsigned int PeekNextSegmentToSend() { return segments[sentSegments]; }
+        unsigned int GetDataAmountNeeded();
+
+    private:
+        HiddenMessageSegments segments;
+        unsigned int sentSegments;
+};
+
+typedef std::shared_ptr<HiddenMessage> HiddenMessagePtr;
+
+struct HiddenMessageSegment {
+    HiddenMessageSegment(HiddenMessagePtr hiddenMessage, unsigned int segment, bool hasMoreFragments):
+        hiddenMessage(hiddenMessage), segment(segment), hasMoreFragments(hasMoreFragments) {}
+
+    HiddenMessagePtr hiddenMessage;
+    unsigned int segment;
+    bool hasMoreFragments;
+};
+
+class HiddenMessageQueue {
+    public:
+        HiddenMessageSegment GetSegmentToSend();
+        unsigned int PeekSegmentToSend() { return messages.front()->PeekNextSegmentToSend(); }
+        unsigned int GetDataAmountNeeded();
+
+        void AddMessage(HiddenMessagePtr message) { messages.push_back(message); }
+
+    private:
+        std::vector<HiddenMessagePtr> messages;
+};
 
 #endif /* end of include guard: MODELS_H */
