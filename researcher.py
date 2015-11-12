@@ -126,12 +126,13 @@ def main():
                 'hiddenDataAppearance': 4,
                 'channelBandwith': 1000,
                 'hiddenDataSegmentLength': 8,
+                'hiddenDataSegmentValue': 30,
                 'basicDataAppearance': 0.1,
                 'basicDataLength': 10,
                 'timeForGeneratingHiddenMessages': 0,
                 'numberOfHiddenMessagesToGenerate': 50,
                 'timeForGeneratingBasicMessages': 0,
-                'hiddenMessageLength': 1,
+                'hiddenMessageSegmentLength': 1,
                 'animate': False
             }
             params[studied_param_name] = studied_param_value

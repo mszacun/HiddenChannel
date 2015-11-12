@@ -26,13 +26,14 @@
                 var defaultSimulationParams = {
                     hiddenDataAppearance: 2,
                     channelBandwith: 1000,
-                    hiddenDataSegmentLength: 8,
+                    hiddenDataSegmentLength: 8, // number hidden segments bits
+                    hiddenDataSegmentValue: 30, // value of single segment
                     basicDataAppearance: 1,
                     basicDataLength: 300,
                     timeForGeneratingHiddenMessages: 5,
                     numberOfHiddenMessagesToGenerate: 4,
                     timeForGeneratingBasicMessages: 20,
-                    hiddenMessageLength: 1,
+                    hiddenMessageSegmentLength: 1, // number of segments in single hidden message
                     animate: true
                 };
                 var simulationParams = getSymulationParamsFromHash();

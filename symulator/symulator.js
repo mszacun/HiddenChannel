@@ -30,7 +30,8 @@ function Symulator(options) {
     this.hiddenDataSegmentLength = options.hiddenDataSegmentLength;
     this.basicDataAppearance = options.basicDataAppearance;
     this.basicDataLength = options.basicDataLength;
-    this.hiddenMessageLength = options.hiddenMessageLength;
+    this.hiddenMessageSegmentLength = options.hiddenMessageSegmentLength;
+    this.hiddenDataSegmentValue = options.hiddenDataSegmentValue;
 }
 
 Symulator.prototype.generateSymulationData = function() {
@@ -54,9 +55,11 @@ Symulator.prototype.generateHiddenMessages = function(apperanceTime) {
     var numberOfPackets = rpoisson(this.hiddenDataAppearance);
     for (var i = 0; i < numberOfPackets; i++) {
         var segments = [];
-        var numberOfSegments = Math.max(1, rpoisson(this.hiddenMessageLength));
+        var numberOfSegments = Math.max(1, rpoisson(this.hiddenMessageSegmentLength));
         for (var j = 0; j < numberOfSegments; j++) {
-            segments.push(getRandomInt(1, Math.pow(2, this.hiddenDataSegmentLength) - 1));
+            var segmentValue = getRandomInt(1, this.hiddenDataSegmentValue);
+            segmentValue = Math.min(segmentValue, Math.pow(2, this.hiddenDataSegmentLength) - 1);
+            segments.push(segmentValue);
         }
         var data = {
             id: 'u' + this.allHiddenMessages.length,
