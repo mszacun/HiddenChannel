@@ -102,33 +102,34 @@ def make_simulation(number_of_simulation, progress_file_path, symulation_params)
     browser.close()
     return (hidden_delay_sum / number_of_measurements, basic_delay_sum / number_of_measurements)
 
+basicDataAppearance = 3
+
 
 def get_paramater_step(current_value):
-    if current_value < 5:
-        return 0.3
-    if current_value < 15:
-        return 0.6
+    if current_value < basicDataAppearance:
+        return 0.1
+    if current_value < 7:
+        return 0.4
 
     return 1
 
 
 def main():
 
-    import sys
-    studied_param_value = 0.1
-    studied_param_last_value = 30
+    studied_param_value = 0.2
+    studied_param_last_value = 20
     studied_param_name = 'hiddenDataAppearance'
-    number_of_simulations = 100
 
     with open(studied_param_name + '.csv', 'w') as result_file:
         while studied_param_value < studied_param_last_value:
+            number_of_simulations = 100 if studied_param_value >= basicDataAppearance else 25
             params = {
                 'hiddenDataAppearance': 4,
                 'channelBandwith': 1000,
-                'hiddenDataSegmentLength': 8,
-                'hiddenDataSegmentValue': 30,
-                'basicDataAppearance': 0.1,
-                'basicDataLength': 10,
+                'hiddenDataSegmentLength': 16,
+                'hiddenDataSegmentValue': 5,
+                'basicDataAppearance': basicDataAppearance,
+                'basicDataLength': 5,
                 'timeForGeneratingHiddenMessages': 0,
                 'numberOfHiddenMessagesToGenerate': 50,
                 'timeForGeneratingBasicMessages': 0,
