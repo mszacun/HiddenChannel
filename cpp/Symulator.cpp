@@ -221,9 +221,10 @@ void Symulator::GenerateBasicMessages(int time) {
 }
 
 StepEvents Symulator::Step() {
+    GenerateBasicMessages(currentTime);
+    GenerateHiddenMessages(currentTime);
     std::vector<HiddenMessagePtr> hiddenMessagesArrived = AddArrivedHiddenMessages();
 
-    AddBasicMessagesToSymulationIfNeeded();
     std::vector<BasicMessagePtr> basicMessagesArrived = AddArrivedBasicMessages();
     std::vector<PacketPtr> packetsGenerated = hiddenChannel.Execute();
 

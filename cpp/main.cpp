@@ -19,7 +19,7 @@ std::string StepToString(StepEvents events) {
 
 int main(int argc, const char *argv[])
 {
-    // ./symulator --timeForGeneratingHiddenMessages <> --numberOfHiddenMessagesToGenerate <> --timeForGeneratingBasicMessages <> --hiddenDataSegmentLength <> --channelBandwidth <> --hiddenDataAppearance <> --basicDataAppearance <> --basicDataLength <> --hiddenMessageSegmentLength <> --hiddenDataSegmentValue <> --numberOfSymulations <>
+    // ./symulator --timeForGeneratingHiddenMessages <> --numberOfHiddenMessagesToGenerate <> --timeForGeneratingBasicMessages <> --hiddenDataSegmentLength <> --channelBandwidth <> --hiddenDataAppearance <> --basicDataAppearance <> --basicDataLength <> --hiddenMessageSegmentLength <> --hiddenDataSegmentValue <> --numberOfSymulations <> --timeForSymulation <>
 
     int timeForGeneratingHiddenMessages = boost::lexical_cast<int>(argv[2]);
     int numberOfHiddenMessagesToGenerate = boost::lexical_cast<int>(argv[4]);
@@ -32,6 +32,7 @@ int main(int argc, const char *argv[])
     int hiddenMessageSegmentLength = boost::lexical_cast<int>(argv[18]);
     int hiddenDataSegmentValue = boost::lexical_cast<int>(argv[20]);
     int numberOfSymulations = boost::lexical_cast<int>(argv[22]);
+    int timeForSymulation =  boost::lexical_cast<int>(argv[24]);
 
     double hiddenMessagesDelaySum = 0;
     double basicMessagesDelaySum = 0;
@@ -42,13 +43,13 @@ int main(int argc, const char *argv[])
                 hiddenDataAppearance, basicDataAppearance, basicDataLength, hiddenMessageSegmentLength,
                 hiddenDataSegmentValue);
 
-        sym.GenerateSymulationData();
-        while (!sym.HasSymulationEnd()) {
+        while (timeForSymulation > sym.GetCurrentTime()) {
             //std::cout << StepToString(sym.Step()) << std::endl;
             sym.Step();
         }
 
-        std::cout << "Time: " << sym.GetCurrentTime()
+        std::cout << " [ " << numberOfSymulation << " / " << numberOfSymulations << " ] "
+            << "Time: " << sym.GetCurrentTime()
             << " HiddenMessages: " << sym.GetHiddenMessagesDelay() << "(" << sym.GetAllHiddenMessages().size() << ") "
             << " BasicMessages: " << sym.GetBasicMessagesDelay() << "(" << sym.GetAllBasicMessages().size() << ") "
             << std::endl;

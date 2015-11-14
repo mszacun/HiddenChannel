@@ -32,11 +32,12 @@ template <typename T>
 double CalculateAverageDelay(std::vector<T> messages) {
     double sum = 0;
 
-    for (auto m : messages) {
-        sum += m->GetDelay();
-    }
+    int numberOfReceivedMessages = 0;
 
-    return sum / messages.size();
+    while (numberOfReceivedMessages < messages.size() && messages[numberOfReceivedMessages]->IsReceived())
+        sum += messages[numberOfReceivedMessages++]->GetDelay();
+
+    return sum / numberOfReceivedMessages;
 }
 
 class Packet
