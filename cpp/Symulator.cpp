@@ -48,7 +48,7 @@ std::string PacketWithHiddenData::GetDescription() {
 
     std::string dataSourcesDesc = "";
 
-    for (auto ds : dataSources) {
+    for (auto& ds : dataSources) {
         char desc[256];
         sprintf(desc, "%s length: %d hasMore? %d | ", ds.basicMessage->GetId().c_str(), ds.length, ds.hasMoreFragments);
         dataSourcesDesc += desc;
@@ -84,7 +84,7 @@ std::string PacketWithoutHiddenData::GetDescription() {
     std::string result = "PacketWithoutHiddenData datasources: [";
     std::string dataSourcesDesc = "";
 
-    for (auto ds : dataSources) {
+    for (auto& ds : dataSources) {
         char desc[256];
         sprintf(desc, "%s length: %d hasMore? %d | ", ds.basicMessage->GetId().c_str(), ds.length, ds.hasMoreFragments);
         dataSourcesDesc += desc;
@@ -125,7 +125,7 @@ std::vector<PacketPtr> HiddenChannel::Execute() {
     }
 
     unsigned int dataAviable = basicMessagesQueue.GetAviableDataLength();
-    if (dataAviable > pow(2, hiddenDataSegmentLength)) {
+    if (dataAviable >= pow(2, hiddenDataSegmentLength)) {
         DataSources dataSources = basicMessagesQueue.GetData(dataAviable);
 
         generatedPackets.push_back(std::make_shared<PacketWithoutHiddenData>(dataSources));
@@ -227,11 +227,11 @@ StepEvents Symulator::Step() {
     std::vector<BasicMessagePtr> basicMessagesArrived = AddArrivedBasicMessages();
     std::vector<PacketPtr> packetsGenerated = hiddenChannel.Execute();
 
-    for (auto p : packetsGenerated) { channel.AddPacket(p); }
+    for (auto& p : packetsGenerated) { channel.AddPacket(p); }
 
     std::vector<PacketPtr> packetsThatReachedTarget = channel.GetPacketsThatReachTarget();
 
-    for (auto p : packetsThatReachedTarget) { p->CalculateDelay(currentTime); }
+    for (auto& p : packetsThatReachedTarget) { p->CalculateDelay(currentTime); }
 
     currentTime++;
 

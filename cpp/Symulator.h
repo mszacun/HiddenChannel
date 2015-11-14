@@ -9,13 +9,11 @@ const unsigned int HEADER_SIZE = 30;
 template <typename T>
 bool HasAllMessagesBeenReceived(std::vector<T>& messages)
 {
-    bool result = true;
+    for (int i = messages.size() - 1; i >= 0; i--)
+        if (!messages[i]->IsReceived())
+            return false;
 
-    for (auto m : messages) {
-        result &= m->IsReceived();
-    }
-
-    return result;
+    return true;
 }
 
 template <typename T>
@@ -23,7 +21,7 @@ bool HasAllMessagesAppeared(std::vector<T>& messages, unsigned int currentTime)
 {
     bool result = true;
 
-    for (auto m : messages) {
+    for (auto& m : messages) {
         result &= m->GetAppearanceTime() < currentTime;
     }
 
@@ -169,6 +167,7 @@ public:
     std::vector<BasicMessagePtr> GetAllBasicMessages() { return allBasicMessages; }
     double GetHiddenMessagesDelay() { return CalculateAverageDelay(allHiddenMessages); }
     double GetBasicMessagesDelay() { return CalculateAverageDelay(allBasicMessages); }
+    unsigned int GetCurrentTime() { return currentTime; }
 
 private:
     unsigned int timeForGeneratingHiddenMessages;
