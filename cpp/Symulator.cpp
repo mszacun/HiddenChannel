@@ -8,7 +8,7 @@ int RPiosson(double lambda) {
 
     do {
         k++;
-        p *= rand() / RAND_MAX;
+        p *= ((double) rand()) / RAND_MAX;
     } while (p > l);
 
     return k - 1;
@@ -146,7 +146,7 @@ bool HiddenChannel::HasEnoughBasicData() {
 
 bool HiddenChannel::CanSendAllBasicData() {
     return !basicMessagesQueue.IsEmpty() &&
-        basicMessagesQueue.GetAviableDataLength() < pow(2, hiddenDataSegmentLength);
+        basicMessagesQueue.GetAviableDataLength() >= pow(2, hiddenDataSegmentLength);
 }
 
 Symulator::Symulator(unsigned int timeForGeneratingHiddenMessages,
@@ -177,7 +177,7 @@ void Symulator::GenerateSymulationData() {
     int t = 0;
 
     while (t < timeForGeneratingHiddenMessages || allHiddenMessages.size() < numberOfHiddenMessagesToGenerate)
-        GenerateHiddenMessages(t);
+        GenerateHiddenMessages(t++);
 
     for (t = 0; t < timeForGeneratingBasicMessages; t++)
         GenerateBasicMessages(t);
@@ -197,7 +197,7 @@ void Symulator::GenerateHiddenMessages(int time) {
         }
 
         char id[256];
-        sprintf(id, "p%d", allHiddenMessages.size());
+        sprintf(id, "u%d", allHiddenMessages.size());
         HiddenMessagePtr hiddenMessage = std::make_shared<HiddenMessage>(id, time, segments);
 
         hiddenMessages.push_back(hiddenMessage);
@@ -222,6 +222,8 @@ void Symulator::GenerateBasicMessages(int time) {
 
 StepEvents Symulator::Step() {
     std::vector<HiddenMessagePtr> hiddenMessagesArrived = AddArrivedHiddenMessages();
+
+    AddBasicMessagesToSymulationIfNeeded();
     std::vector<BasicMessagePtr> basicMessagesArrived = AddArrivedBasicMessages();
     std::vector<PacketPtr> packetsGenerated = hiddenChannel.Execute();
 
@@ -272,7 +274,16 @@ bool Symulator::NeedMoreDataForHiddenMessages() {
 }
 
 bool Symulator::NeedMoreDaraForBasicMessages() {
+    bool p1 = !HasAllMessagesBeenReceived(allBasicMessages);
+    bool p2 = HasAllMessagesAppeared(allBasicMessages, currentTime);
+    bool p3 = !hiddenChannel.CanSendAllBasicData();
+
     return !HasAllMessagesBeenReceived(allBasicMessages) &&
         HasAllMessagesAppeared(allBasicMessages, currentTime) &&
         !hiddenChannel.CanSendAllBasicData();
+}
+
+void Symulator::AddBasicMessagesToSymulationIfNeeded() {
+    if (NeedMoreDataForHiddenMessages() || NeedMoreDaraForBasicMessages())
+        GenerateBasicMessages(currentTime);
 }

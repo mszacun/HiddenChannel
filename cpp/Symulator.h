@@ -30,6 +30,17 @@ bool HasAllMessagesAppeared(std::vector<T>& messages, unsigned int currentTime)
     return result;
 }
 
+template <typename T>
+double CalculateAverageDelay(std::vector<T> messages) {
+    double sum = 0;
+
+    for (auto m : messages) {
+        sum += m->GetDelay();
+    }
+
+    return sum / messages.size();
+}
+
 class Packet
 {
 public:
@@ -154,6 +165,10 @@ public:
     void GenerateSymulationData();
     StepEvents Step();
     bool HasSymulationEnd();
+    std::vector<HiddenMessagePtr> GetAllHiddenMessages() { return allHiddenMessages; }
+    std::vector<BasicMessagePtr> GetAllBasicMessages() { return allBasicMessages; }
+    double GetHiddenMessagesDelay() { return CalculateAverageDelay(allHiddenMessages); }
+    double GetBasicMessagesDelay() { return CalculateAverageDelay(allBasicMessages); }
 
 private:
     unsigned int timeForGeneratingHiddenMessages;
@@ -183,6 +198,7 @@ private:
     std::vector<BasicMessagePtr> AddArrivedBasicMessages();
     bool NeedMoreDataForHiddenMessages();
     bool NeedMoreDaraForBasicMessages();
+    void AddBasicMessagesToSymulationIfNeeded();
 };
 
 #endif /* end of include guard: SYMULATOR_H */
