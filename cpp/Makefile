@@ -1,14 +1,17 @@
 FLAGS=-std=c++11 -ggdb
 
-all: Models.o main.o
-	g++ $(FLAGS) Models.o main.o -o symulator
+all: Symulator.o Models.o test.o
+	g++ $(FLAGS) Models.o test.o Symulator.o -o test
 
 Models.o: Models.cpp Models.h
 	g++ -c $(FLAGS) Models.cpp
 
-main.o: main.cpp
-	g++ -c $(FLAGS) main.cpp
+Symulator.o: Symulator.h Symulator.cpp
+	g++ -c $(FLAGS) Symulator.cpp
+
+test.o: test.cpp
+	g++ -c $(FLAGS) test.cpp
 
 clean:
 	rm *.o
-	rm symulator
+	rm test

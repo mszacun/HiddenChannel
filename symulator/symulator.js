@@ -35,9 +35,6 @@ function Symulator(options) {
 }
 
 Symulator.prototype.generateSymulationData = function() {
-    var hiddenPacketNumber = 0;
-    var basicPacketNumber = 0;
-
     this.basicMessages = [];
     this.allBasicMessages = [];
     this.hiddenMessages = [];

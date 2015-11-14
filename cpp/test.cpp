@@ -2,6 +2,10 @@
 #include <cassert>
 
 #include "Models.h"
+#include "Symulator.h"
+
+void ShouldSendPacketWithOnlyBasicData();
+std::string StepToString(StepEvents events);
 
 int main(int argc, const char *argv[])
 {
@@ -70,5 +74,48 @@ int main(int argc, const char *argv[])
     assert(segment3.hasMoreFragments);
     assert(hiddenQueue.GetDataAmountNeeded() == 242);
 
+    ShouldSendPacketWithOnlyBasicData();
+
     return 0;
+}
+
+void ShouldSendPacketWithOnlyBasicData() {
+    BasicMessagePtr m1 = std::make_shared<BasicMessage>("b1", 2, 120);
+    BasicMessagePtr m2 = std::make_shared<BasicMessage>("b2", 2, 220);
+
+    Symulator sym(0, // timeForGeneratingHiddenMessages
+            0, // numberOfHiddenMessagesToGenerate
+            0, // timeForGeneratingBasicMessages
+            8, // hiddenDataSegmentLength
+            1000, // channelBandwith
+            2, // hiddenDataAppearance
+            3, // basicDataAppearance
+            220, // basicDataLength
+            2, // hiddenMessageSegmentLength
+            50); // hiddenDataSegmentValue
+
+    std::vector<BasicMessagePtr> bms { m1, m2 };
+    sym.SetBasicMessages(bms);
+
+    assert(!sym.HasSymulationEnd());
+    std::cout << StepToString(sym.Step()) << std::endl;
+    assert(!sym.HasSymulationEnd());
+    std::cout << StepToString(sym.Step()) << std::endl;
+    assert(!sym.HasSymulationEnd());
+    std::cout << StepToString(sym.Step()) << std::endl;
+    assert(sym.HasSymulationEnd());
+}
+
+std::string StepToString(StepEvents events) {
+    std::string basicMessagesArrivedDesc = "";
+    std::string hiddenMessagesArrivedDesc = "";
+    std::string packetsGeneratedDesc = "";
+    std::string packetsAtTargetDesc = "";
+
+    for (auto m : events.arrivedBasicMessages) { basicMessagesArrivedDesc += m->GetId() + " "; }
+    for (auto m : events.arrivedHiddenMessages) { hiddenMessagesArrivedDesc += m->GetId() + " "; }
+    for (auto p : events.packetsGenerated) { packetsGeneratedDesc += p->GetDescription() + " "; }
+    for (auto p : events.packetsThatReachedTarget) { packetsAtTargetDesc += p->GetDescription() + " "; }
+
+    return basicMessagesArrivedDesc + " # " + hiddenMessagesArrivedDesc + " # " + packetsGeneratedDesc + " # " + packetsAtTargetDesc;
 }

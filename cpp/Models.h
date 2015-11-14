@@ -11,9 +11,10 @@ class Message
 {
     public:
         Message(const std::string& id, unsigned int appearanceTime): receiveTime(0), delay(0),
-            appearanceTime(appearanceTime), isReceived(false) {}
+            appearanceTime(appearanceTime), isReceived(false), id(id) {
+            }
 
-        void CalculateDelay(unsigned int receiveTime) { this->receiveTime = receiveTime; delay = receiveTime - appearanceTime; }
+        void CalculateDelay(unsigned int receiveTime) { this->receiveTime = receiveTime; delay = receiveTime - appearanceTime; isReceived = true; }
         bool IsReceived() { return isReceived; }
 
         unsigned int GetReceiveTime() { return receiveTime; }
@@ -21,7 +22,7 @@ class Message
         unsigned int GetAppearanceTime() { return appearanceTime; }
         std::string GetId() { return id; }
 
-    private:
+    protected:
         unsigned int receiveTime;
         unsigned int delay;
         unsigned int appearanceTime;
@@ -33,7 +34,8 @@ class Message
 class BasicMessage : public Message
 {
     public:
-        BasicMessage(const std::string& id, unsigned int appearanceTime, unsigned int length): Message(id, appearanceTime), length(length) {}
+        BasicMessage(const std::string& id, unsigned int appearanceTime,
+            unsigned int length): Message(id, appearanceTime), length(length) {}
 
         unsigned int  GetLength() { return length; }
 
@@ -64,7 +66,7 @@ struct DataSource
 {
     DataSource(BasicMessagePtr basicMessage, unsigned int length,
             bool hasMoreFragments): basicMessage(basicMessage), length(length),
-            hasMoreFragments(hasMoreFragments) {}
+            hasMoreFragments(hasMoreFragments) { }
 
     BasicMessagePtr basicMessage;
     unsigned int length;
@@ -84,6 +86,7 @@ class BasicMessagesQueue
 
         std::vector<DataSource> GetData(unsigned int amount);
         void AddMessage(BasicMessagePtr message) { messages.push_back(std::make_shared<QueuedBasicMessage>(message)); }
+        bool IsEmpty() { return messages.empty(); }
 
     private:
         std::vector<QueuedBasicMessagePtr> messages;
@@ -127,6 +130,7 @@ class HiddenMessageQueue {
         unsigned int GetDataAmountNeeded();
 
         void AddMessage(HiddenMessagePtr message) { messages.push_back(message); }
+        bool IsEmpty() { return messages.empty(); }
 
     private:
         std::vector<HiddenMessagePtr> messages;
