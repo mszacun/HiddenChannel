@@ -37,6 +37,8 @@ int main(int argc, const char *argv[])
     double hiddenMessagesDelaySum = 0;
     double basicMessagesDelaySum = 0;
 
+    srand(time(nullptr));
+
     for (int numberOfSymulation = 0; numberOfSymulation < numberOfSymulations; numberOfSymulation++) {
         Symulator sym(timeForGeneratingHiddenMessages, numberOfHiddenMessagesToGenerate,
                 timeForGeneratingBasicMessages, hiddenDataSegmentLength, channelBandwidth,
