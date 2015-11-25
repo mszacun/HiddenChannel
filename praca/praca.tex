@@ -1,0 +1,91 @@
+\documentclass[a4paper]{report}
+
+\usepackage{titlesec}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=25mm]{geometry}
+\linespread{1}
+\titleformat*{\section}{\fontsize{14pt}{2}\bfseries}
+\titleformat*{\subsection}{\fontsize{13pt}{2}\bfseries}
+\titleformat*{\subsubsection}{\fontsize{13pt}{2}\bfseries}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx}
+
+
+
+\begin{document}
+
+\title{Ukryte kanały transmisji danych w sieciach komputerowych}
+\author{Marcin Szachun}
+\maketitle
+
+
+\begin{abstract}
+To jest tekst
+\end{abstract}
+
+\tableofcontents
+
+\chapter{Cel i zakres pracy}
+\chapter{Wstęp teoretyczny}
+    \section{Steganografia}
+        \subsection{Podstawowe pojęcia}
+        \subsection{Zastosowanie}
+        \subsection{Przykłady dawnych zastosowań}
+
+    \section{Steganografia}
+        \subsection{Podstawowe pojęcia}
+        \subsection{Zastosowanie}
+        \subsection{Przykłady zapobiegania wykorzystywaniu steganografii}
+
+\chapter{Charakterystyka możliwości realizacji kanałów ukrytych}
+    \section{Poprzez modyfikację pakietów}
+        \subsection{Wykorzystanie nieużywanych pól nagłówków}
+        \subsection{Wykorzystanie dopełnienia pakietów}
+        \subsection{Ukrywanie danych w pakietach celowo uszkodzonych}
+
+    \section{Poprzez modyfikację właściwości strumienia pakietów}
+        \subsection{Poprzez manipulację prędkością transmisji}
+        \subsection{Poprzez manipulację opóźnieniem pakietów}
+
+    \section{Podejścia hybrydowe}
+        \subsection{Ukrywanie danych w pakietach opóźnionych}
+
+
+\chapter{Projekt protokołu kanału ukrytego}
+    \section{Opis otoczenia działania protokołu}
+    \section{Założenia i ograniczenia projektowe}
+    \section{Słownik używanych pojęć}
+    \section{Opis parametrów kanału ukrytego}
+    \section{Opis działania protokołu kanału ukrytego}
+    \section{Schemat działania protokołu kanału ukrytego}
+
+\chapter{Badania optymalnych parametrów i jakości kanału ukrytego}
+    \section{Zależność opóźnienia wiadomości ukrytych od natężenia napływu wiadomości podstawowych}
+        \subsection{Metodologia i cel badania}
+        \subsection{Obserwacje}
+        \subsection{Wnioski}
+
+    \section{Zależność opóźnienia wiadomości podstawowych od natężenia napływu wiadomości ukrytych}
+        \subsection{Metodologia i cel badania}
+        \subsection{Obserwacje}
+        \subsection{Wnioski}
+
+    \section{Zależność opóźnienia wiadomości podstawowych od natężenia napływu wiadomości podstawowych}
+        \subsection{Metodologia i cel badania}
+        \subsection{Obserwacje}
+        \subsection{Wnioski}
+
+
+\chapter{Analiza wykrywalności kanału ukrytego}
+    \section{Analiza ingerencji kanału ukrytego w kanał podstawowy}
+    \section{Metody ataku na kanał ukryty}
+    \section{Sugestie doboru parametrów kanału ukrytego}
+    \section{Inne sposoby obrony przed wykryciem}
+
+\chapter{Podsumowanie i wnioski}
+\chapter{Możliwości rozwoju i kontynuacji prac}
+\chapter{Bibliografia}
+
+
+\end{document}
