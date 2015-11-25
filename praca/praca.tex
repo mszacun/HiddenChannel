@@ -21,24 +21,84 @@
 
 
 \begin{abstract}
-To jest tekst
+    Zapewnienie bezpiecznej komunikacji było od zawsze jednym z największych
+    problemów telekomunikacji. Tradycyjnie bezpieczna transmisja była możliwa
+    dzięki wykorzystaniu kryptografii. Wraz z zastosowanie coraz bardziej wysublimowanych
+    ataków na algorytmy kryptograficzne, oprócz udoskonalania tych algorytmów rozpoczęto
+    poszukiwania innych sposobów zabezpieczenia wymienianych informacji. Jednym
+    z proponowanych rozwiązań jest steganografia, nauka zajmująca się opracowywaniem
+    metod komunikacji, w sposób utrudniający wykrycie istnienia wymienianych komunikatów.
+    Niniejsza praca zawiera krótki przegląd przykładowych sposobów
+    realizacji kanałów ukrytych na potrzeby transmisji danych w sieciach komputerowych.
+    W głównej części pracy wysuwana jest propozycja stworzenia kanału ukrytego, opartego na ukrywaniu
+    danych w długości pakietów protokołu UDP przesyłanych kanałem podstawowym.
+    Przedstawiony protokół kanału ukrytego wspiera zarówno agregację jak i fragmentację
+    wiadomości podstawowych w celu transmisji wiadomości ukrytych.Przeprowadzone
+    zostały szczegółowe badania parametrów jakościowych takiego kanału w zależności
+    od przyjętych parametrów protokołu kanału ukrytego. Podjęta została również
+    analiza ingerencji w kanał podstawowy oraz wykrywalności kanału zorganizowanego w taki sposób.
+    Dokument zawiera wskazówki doboru parametrów protokołu kanału ukrytego, w taki sposób, aby
+    zminimalizować jego ingerencję w kanał podstawowy. Ponadto zostały podane inne
+    wskazówki pozwalające zmniejszyć szansę na wykrycie faktu, że kanał ukryty jest
+    używany. Zaprezentowano również przykładowe środowiska, w których przedstawiony
+    kanał ukryty może być wykorzystywany.
 \end{abstract}
 
 \tableofcontents
 
 \chapter{Cel i zakres pracy}
+    Celem niniejszej pracy jest przedstawienie zaprojektowanego protokołu kanału
+    ukrytego, działającego w sieciach komputerowych i  opartego o ukrywanie wiadomości za pomocą długości pakietów UDP
+    zawierających wiadomości podstawowe. W ramach tego celu zostaną wykonane:
+    \begin{itemize}
+        \item prezentacja steganografii, nauki o ukrywaniu wiadomości w różnego rodzaju nośnikach,
+            oraz steganoanalizy, nauki o wykrywaniu oraz ewentualnym niszczeniu kanałów
+            ukrytej komunikacji, wraz z najczęściej używanymi pojęciami
+        \item przedstawienie przykładowych, innych niż zaproponowany w pracy,
+            sposobów organizacji kanałów ukrytych, z zakresu steganografii sieciowej,
+            z wykorzystaniem różnego rodzaju protokołów komunikacyjnych
+        \item zaprezentowanie projektu protokołu kanału ukrytego, ukrywającego
+            wiadomości ukryte za pomocą długości pakietów protokołu UDP, wraz
+            z opisem parametrów otrzymanego protokołu, oraz wyjaśnieniem pojęć
+            użytych do jego opisu
+        \item przeprowadzenie badań czynników wpływających na średnie opóźnienie
+            w odbiorze wiadomości podstawowych i ukrytych, wraz z analizą wniosków
+            z nich płynących
+        \item przeprowadzenie analizy wykrywalności zaproponowanego kanału ukrytego,
+            wraz z zaproponowaniem sposobów jej zmniejszenia
+    \end{itemize}
+
 \chapter{Wstęp teoretyczny}
     \section{Steganografia}
         \subsection{Podstawowe pojęcia}
-        \subsection{Zastosowanie}
-        \subsection{Przykłady dawnych zastosowań}
+        \emph{Steganografia} jest to nauka o przesyłaniu komunikatów w taki sposób, aby
+        osoba mająca dostęp do kanału, którym prowadzona jest transmisja komunikatów
+        nie był w stanie zorientować się, że przesyłane komunikaty istnieją.
+        Do ukrycia wiadomości ukrytych wykorzystuje się \emph{nośniki steganograficzne}.
+        Jednymi z najczęściej wykorzystywanych nośników są multimedia takie jak
+        obrazy oraz dźwięki. Poprzez modyfikację własności nośnika możliwe jest
+        ukrycie w nim \emph{wiadomości ukrytej}. Pomimo, że osoba postronna ma
+        dostęp do zmodyfikowanego nośnika z zawartą w nim wiadomością ukrytą,
+        czyli tak zwanym \emph{steganogramem}, nie wzbudza on w niej podejrzeń,
+        że może on przenosić jakieś ukryte dane. Procedurę mówiącą w jaki sposób
+        zmodyfikować właściwości nośnika aby ukryć w nim wiadomość opisuje
+        \emph{algorytm steganograficzny}. Opisuje on także procedurę jaką musi
+        wykonać odbiorca steganogramu w celu odzyskania wiadomości ukrytej.
+        Opcjonalnie zachowanie algorytmu steganograficznego może być modyfikowane przy pomocy specjalnego
+        parametru, tak zwanego \emph{klucza}.  Dla takiej samej wiadomości ukrytej i nośnika
+        wykorzystywanego do jej ukrycia, różne wartości klucza powodują, że algorytm
+        w inny sposób modyfikuje właściwości nośnika, w rezultacie dając inne
+        steganogramy.
 
-    \section{Steganografia}
+        \subsection{Zastosowanie}
+        \subsection{Przykładowe metody stegnograficzne}
+
+    \section{Steganoanaliza}
         \subsection{Podstawowe pojęcia}
         \subsection{Zastosowanie}
         \subsection{Przykłady zapobiegania wykorzystywaniu steganografii}
 
-\chapter{Charakterystyka możliwości realizacji kanałów ukrytych}
+\chapter{Charakterystyka możliwości realizacji kanałów ukrytych w sieciach komputerowych}
     \section{Poprzez modyfikację pakietów}
         \subsection{Wykorzystanie nieużywanych pól nagłówków}
         \subsection{Wykorzystanie dopełnienia pakietów}
@@ -85,7 +145,11 @@ To jest tekst
 
 \chapter{Podsumowanie i wnioski}
 \chapter{Możliwości rozwoju i kontynuacji prac}
-\chapter{Bibliografia}
+
+\clearpage
+\addcontentsline{toc}{chapter}{Bibliografia}
+\bibliographystyle{plain}
+\bibliography{bibliografia}
 
 
 \end{document}
