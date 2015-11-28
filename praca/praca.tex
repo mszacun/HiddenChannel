@@ -1,4 +1,4 @@
-\documentclass[a4paper]{report}
+\documentclass[a4paper, twoside]{report}
 
 \usepackage{titlesec}
 \usepackage{polski}
@@ -75,7 +75,8 @@
         \emph{Steganografia} jest to nauka o przesyłaniu komunikatów w taki sposób, aby
         osoba mająca dostęp do kanału, którym prowadzona jest transmisja komunikatów
         nie był w stanie zorientować się, że przesyłane komunikaty istnieją.
-        Do ukrycia wiadomości ukrytych wykorzystuje się \emph{nośniki steganograficzne}.
+        Do ukrycia wiadomości ukrytych wykorzystuje się 
+        \emph{nośniki steganograficzne}\cite{STEGANOGRAFIASIECIOWAART}.
         Jednymi z najczęściej wykorzystywanych nośników są multimedia takie jak
         obrazy oraz dźwięki. Poprzez modyfikację własności nośnika możliwe jest
         ukrycie w nim \emph{wiadomości ukrytej}. Pomimo, że osoba postronna ma
@@ -83,7 +84,8 @@
         czyli tak zwanym \emph{steganogramem}, nie wzbudza on w niej podejrzeń,
         że może on przenosić jakieś ukryte dane. Procedurę mówiącą w jaki sposób
         zmodyfikować właściwości nośnika aby ukryć w nim wiadomość opisuje
-        \emph{algorytm steganograficzny}. Opisuje on także procedurę jaką musi
+        \emph{algorytm steganograficzny}. W ramach algorytmu steganograficznego
+        opisuje się także przekształcenie odwrotne, które musi
         wykonać odbiorca steganogramu w celu odzyskania wiadomości ukrytej.
         Opcjonalnie zachowanie algorytmu steganograficznego może być modyfikowane przy pomocy specjalnego
         parametru, tak zwanego \emph{klucza}.  Dla takiej samej wiadomości ukrytej i nośnika
@@ -92,11 +94,169 @@
         steganogramy.
 
         \subsection{Zastosowanie}
+        Steganografia nie jest nową nauką. Pierwsze wzmianki o zastosowaniu technik
+        służących do ukrywania informacji pochodzą ze starożytnej Grecji.\cite{STEGANOGRAPHYINTRO}
+        W tamtych czasach wykorzystywane one były do przesyłania wiadomości
+        podczas pobytu w niewoli, bądź w celu planowania różnego rodzaju spisków.
+
+        Obecnie zainteresowanie steganografią rośnie i znajduje ona coraz więcej
+        zastosowań w różnych dziedzinach. Podstawowym celem w jakim stosowana jest
+        steganografia jest zabezpieczenie przed dostępem do wiadomości osób do tego nie
+        upoważnionych. W większości przypadków, wykorzystywana jest do tego
+        kryptografia. W odróżnieniu od steganografii, kryptografia nie stara się
+        ukryć faktu istnienia wiadomości, tylko za pomocą algorytmów kryptograficznych
+        przekształcić ją w taki sposób, aby nie możliwe było jej odczytanie bez posiadania
+        klucza. Osoba, która przechwyci zaszyfrowaną komunikację nie może co prawda
+        odczytać komunikatów, jednak jest dla niej oczywiste, że nadawca i odbiorca
+        komunikują się ze sobą i że jakaś tajna wiadomość, nie przeznaczona dla niej,
+        istnieje.\cite{DIGITALWATERMARKING} Cecha ta sprawia, że kryptografii nie
+        powinno się stosować tam, gdzie konieczne jest zachowanie w tajemnicy
+        faktu istnienia wiadomości lub faktu prowadzenia komunikacji. Jako przykład
+        można tutaj podać komunikację pomiędzy różnego rodzaju służbami specjalnymi
+        podczas organizacji i prowadzenia akcji specjalnych na przykład odbijanie zakładników.
+        W przypadku gdyby przestępcy, przechwyciliby zaszyfrowaną komunikację
+        pomiędzy oddziałami, mogliby nabrać podejrzeń, jeśli natomiast przechwycona
+        zostałaby niezaszyfrowana niewinnie wyglądająca komunikacje, nie powinna ona
+        budzić żadnych obaw. Steganografia wykorzystywana jest również do prowadzenia
+        działań wywiadowczych i anty wywiadowczych. Szpiedzy wykorzystują ją do
+        bezpiecznej i nie wzbudzającej podejrzeń komunikacji z macierzystą agencją
+        wywiadowczą.
+
+        Kryptografia nie może również zostać wykorzystana w miejscach, w których
+        nie pozwala na to prawo.\cite{CRYPTOGRAFYLAW} W takich krajach wszelkie
+        zaszyfrowane wiadomości mogą być niszczone przez instytucje zajmujące się
+        cenzurą. Steganografia jest w takim
+        wypadku jedynym środkiem umożliwiającym bezpieczną komunikację. Ponadto
+        dzięki jej zastosowaniu, możliwe jest użycie zabronionych algorytmów szyfrujących,
+        co dodatkowo zabezpiecza komunikację, ponieważ cenzor nie jest świadomy
+        istnienia zaszyfrowanej wiadomości. W niektórych krajach użycie kryptografii
+        może być dozwolone, jednak mogą być narzucone ograniczenia, na algorytmy
+        kryptograficzne, które mogą być wykorzystywane, lub też na maksymalną
+        długość klucza kryptograficznego. Może to rodzić podejrzenia, że ustawodawca
+        specjalnie ogranicza dostępne metody kryptograficzne, aby w razie konieczności
+        być w stanie złamać i odszyfrować wymieniane wiadomości. Ustawodawca
+        może ograniczyć dostępne algorytmy, do własnościowych algorytmów, bądź
+        udostępniać jedynie własnościowe implementacje algorytmów kryptograficznych.
+        Powoduje to nieufność do udostępnionych rozwiązań, nie tylko ze względu
+        na zasadę Kerckhoffsa zgodnie z którą:
+        "Algorytm kryptograficzny nie powinien być utrzymywany w sekrecie i nie powinno
+        być problemem wykradnięcie go przez wroga".\cite{KERCKHOS}, ale również,
+        w świetle doniesień Edwarda Snowdena na temat progrmów takich jak
+        Ballrun\cite{WIKI:BALLRUN}, budzi obawę o możliwość umieszczenia w tych
+        algorytmach "tylnych furtek", umożliwiających odszyfrowanie zaszyfrowanych
+        nim wiadomości.
+
+        Kolejnym przykładem zastosowanie technik używanych w steganografii jest
+        tworzenie znaków wodnych(ang. \emph{watermark}). Jest to dziedzina bardzo zbliżona do steganografii,
+        jednak różnica polega na tym, że w przypadku steganografii w nośnej ukrywamy
+        informację nie związaną bezpośrednio z samą nośną, natomiast w przypadku znakowania,
+        ukryty komunikat w jakiś sposób odnosi się do nośnej. Przykładowym zastosowaniem
+        znakowania jest umieszczenie informacji o autorze obrazu w pliku ze zdjęciem.
+        Ponadto w przypadku znakowania, istnienie znaku wodnego, nie musi być tajemnicą,
+        jednak nadal musi być on "ukryty", to znaczy być zawarty w nośnej, jednak
+        nie przeszkadzać w jej odbiorze, na przykład w oglądaniu oznakowanego obrazu.
+        Oprócz tego usunięcie znaku wodnego powinno być trudne dla osób do tego nie
+        uprawnionych. W przypadku, gdyby druga osoba skopiowała dzieło innej osoby,
+        w którym ukryty był znak wodny, może on posłużyć prawowitemu autorowi w
+        sądzie do udowodnienia kto jest prawdziwym autorem.
+
+        Bardzo zbliżonym do znakowania zastosowaniem technik steganograficznych jest
+        tworzenie "odcisków palca"(ang. \emph{fingerprinting}). Jest to specjalny
+        typ znaku wodnego, unikalny dla każdej kopii dzieła(pliku). Dzięki odciskowi
+        palca możliwe jest zidentyfikowanie osoby winnej na przykład wycieku informacji
+        do mediów, lub też nielegalnie udostępniającej plik w Internecie. W przypadku,
+        gdy jeden z nabywców filmu udostępnia go nielegalnie w Internecie, sprzedawca,
+        który w każdej sprzedanej kopii umieścił unikany odcisk palca, może porównać
+        odcisk palca w udostępnianym pliku z zapisanymi wcześniej odciskami palców
+        w kopiach sprzedanym poszczególnym klientom.
+
+        Techniki ukrywania informacji wykorzystywane są także do rozbudowywania
+        istniejących od dawna formatów danych, w celu przechowywania dodatkowych
+        danych lub metadanych. Często zdarza się na przykład, że wraz z obrazem
+        chcielibyśmy przechowywać jego opis. Dzięki steganografii możemy dodać
+        taką zawartość nawet do formatów plików, które nie wspierają natywnie
+        przechowywania tego typu danych, nie łamiąc wstecznej kompatybilności z innymi
+        programami obsługującymi dany format plików. Przykładem takiego wykorzystania
+        steganografii jest przechowywanie opisów zdjęć medycznych, na przykład
+        z prześwietleń, w tym samym pliku co obraz.\cite{DISAPPEARINGCRYPTOEMBEDDINGMETDATA}
+
         \subsection{Przykładowe metody stegnograficzne}
+        Jeden z pierwszych historyków greckich Herodot, w swoim dziele "Dzieje"
+        opisuje historię starożytnego polityka grackiego Histiajosa, który spiskował
+        ze swoim zięciem Arystagorasem, w celu wywołania powstania miast greckich
+        przeciw Persom\cite{STEGANOGRAPHYINTRO}. Ponieważ Persowie nie ufali Histiajosowi, musiał on komunikować
+        się ze swoim zięciem w sposób sekretny. Wedługo Herodota, wykorzystywał
+        on w tym celu swojego najbardziej zaufanego niewolnika, najpierw goląc
+        go na łyso, a następnie tatuując mu ukryte wiadomości na skórze głowy.
+        Gdy niewolnikowi odrastały włosy, był on wysyłany do Arystagorasa, oficjalnie
+        transportując inną, nie związaną ze spiskiem i niewinnie wyglądającą wiadomość.
+        Gdy niewolnik docierał do miejsca przeznaczenia, spotykał się Arystagorasem i
+        gdy nie było przy nich osób postronnych mówił on o istnieniu wiadomości ukrytej.
+        Po ponownym ogoleniu głowy niewolnika Arystagoras zapoznawał się z wiadomością
+        od teścia.
+
+        Inną techniką ukrywania wiadomości opisywaną również przez Herodota
+        jest wykorzystanie drewnianych tabliczek. Zazwyczaj tabliczki te pokrywane
+        były woskiem, w którym można było utrwalić wiadomość, a następnie, gdy
+        nie była ona już potrzebna, stopić wosk i otrzymać tabliczkę gotową do
+        ponownego użycia. Grek Demaratos chcąc ostrzec Spartę przed atakiem Persów,
+        wyrył ostrzeżenie bezpośrednio w drewnie, następnie pokrywające je woskiem
+        i umieszczając w nim niewinnie brzmiącą wiadomość.
+
+        W średniowieczu często stosowane były atramenty sympatyczne, czyli takie,
+        które po zapisaniu wiadomości na papierze stawały się niewidoczne, a do
+        odczytania ukrytej wiadomości konieczne było "wywołanie" dokumentu. Procedura
+        wywoływania była różna w zależności od substancji, która została użyta jako
+        atrament sympatyczny. Wśród substancji używanych w tym celu można wymienić:
+        mleko, sok cytrynowy, mocz, ocet czy też amoniak. Atramenty sympatyczne
+        były nadal wykorzystywane w czasie obu wojen światowych.
+
+        Jedna z ciekawszych technik steganograficznych została zaprezentowana przez
+        Gaspari Schotti\cite{NUTYSTEGANOGRAFIA},
+        który zaproponował kodowanie liter za pomocą nut. Każdej literze alfabetu
+        odpowiadała jedna nuta, różniąca się od innych pod względem wysokości
+        dźwięku i czasu jego trwania. Dla osoby nie znającej się na muzyce, tak zakodowana
+        wiadomość wygląda na zwykły utwór muzyczny, jednak gdyby zagrać ją na instrumencie
+        muzycznym, najprawdopodobniej nie byłyby to miłe uchu dźwięki.
+
+        W czasach, gdy w wielu krajach obowiązywała cenzura, powszechne było ukrywanie
+        informacji w tekstach. Odbywało się to poprzez odpowiedni dobór słów,
+        z których składał się tekst. Odczytywanie tak ukrytych wiadomości możliwe było
+        dzięki na przykład odczytywaniu drugiej litery każdego ze słów, bądź pierwszej
+        litery każdego ze zdań.
+
+        Wspomniano wcześniej, że techniki steganograficzne wykorzystywane są do umieszczania
+        odcisków palców w dokumentach. Warto tutaj przytoczyć sztuczkę zastosowaną
+        przez Margaret Thatcher poirytowaną częstymi wyciekami zdjęć tajnych dokumentów
+        do prasy. Zażądała ona przeprogramowania oprogramowania do redagowania tych
+        dokumentów, w taki sposób, aby w każdej kopii udostępnionej jej współpracownikom,
+        poprzez zastosowanie różnych odstępów pomiędzy wyrazami, ukryć informację
+        komu udostępniono daną kopię. Dzięki temu, gdy ponownie pojawiły się one w
+        prasie, mogła ona zidentyfikować współpracownika odpowiedzialnego za wyciek.\cite{DIGITALWATERMARKING}
+
+        Wraz z rozwojem informatyki i komputerów pojawiły się nowe możliwości
+        ukrywania danych. Pojawiło się zainteresowanie wykorzystaniem plików
+        multimedialnych na przykład obrazów lub nagrań, jako nośnika dla wiadomości
+        ukrytych. Wiąże się to z powstaniem dziedziny zwanej steganografią sieciową.
+        Jednym z najpopularniejszych sposobów wykorzystywanych w tej dziedzinie
+        jest ukrywanie danych poprzez modyfikację najmniej istotnego bitu. Jest
+        to metoda wykorzystywana zarówno do plików graficznych\cite{LSBSTEGANGRAPHY}
+        jak i dźwiękowych\cite{AUDIOLSBSTEGANGRAPHY}.
+        Polega ona na modyfikacji najmniej znaczącego bitu opisującego kolor piksela
+        (lub daną próbkę nagrania), w taki sposób, aby ukryć w nim część danych
+        ukrytych i aby jednocześnie zmiana w wyglądzie(lub brzmieniu) obraz(filmu)
+        była niedostrzegalna. Tak otrzymany steganogram może być łatwo rozpowszechniany
+        w Internecie, a dostęp do niego może mieć duża grupa osób.
+
+        Jednym z najnowszych obszarów steganografii cyfrowej jest steganografia
+        sieciowa, której poświęcony został jeden z kolejnych rozdziałów pracy.
+        Ponadto praca ta zawiera propozycję organizacji kanału ukrytego, zawierającą
+        się właśnie w tym obszarze steganografii.
 
     \section{Steganoanaliza}
         \subsection{Podstawowe pojęcia}
         \subsection{Zastosowanie}
+        * terroryzm
         \subsection{Przykłady zapobiegania wykorzystywaniu steganografii}
 
 \chapter{Charakterystyka możliwości realizacji kanałów ukrytych w sieciach komputerowych}
