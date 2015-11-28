@@ -255,8 +255,46 @@
 
     \section{Steganoanaliza}
         \subsection{Podstawowe pojęcia}
+        Podobnie jak kryptografii towarzyszy kryptoanaliza, tak i steganografii
+        towarzyszy nauka zwana \emph{steganoanalizą}. Zajmuje się ona badaniem
+        nośników, pod kątem przenoszenia przez nie danych ukrytych, ponadto badane
+        są sposoby niszczenia danych ukrytych. W kryptografii system uznaje się
+        za \emph{skompromitowany}, gdy kryptologowi uda się odczytać zaszyfrowaną wiadomość.
+        Dla steganografii poprzeczka jest podniesiona, do jej skompromitowania wystarczy,
+        że dowiedzione zostanie, że wiadomość ukryta istnieje w nośnej, nie jest
+        konieczne jej odczytanie. Jeśli ponadto atakującemu uda się odczytać wiadomość
+        ukrytą, zwiększa to poziom kompromitacji systemu.
+
+        Wyróżnia się dwie metody prowadzenie steganoanlizy: pasywną i aktywną.
+        Celem metody pasywnej jest wykrycie istnienia wiadomości ukrytej. Każdy przekazywany
+        przez nadawcę komunikat jest analizowany pod względem zawierania tajnej wiadomości.
+        W przypadku, gdy taka wiadomość zostanie wykryta, komunikacja zostaje przerwana,
+        w przeciwnym wypadku, wiadomość jest dostarczana do odbiorcy. Osoba lub system,
+        który zajmuje się analizą przesyłanych wiadomości, nazwana jest \emph{agentem(ang. warden)}.
+        Steganoanaliza pasywna dzieli się na dwie grupy, \emph{steganoanaliza kierowana(ang. targeted)}, gdy
+        atakujący podejrzewa algorytm, lub grupę algorytmów steganograficznych,
+        które zostały użyte do ukrycia informacji i jest w stanie dopasować do
+        niego sposób prowadzenie analizy, oraz \emph{steganoanalizę ślepą(ang. blind)},
+        gdy musi on stosować ogólne sposoby analizy, które są w stanie wykryć różnego
+        rodzaju algorytmy steganograficzne. Po wykryciu obecności wiadomości ukrytej,
+        agent może przeprowadzić \emph{steganografię śledczą, wywiadowczą(ang. forensic steganalysis)},
+        w celu wydobycia treści wiadomości ukrytej. W takim przypadku nie musi on
+        blokować komunikacji pomiędzy odbiorcą a nadawcą, co mogłoby spowodować,
+        że zorientowali by się oni, że bezpieczeństwo ich komunikacji może być zagrożone.
+
+        W przypadku prowadzenie \emph{steganoanalizy aktywnej} agent ma więcej możliwości
+        działania. W szczególności może on modyfikować wiadomości przesyłane pomiędzy
+        nadawcą a odbiorcą. Jego celem nie koniecznie musi być wykrycie, czy wiadomość
+        ukryta istnieje, ale na przykład upewnienie się, że na pewno nie dotrze ona
+        do odbiorcy. W związku z tym, nawet jeśli błędnie nie wykryje on wiadomości ukrytej,
+        może on modyfikować wiadomość podstawową, starając się usunąć wiadomość ukrytą,
+        ale nadal zachowując sens i znaczenie wiadomości podstawowej. Tego typu analiza
+        najczęściej skierowana jest przeciwko omówionym wcześniej znakom wodnym,
+        oraz cyfrowym odciskom palców.\cite[Rozdział 13]{DIGITALWATERMARKING}
+
         \subsection{Zastosowanie}
         * terroryzm
+        * przewaga technologiczna daje przewage nad przeciwnikiem, np. złamanie enigmy
         \subsection{Przykłady zapobiegania wykorzystywaniu steganografii}
 
 \chapter{Charakterystyka możliwości realizacji kanałów ukrytych w sieciach komputerowych}
