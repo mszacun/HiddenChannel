@@ -489,6 +489,46 @@
                 \label{IPHEADER}
         \end{figure}
         \subsection{Wykorzystanie dopełnienia pakietów}
+        Kolejnym sposobem, który można wykorzystać do tworzenia kanałów ukrytych
+        jest wykorzystanie dopełnienia. Wykorzystanie dopełnienia przez protokół komunikacyjny
+        może być konieczne z kilku powodów. Niektóre algorytmy kryptograficzne, w szczególności
+        tak zwane szyfry blokowe, operują na stałym z góry określonym fragmencie danych,
+        to znaczy bloku. Taki algorytm nie jest w stanie pracować z danymi, których
+        rozmiar nie jest równy rozmiarowi bloku, w związku z tym jeśli długość
+        danych zawartych w pakiecie nie jest wielokrotnością długości bloku
+        algorytmu używanego do szyfrowania, muszą one zostać uzupełnione, aby możliwe
+        było zaszyfrowanie całego pakietu. Taka sytuacja występuje w protokołach,
+        które wykorzystują szyfrowanie, na przykład IPSec\cite{IPSECPADDING}.
+
+        Dopełnienie pakietu jest konieczne, gdy protokół zakłada, z góry ustaloną długość
+        całego pakietu, lub któregoś z pól nagłówka. Takie założenia spotykane są
+        w protokołach, w których można z dużą dokładnością z góry przewidzieć jaką długość
+        będą miały transmitowane dane. W przypadku, gdy długość danych może oscylować
+        wokół przewidzianej wartości, należy założyć długość pakietu(nagłówka)
+        nieco większą niż oszacowana. Gdy długość danych do transmisji jest krótsza niż
+        założona długość pakietu(nagłówka), konieczne jest zastosowanie dopełnienia.
+
+        Niekiedy, dopełnienie stosuje się w celu dopasowania długości pola nagłówka,
+        do długości słowa maszynowego używanego przez dany system komputerowy. Może
+        to w istotny sposób ułatwić implementację sprzętową danego protokołu, co
+        przyspiesza jego działanie. Ponadto nawet programowe implementacje zyskują
+        na szybkości, ponieważ komputery są zoptymalizowane pod względem operowania
+        na danych o długości będącej wielokrotnością długości słowa maszynowego.
+
+        Podobnie jak w przypadku pól nieużywanych, teoretycznie specyfikacja
+        mówi jaką wartością powinno odbywać się dopełnianie pakietów, co więcej,
+        w przypadku dopełniania pakietów dla algorytmu kryptograficznego, zastosowane
+        dopełnienie może mieć wpływ na bezpieczeństwo szyfrogramu(złe dopełnienie narażone
+        jest na atak "padding oracle attack"). Różnice w implementacji protokołów
+        i sterowników urządzeń sieciowych, powodują, że dopełnienie można wykorzystać,
+        jako miejsce ukrycia danych\cite{PADSTEG}
+
+        Również tak jak w przypadku wykorzystania zarezerwowanych pól nagłówka,
+        wykrycie tego rodzaju danych ukrytych może zostać sprowadzone do testowania
+        zgodności przesyłanych pakietów ze specyfikacją protokołu. Wcześniej wspomniane
+        wykorzystanie wielu protokołów z różnych warstw sieciowych, pozwala zmniejszyć
+        prawdopodobieństwo wykrycia ukrytych wiadomości\cite{PADSTEG}
+
         \subsection{Ukrywanie danych w pakietach celowo uszkodzonych}
 
     \section{Poprzez modyfikację właściwości strumienia pakietów}
