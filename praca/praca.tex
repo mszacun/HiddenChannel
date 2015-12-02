@@ -141,7 +141,7 @@
         na zasadę Kerckhoffsa zgodnie z którą:
         "Algorytm kryptograficzny nie powinien być utrzymywany w sekrecie i nie powinno
         być problemem wykradnięcie go przez wroga".\cite{KERCKHOS}, ale również,
-        w świetle doniesień Edwarda Snowdena na temat progrmów takich jak
+        w świetle doniesień Edwarda Snowdena na temat programów takich jak
         Ballrun\cite{WIKI:BALLRUN}, budzi obawę o możliwość umieszczenia w tych
         algorytmach "tylnych furtek", umożliwiających odszyfrowanie zaszyfrowanych
         nim wiadomości.
@@ -185,7 +185,7 @@
         opisuje historię starożytnego polityka grackiego Histiajosa, który spiskował
         ze swoim zięciem Arystagorasem, w celu wywołania powstania miast greckich
         przeciw Persom\cite{STEGANOGRAPHYINTRO}. Ponieważ Persowie nie ufali Histiajosowi, musiał on komunikować
-        się ze swoim zięciem w sposób sekretny. Wedługo Herodota, wykorzystywał
+        się ze swoim zięciem w sposób sekretny. Według Herodota, wykorzystywał
         on w tym celu swojego najbardziej zaufanego niewolnika, najpierw goląc
         go na łyso, a następnie tatuując mu ukryte wiadomości na skórze głowy.
         Gdy niewolnikowi odrastały włosy, był on wysyłany do Arystagorasa, oficjalnie
@@ -274,7 +274,7 @@
         Steganoanaliza pasywna dzieli się na dwie grupy, \emph{steganoanaliza kierowana(ang. targeted)}, gdy
         atakujący podejrzewa algorytm, lub grupę algorytmów steganograficznych,
         które zostały użyte do ukrycia informacji i jest w stanie dopasować do
-        niego sposób prowadzenie analizy, oraz \emph{steganoanalizę ślepą(ang. blind)},
+        niego sposób prowadzenia analizy, oraz \emph{steganoanalizę ślepą(ang. blind)},
         gdy musi on stosować ogólne sposoby analizy, które są w stanie wykryć różnego
         rodzaju algorytmy steganograficzne. Po wykryciu obecności wiadomości ukrytej,
         agent może przeprowadzić \emph{steganografię śledczą, wywiadowczą(ang. forensic steganalysis)},
@@ -319,13 +319,13 @@
         Niestety możliwość wymiany wiadomości bez wzbudzania podejrzeń bywa nadużywana.
         Oprócz wspomnianych wcześniej legalnych zastosowań, steganografia może
         być wykorzystywana przez organizacje przestępcze oraz terrorystyczne. Podejrzewa
-        się, że do zorganizowania ataków na wieże World Trade Center, 11 wrześnie 2001 roku,
+        się, że do zorganizowania ataków na wieże World Trade Center, 11 września 2001 roku,
         terroryści wykorzystywali metody powiązane ze staganografią, a obecnie wykorzystują
         je powszechnie\cite{TERRORISMANDSTEGANOGRAPHY}.
         Powoduje to, że służby zajmujące się utrzymaniem bezpieczeństwa wykorzystują
         steganoanalizę do łapanie przestępców, oraz zapobieganiu ich działaniom.
 
-        Najpowszechniejszeym zastosowaniem steganoanalizy, podobnie jak kryptoanalizy,
+        Najpowszechniejszym zastosowaniem steganoanalizy, podobnie jak kryptoanalizy,
         jest analizowanie oraz ocenianie nowych i już istniejących algorytmów steganograficznych.
         Jak wcześniej wspomniano algorytmy te wykorzystywane są w wielu miejscach,
         a niekiedy bezpieczeństwo zapewniane przez te algorytmy jest kluczowe, jak
@@ -334,15 +334,68 @@
         jest bardzo ważne. W celu oceny algorytmu, pod uwagę branych jest kilka czynników
         Bezpieczeństwo, czyli trudność i ilość pracy jaką trzeba włożyć,
         w badanie steganogramu, aby odkryć istnienie ukrytej wiadomości,
-        w ramach badania bezpieczeństwa, zazwyczaj sprawdza się, jak cięzko
+        w ramach badania bezpieczeństwa, zazwyczaj sprawdza się, jak ciężko
         jest odczytać treść ukrytej wiadomości, po odkryciu jej istnienia.
-        Pojemność(bądź przeływność, w przpyadku steganoanalizy sieciowej), czyli
+        Pojemność(bądź przepływność, w przypadku steganoanalizy sieciowej), czyli
         ilość informacji, które jest w stanie ukryć algorytm, w pojedynczej jednostce
         nośnika(na przykład w jednym obrazie, lub jednym pakiecie sieciowym). Badane
         jest także jak trudne jest usunięcie informacji ukrytej w steganogramie, przy
         użyciu steganoanalizy aktywnej.
 
         \subsection{Przykłady zapobiegania wykorzystywaniu steganografii}
+        Jak zostało wcześniej wspomniane, do wykrywania i zapobiegania wykorzystaniu stegangrafii
+        wykorzystywane są różnego rodzaju techniki opracowane w ramach steganoanalizy.
+        Część ataków na alagorytmy steganograficzne jest podobna do ataków na
+        algorytmy kryptograficzne. Steganografia stara się zapewnić dodatkowe bezpieczeństwo
+        poprzez ukrycie wiadomości, w związku z tym jest podatna na dodatkowe ataki.
+        Podobnie jak w przypadku kryptografii, im większą ilością danych na temat
+        algorytmu steganograficznego i wymienianych wiadomości posiada atakujący,
+        tym groźniejsze i bardziej wyrafinowane ataki jest w stanie on przeprowadzić.
+        Wśród możliwych ataków wyróżniamy\cite{DISAPPEARINGCRYPTOEMBEDDINGMETDATA}:
+        \begin{itemize}
+            \item atak ze znanym steganogramem - atakujący ma dostęp jedynie do
+                steganogramu, ewentualnie pewnej ich kolekcji, przechwyconych poprzez
+                podsłuchiwanie komunikacji, na tej podstawie podejmuje on decyzję,
+                czy zawierają one wiadomość ukrytą, czy nie, analiza ślepa opiera
+                się w tym przypadku o analizę statystyczną steganogramu i poszukiwaniu
+                odchyleń od normy lub o badanie zgodności wymienianych wiadomości
+                ze standardami(na przykład zgody z oficjalną specyfikacją formatu pliku,
+                lub protokołu komunikacyjnego), możliwe jest rozszerzenie
+                analizy o próbę odczytania zawartości wiadomości ukrytej, po stwierdzeniu
+                jej istnienia
+            \item atak ze znanym steganogramem i oryginalnym nośnikiem - w przypadku
+                takiego ataku steganoanalityk jest w stanie łatwo wykryć istnienie
+                wiadomości poprzez porównanie nośnika ze steganogramem, jednoznacznie
+                potwierdza to istnienie wiadomości ukrytej, ponieważ z definicji
+                każdy algorytm steganograficzny powoduje modyfikację właściwości
+                nośnika, w przypadku tego ataku najczęściej wysiłki skupiają się
+                na odczytaniu zawartości wiadomości ukrytej
+            \item atak ze znajomością algorytmu steganograficznego - atak ten
+                stosowany jest przeciwko algorytmom używającym klucza steganograficznego,
+                w celu odczytania zawartości wiadomości ukrytych, klucz steganograficzny
+                jest najczęściej ziarnem dla generatora liczb losowych, który z
+                kolei kontroluje proces ukrywania wiadomości w nośniku, przeprowadzanie
+                takiego ataku przeciw algorytmom nie używającym klucza kryptograficznego
+                nie jest konieczne, ponieważ znając algorytm, atakujące może wykrywać i
+                odczytywać tajne wiadomości
+            \item atak niszczący ukryte wiadomości - jak wspomniano wcześniej, niekiedy
+                celem atakującego nie jest wykrycie wiadomości ukrytej, ale upewnienie
+                się, że nie dotrze ona do odbiorcy, w tym celu może on poddać steganogram
+                procesom takim jak filtrowanie(obrazy, dźwięki, skuteczne przeciwko
+                algorytmom ukrywającym dane w najmniej znaczącym bicie), kompresja(bardzo skuteczna
+                metoda przeciwko większości algorytmów), konwersja do innego formatu
+                bądź użycie innego protokołu komunikacyjnego(skuteczniejsze niż konwersja) lub
+                przeformułowanie wiadomości nośnej(na przykład poprzez zapisanie tego samego tekstu
+                innymi słowami)
+            \item atak zastępujący ukrytą wiadomość - atak stosowany w celu zniszczenia
+                wiadomości ukrytej, lub zastąpienia jej wiadomością przygotowaną przez atakującego,
+                stosowany, gdy dysponuje on specyfikacją algorytmu steganograficznego,
+                polega na zastosowaniu algorytmu ponownie, traktując steganogram jako nośnik
+                nowej ukrytej wiadomości, większość algorytmów jest podatna na ten
+                atak, ponieważ ukrywają one wiadomość atakującego w taki sam sposób,
+                jak oryginalną wiadomość ukrytą, tym samym ją niszcząc
+        \end{itemize}
+
 
 \chapter{Charakterystyka możliwości realizacji kanałów ukrytych w sieciach komputerowych}
     \section{Poprzez modyfikację pakietów}
