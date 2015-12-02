@@ -2,6 +2,8 @@
 
 \usepackage{titlesec}
 \usepackage{polski}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 \usepackage[utf8]{inputenc}
 \usepackage[margin=25mm]{geometry}
 \usepackage{indentfirst}
@@ -46,6 +48,8 @@
 \end{abstract}
 
 \tableofcontents
+
+\listoffigures
 
 \chapter{Cel i zakres pracy}
     Celem niniejszej pracy jest przedstawienie zaprojektowanego protokołu kanału
@@ -425,13 +429,65 @@
     kilka kanałów ukrytych zorganizowanych na poziomie różnych warstw modelu ISO/OSI.
     Zastosowanie kilku kanałów ukrytych stosowanych na przemian, może pomóc w zmniejszeniu
     wykrywalności całego systemu poprzez minimalizowanie wywieranego wpływu na pojedynczy
-    nośnik(protokół komunikacyjny).
+    nośnik(protokół komunikacyjny). Wybór warstwy sieciowej, w której działa kanał ukryty
+    ma wpływ między innymi na prawdopodobieństwo przypadkowego usunięcia wiadomości
+    ukrytej w trakcie transmisji(na przykład poprzez budowę nowego pakietu na podstawie
+    pakietu oryginalnego w czasie trasowania).
 
     W dalszej części rozdziału przedstawiono podział steganografii sieciowej
     oraz zaprezentowane przykładowe kanały ukryte charakterystyczne dla danej
     dziedziny.
     \section{Poprzez modyfikację pakietów}
         \subsection{Wykorzystanie nieużywanych pól nagłówków}
+        Nie tylko wspomniane wcześniej rozbieżności pomiędzy poszczególnymi
+        implementacjami powodują powstanie możliwości organizacji kanałów ukrytych.
+        Często zdarza się, że protokoły komunikacyjne wymagają rozbudowy o nowe,
+        funkcjonalności, o których nie pomyśleli, bądź nawet nie byli świadomi
+        ich twórcy na etapie projektowania. W momencie, gdy protokół jest obecny
+        na rynku od dawna i jest szeroko używany(dokument RFC opisujący protokół TCP
+        powstał w 1981 roku\cite{TCPRFC}), wprowadzanie do niego drastycznych zmian,
+        powodujących niekompatybilność z istniejącymi implementacjami, nie jest
+        najlepszym pomysłem. W związku z tym, autorzy protokołów często wprowadzają
+        do nagłówków tych protokołów nadmiarowe pola, zarezerwowane do wykorzystania
+        w przyszłości. Takie pola nie są wykorzystywane przez aktualne implementacje
+        protokołów, co pozwala na wykorzystanie ich w celu transmisji ukrytych danych.
+
+        Jeden z najpopularniejszych protokołów komunikacyjnych używany do niezawodnej
+        transmisji danych - TCP, jest przykładem protokołu zawierającego pola zarezerwowane(Rys. \ref{TCPHEADER}).
+        Wykorzystanie tego pola pozwala na stworzenie kanału ukrytego pozwalającego
+        na transmisję 6 bitów tajnych danych w każdym pakiecie TCP. W przypadku protokołu
+        IP, który jest głównym protokołem wykorzystywanym w Internecie, możemy wykorzystać: pole
+        opisujące używaną wersję protokołu(4 bity), nie zarejestrowane wartości pola Typ Usługi(2 bity),
+        oraz pierwszy bit pola Flagi(1 bit)(Rys. \ref{IPHEADER})\cite{IPRFC}.
+
+        Liczba bitów danych
+        możliwych do ukrycia w pojedynczym pakiecie, nie robi może wrażenia, jednak biorąc
+        pod uwagę intensywność wykorzystania tych protokołów, można w ten sposób
+        stworzyć kanały ukryte o dużych przepustowościach. Inną zaletą kanałów organizowanych
+        w ten sposób jest prostota implementacji. Niestety ogromną wadą jest stosunkowa
+        łatwość wykrycia. Nawet pasywny warden jest w stanie łatwo wykryć istnienie wiadomości
+        ukrytej, poprzez sprawdzanie zgodności zawartości wymienionych wcześniej pól
+        nagłówka ze specyfikacją protokołu. Zazwyczaj jest w niej wyraźnie napisane,
+        jaką wartością powinny być wypełnione pola zarezerwowane(najczęściej jest to 0).
+        Każde odstępstwo od specyfikacji może być traktowane jako podejrzane. Nawet biorąc
+        pod uwagę, przytoczony wcześniej argument o niezgodności implementacji protokołów
+        ze specyfikacją, zazwyczaj wartość wpisywana przez systemy operacyjne do
+        zarezerwowanych pól nagłówków jest stała.
+
+        \begin{figure}[h]
+                \centering
+                % source: http://intronetworks.cs.luc.edu/current/html/_images/tcp_header.png
+                \includegraphics{tcp_header}
+                \caption{Format nagłówka protokołu TCP}
+                \label{TCPHEADER}
+        \end{figure}
+        \begin{figure}[h]
+                \centering
+                % source: http://ps-2.kev009.com/wisclibrary/aix51/usr/share/man/info/en_US/a_doc_lib/aixbman/commadmn/figures/comma35.jpg
+                \includegraphics{ip_header}
+                \caption{Format nagłówka protokołu IP}
+                \label{IPHEADER}
+        \end{figure}
         \subsection{Wykorzystanie dopełnienia pakietów}
         \subsection{Ukrywanie danych w pakietach celowo uszkodzonych}
 
