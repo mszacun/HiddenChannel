@@ -398,6 +398,38 @@
 
 
 \chapter{Charakterystyka możliwości realizacji kanałów ukrytych w sieciach komputerowych}
+    Wraz z rozwojem i coraz powszechniejszym wykorzystaniem komputerów i sieci
+    komputerowych, prężnie rozwija się dziedzina steganografii zwana steganografią
+    sieciową. Do tworzenia kanałów umożliwiających transmisję wiadomości ukrytych
+    wykorzystuje ona protokoły komunikacyjne i wpływa na ich działanie. W kontekście
+    steganografii sieciowej warto wyróżnić zasługi polskich naukowców z Politechniki
+    Warszawskiej, którzy wiele wnieśli w rozwój tej nauki\cite{STEGANOGRAFIASIECIOWAART}.
+
+    Protokoły komunikacyjne są zazwyczaj
+    precyzyjnie specyfikowane w dokumentach RFC, jednak nawet najdokładniejsza
+    specyfikacja nie jest w stanie pokryć wszystkich przypadków brzegowych. Powoduje
+    to, że w niektórych miejscach specyfikacja pozostawia swobodę implementacji protokołu,
+    co w dalszej kolejności powoduje występowanie różnic pomiędzy konkretnymi
+    implementacjami, na przykład pomiędzy różnymi systemami operacyjnymi, ponadto
+    w niektórych systemach implementacja protokołów może być okrojona. Te czynnik
+    powodują, że pojawia się okazja do nadużyć i wykorzystaniu niespójności do organizowania
+    kanałów ukrytych.
+
+    Mnogość istniejących protokołów pozwala na tworzenie różnorodnych protokołów
+    kanałów ukrytych, dostosowanych do konkretnych warunków komunikacyjnych.
+    Mogą być w tym celu wykorzystywane protokoły ze wszystkich warstw modelu
+    ISO/OSI, chociaż wykorzystanie niektórych warstw może być trudne, lub wiązać
+    się z dużym wysiłkiem(na przykład dla warstwy fizycznej lub warstwy danych -
+    implementacja dedykowanych sterowników urządzeń sieciowych). Umożliwia to
+    też budowę dużych systemów steganograficznych wykorzystujących jednocześnie
+    kilka kanałów ukrytych zorganizowanych na poziomie różnych warstw modelu ISO/OSI.
+    Zastosowanie kilku kanałów ukrytych stosowanych na przemian, może pomóc w zmniejszeniu
+    wykrywalności całego systemu poprzez minimalizowanie wywieranego wpływu na pojedynczy
+    nośnik(protokół komunikacyjny).
+
+    W dalszej części rozdziału przedstawiono podział steganografii sieciowej
+    oraz zaprezentowane przykładowe kanały ukryte charakterystyczne dla danej
+    dziedziny.
     \section{Poprzez modyfikację pakietów}
         \subsection{Wykorzystanie nieużywanych pól nagłówków}
         \subsection{Wykorzystanie dopełnienia pakietów}
