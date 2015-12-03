@@ -570,6 +570,46 @@
 
     \section{Poprzez modyfikację właściwości strumienia pakietów}
         \subsection{Poprzez manipulację prędkością transmisji}
+        Ten sposób organizacji polega na modulacji prędkości transmisji danych
+        pomiędzy nadawcą a odbiorcą, w zależności od danych ukrytych, które mają
+        być transmitowane. Należy zauważyć, że w przeciwieństwie do poprzednich
+        metod, tutaj nie następuje żadna ingerencja, w dane ani nagłówek pakietu.
+        Odróżnia to metody przedstawione w tej części rozdziału, od poprzednio
+        przedstawionych.
+
+        W celu organizacji kanału ukrytego wyznaczane są odpowiednie zakresy prędkości, oraz ich
+        interpretacja. Odbiorca co ustalony czas, dokonuje próbkowania prędkości
+        transmisji. Odczytana wartość jest porównana z umówionymi wcześniej zakresami,
+        w zależności, w którym z tych zakresów jest ona zawarta, interpretowane jest to
+        jako otrzymanie bitu 1, 0 lub brak komunikatu. Rola tych przedziałów jest analogiczna
+        do przedziałów kwantyzacji, używanych do kwantyzacji sygnału analogowego.
+
+        Przepływność takiego kanału ukrytego jest pochodną wybranej przez rozmówców
+        częstotliwości próbkowania oraz liczby przedziałów kwantyzacji. Pojawia się
+        problem doboru długości przedziałów kwantyzacji, za pomocą których wykonywana
+        jest interpretacja wartości
+        prędkości chwilowej. Muszą być one na tyle długie, aby uwzględniać naturalnie
+        występujące w sieciach komputerowych opóźnienia oraz przeciążenia, które wpływają
+        na chwilową wartość prędkości transmisji. Z drugiej strony, zbyt długie przedziały
+        mogą spowodować, że do transmisji danych ukrytych wymagana będzie duża ilość danych
+        podstawowych. Ponadto środki przedziałów należy dostosować do natężenia
+        napływu wiadomości podstawowych. Możliwe jest wyznaczenie większej ilości
+        przedziałów kwantyzacji, co umożliwia transmisję więcej niż jednego bitu w pojedynczym
+        okresie próbkowania.
+
+        Przedstawione problemy powodują, że tego typu kanały muszą być dokładnie
+        skonfigurowane pod kątem konkretnej sieci komputerowej, w której będą wykorzystywane.
+        Zastosowanie takich kanałów w niestabilnych środowiskach sieciowych(częste zmiany
+        opóźnień, lub natężenia napływu danych) jest znacznie utrudnione. Należy jednak
+        zauważyć, że po dokładnym skonfigurowaniu oraz przeprowadzeniu dokładnych
+        pomiarów opóźnień, kanały ukryte zorganizowane w ten sposób można z powodzeniem
+        stosować, nawet wtedy, gdy do komunikacji konieczne jest korzystanie z węzłów pośrednich.
+        Węzły pośrednie, o ile zachowują się deterministycznie, nie zmieniają znacznie wcześniej
+        zmierzonych wartości opóźnienia oraz prędkości transmisji.
+
+        TODO: TU BĘDZIE OBRAZEK(wykres zależności prędkości transmisji od czasu, z
+        oznaczonymi przedziałami kwantyzacji prędkości transmisji, oraz okresami
+        próbkowania)
         \subsection{Poprzez manipulację opóźnieniem pakietów}
 
     \section{Podejścia hybrydowe}
