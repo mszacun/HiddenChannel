@@ -527,9 +527,46 @@
         wykrycie tego rodzaju danych ukrytych może zostać sprowadzone do testowania
         zgodności przesyłanych pakietów ze specyfikacją protokołu. Wcześniej wspomniane
         wykorzystanie wielu protokołów z różnych warstw sieciowych, pozwala zmniejszyć
-        prawdopodobieństwo wykrycia ukrytych wiadomości\cite{PADSTEG}
+        prawdopodobieństwo wykrycia ukrytych wiadomości. Przykład implementacji
+        takiego kanału ukrytego przedstawiono w \cite{PADSTEG}
 
         \subsection{Ukrywanie danych w pakietach celowo uszkodzonych}
+        Obecnie popularne staje się wykorzystanie mechanizmów zapewniania niezawodności
+        transmisji do organizacji kanałów ukrytych. Chodzi tutaj o mechanizmy
+        takie jak odrzucanie i retransmisja uszkodzonych pakietów.Przykładem wykorzystania takich
+        mechanizmów jest umyślne tworzenie pakietów, w których suma kontrolna w nagłówku
+        nie zgadza się z sumą kontrolną obliczoną dla treści wiadomości.
+
+        Teoretycznie możliwe są dwa
+        sposoby organizacji kanałów ukrytych oparte na tym pomyśle. Pierwszy z nich polega na umieszczeniu
+        danych ukrytych w polu nagłówka, w którym zwykle znajduje się suma kontrolna,
+        jednak nie ma on praktycznego zastosowania, ze względu, na małą przepływność
+        kanału ukrytego i stosunkowo łatwą wykrywalność(transmisja dużej ilości
+        danych ukrytych znacząco pogarsza jakość obsługi w kanale podstawowym).
+
+        Inny pomysł polega
+        na umieszczeniu danych ukrytych w polu danych pakietu, i sfałszowaniu sumy
+        kontrolnej. W takiej sytuacji pakiet wygląda na uszkodzony, w związku z tym
+        dla podsłuchującego i dla odbiorcy wiadomości podstawowych wydaje się
+        on nie przenosić żadnych użytecznych danych. Odbiorca wiadomości ukrytych,
+        widząc, że to właśnie w takich pakietach znajdują się wiadomości ukryte,
+        może je odczytać. Kanały ukryte oparte na takiej zasadzie, są w stanie
+        zapewnić dużą przepływność, należy jednak uważać, aby liczba wprowadzonych
+        uszkodzonych pakietów mieściła się w granicach zdrowego rozsądku, zbyt duża
+        ich liczba może przyczynić się do wzrostu wykrywalności kanału. Do wad takiego
+        rozwiązania należy zaliczyć brak możliwości wykorzystania kanału, jeśli do
+        komunikacji pomiędzy nadawcą a odbiorcą konieczne jest wykorzystanie pośrednika(na przykład routera).
+        Jest to spowodowane tym, że zazwyczaj każdy z węzłów pośredniczących w transmisji
+        dokonuje kontroli poprawności pakietu(sprawdza sumę kontrolną) i nie przekazuje
+        dalej pakietów uszkodzonych.
+
+        Wykorzystanie celowow uszkodzonych pakietów najlepiej sprawdza się w
+        sieciach, w których do naturalnych uszkodzeń pakietów, nie związanych z
+        istnieniem kanału ukrytego, dochodzi stosunkowo często. W związku z tym
+        świetnie nadają się sieci bezprzewodowe oraz takie, w których występują
+        częste zakłócenia. Przykład implementacji kanału ukrytego, wykorzystującego
+        ukrywanie informacji w polu danych uszkodzonych pakietów, w sieci WIFI
+        został opisany w \cite{HICCUPS}
 
     \section{Poprzez modyfikację właściwości strumienia pakietów}
         \subsection{Poprzez manipulację prędkością transmisji}
