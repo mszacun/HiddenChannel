@@ -609,8 +609,43 @@
 
         TODO: TU BĘDZIE OBRAZEK(wykres zależności prędkości transmisji od czasu, z
         oznaczonymi przedziałami kwantyzacji prędkości transmisji, oraz okresami
-        próbkowania)
+        próbkowania).
+
         \subsection{Poprzez manipulację opóźnieniem pakietów}
+        Sposobem podobnym do poprzedniego jest interpretacja opóźnień pakietów,
+        jako fragmenty pochodzące z danych ukrytych.\cite{IPDELAYCHANNEL} Ten sposób nie wymaga jednak próbkowania,
+        ponieważ opóźnienie(rozumiane tutaj jako okres czasu pomiędzy odebraniem dwóch
+        kolejnych pakietów), może być precyzyjnie obliczony. Nadal jednak potrzebna
+        jest kwantyzacja, ze względu na wpływa warunków zewnętrznych, takich jak przeciążenia,
+        na opóźnienie pakietów. Nadawca umyślnie wydłuża lub skraca czas pomiędzy
+        wysłaniem kolejnych pakietów, w zależności od fragmentu danych ukrytych,
+        które chce przetransmitować. Odbiorca po odebraniu pakietu oblicza czas jaki
+        upłynął od odebrania poprzedniego pakietu, następnie sprawdza, a następnie
+        interpretuje opóźnienie jako fragment wiadomości ukrytej korzystając z
+        przedziałów kwantyzacji.
+
+        Przepływność tak uzyskanego kanału zależy od długości i ilości wybranych
+        przedziałów kwantyzacji. W związku z tym, jest ona niższa od możliwej do
+        uzyskania przy pomocy wcześniej przedstawionego sposobu, ze względu na brak
+        możliwości regulacji okresu próbkowania, który jest tutaj nieobecny. Poza tą różnicą, oba sposoby mają
+        wiele wspólnego. Podobnie jak w poprzednim przypadku, wyznaczenie długości
+        przedziałów kwantyzacji powinno być poprzedzone zbadaniem opóźnień występujących
+        naturalnie w środowisku sieciowym, ponieważ nakładają się one na opóźniania
+        wprowadzone przez nadawcę. W związku z tym taki kanał ukryty również wrażliwy jest
+        na nagłe zmiany charakterystyk pracy sieci komputerowej, jednak w mniejszym
+        stopniu niż kanał oparty na modulacji prędkości transmisji. Równie dobrze
+        nadaje się on do komunikacji, gdy pomiędzy odbiorcą a nadawcą znajdują się
+        węzły pośredniczące.
+
+        Zaletą obu przedstawionych w tej sekcji protokołów komunikacyjnych,
+        jest możliwość wykorzystania szerokiego zestawu protokołów jako
+        źródeł wiadomości podstawowych. Przedstawione techniki są na ogólne i
+        nie stawiają żadnych wymagań protokołowi, który zostanie wykorzystany jako
+        nośnik(brak wymagań co do określonych pól nagłówka, oraz co do typu transportowanych danych).
+        W związku z tym, jako źródło wiadomości podstawowych może być wykorzystany
+        praktycznie każdy protokół, pod warunkiem odpowiedniego skonfigurowania
+        protokołu kanału ukrytego.
+
 
     \section{Podejścia hybrydowe}
         \subsection{Ukrywanie danych w pakietach opóźnionych}
