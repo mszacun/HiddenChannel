@@ -437,7 +437,7 @@
     W dalszej części rozdziału przedstawiono podział steganografii sieciowej
     oraz zaprezentowane przykładowe kanały ukryte charakterystyczne dla danej
     dziedziny.
-    \section{Poprzez modyfikację pakietów}
+    \section{Poprzez modyfikację pakietów} \label{MODYFIKACJAPAKIETOW}
         \subsection{Wykorzystanie nieużywanych pól nagłówków}
         Nie tylko wspomniane wcześniej rozbieżności pomiędzy poszczególnymi
         implementacjami powodują powstanie możliwości organizacji kanałów ukrytych.
@@ -530,7 +530,7 @@
         prawdopodobieństwo wykrycia ukrytych wiadomości. Przykład implementacji
         takiego kanału ukrytego przedstawiono w \cite{PADSTEG}
 
-        \subsection{Ukrywanie danych w pakietach celowo uszkodzonych}
+        \subsection{Ukrywanie danych w pakietach celowo uszkodzonych} \label{USZKODZONEPAKIETY}
         Obecnie popularne staje się wykorzystanie mechanizmów zapewniania niezawodności
         transmisji do organizacji kanałów ukrytych. Chodzi tutaj o mechanizmy
         takie jak odrzucanie i retransmisja uszkodzonych pakietów.Przykładem wykorzystania takich
@@ -568,7 +568,7 @@
         ukrywanie informacji w polu danych uszkodzonych pakietów, w sieci WIFI
         został opisany w \cite{HICCUPS}
 
-    \section{Poprzez modyfikację właściwości strumienia pakietów}
+    \section{Poprzez modyfikację właściwości strumienia pakietów} \label{MODYFIKACJASTRUMIENIA}
         \subsection{Poprzez manipulację prędkością transmisji}
         Ten sposób organizacji polega na modulacji prędkości transmisji danych
         pomiędzy nadawcą a odbiorcą, w zależności od danych ukrytych, które mają
@@ -648,8 +648,49 @@
 
 
     \section{Podejścia hybrydowe}
-        \subsection{Ukrywanie danych w pakietach opóźnionych}
+        \subsection{Ukrywanie danych w pakietach protokołów strumieniowej transmisji danych}
+        W celu połączenia zalet podejść przedstawionych w sekcjach
+        \ref{MODYFIKACJAPAKIETOW} i \ref{MODYFIKACJASTRUMIENIA}, oraz wyeliminowania
+        ich wad, stworzono kanały steganograficzne, wykorzystujące jednocześnie obie te
+        techniki. Takie kanały modyfikują jednocześnie pojedyncze pakiety sieciowe,
+        jak i właściwości strumienia pakietów. Dzięki temu, można przesyłać tajne wiadomości,
+        nawet do innych sieci komputerowych, z wykorzystaniem pośrednich węzłów sieciowych,
+        jednocześnie eliminując dużą zależność protokołu kanału ukrytego od warunków
+        panujących w środowisku sieciowym. Ceną, którą należy zapłacić za kanał
+        ukryty tej klasy, jest niewielka liczba protokołów, które można wykorzystać
+        jako kanał podstawowy. Najczęściej wykorzystywaną klasą protokołów są
+        protokoły strumieniowej transmisji danych, wykorzystywane między innymi
+        w aplikacjach VOiP, lub strumieniujących multimedia(muzykę, filmy).
 
+        W pracy \cite{VOIPSTEGANOGRAPHY} w celu organizacji kanału ukrytego wykorzystany
+        jest protokół RTP(Real-Time Transfer Protocol), jako przykład aplikacji
+        wykorzystującej ten protokół wybrano aplikację typu VOiP. W tego typu aplikacjach,
+        jeśli odbiorca odbierze pakiet, który jest znacznie opóźniony w stosunku
+        do innych pakietów, uznaje się, że informacje w nim zawarte są bezwartościowe,
+        ponieważ jest za późno, aby użyć ich do procedury rekonstrukcji głosu.
+        Zastosowane przez autorów podejście opiera się na celowym opóźnianiu pakietów
+        zawierających dane ukryte, zapisane w polu danych pakietu.
+        Odbiorca wiadomości podstawowych odbierając pakiet
+        uszkodzony, odrzuca go, jednak odbiorca wiadomości wiedząc, że to właśnie
+        w nim znajduje się ukryta wiadomość, może ją odczytać.
+
+        Pakiet zostaje rozpoznany jako opóźniony, nie tylko ze względu na celowe
+        oczekiwanie z jego wysłaniem przez nadawcę, ale również ze względu
+        na umieszczenie sfałszowanego czasu wysłania pakietu w odpowiednim
+        polu nagłówka(pole Timestamp). Dzięki temu kanał staje się mniej zależny
+        od warunków i opóźnienia naturalnie występującego w sieci komputerowej.
+
+        Jak widać w celu realizacji kanału modyfikowany jest zarówno pakiet(pole danych,
+        pole nagłówka z czasem nadania) jak i właściwości strumienia pakietów(opóźnienie)
+        Jak wspomniano wcześniej, pozwala to na połączenie zalet obu opisywanych
+        wcześniej sposobów organizacji kanałów ukrytych. Ponadto użycie pola danych
+        do transmisji danych ukrytych, pozwala na stworzenie kanału ukrytego o
+        dużej przepływności. Podobnie jak w przypadku metody omawianej w sekcji
+        \ref{USZKODZONEPAKIETY}, tak i tutaj ilość pakietów, które zostaną opóźnione
+        nie może być zbyt duża, ponieważ może to skutkować znaczącym pogorszeniem
+        jakości usługi i ułatwić wykrycie kanału ukrytego.
+
+        DORZUCIC NAGLOWEK PROTOKOLU RTP
 
 \chapter{Projekt protokołu kanału ukrytego}
     \section{Opis otoczenia działania protokołu}
