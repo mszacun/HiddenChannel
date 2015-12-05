@@ -26,9 +26,9 @@
 \begin{abstract}
     Zapewnienie bezpiecznej komunikacji było od zawsze jednym z największych
     problemów telekomunikacji. Tradycyjnie bezpieczna transmisja była możliwa
-    dzięki wykorzystaniu kryptografii. Wraz z zastosowanie coraz bardziej wysublimowanych
+    dzięki wykorzystaniu kryptografii. Wraz z zastosowaniem coraz bardziej wysublimowanych
     ataków na algorytmy kryptograficzne, oprócz udoskonalania tych algorytmów rozpoczęto
-    poszukiwania innych sposobów zabezpieczenia wymienianych informacji. Jednym
+    poszukiwania innych sposobów zabezpieczania wymienianych informacji. Jednym
     z proponowanych rozwiązań jest steganografia, nauka zajmująca się opracowywaniem
     metod komunikacji, w sposób utrudniający wykrycie istnienia wymienianych komunikatów.
     Niniejsza praca zawiera krótki przegląd przykładowych sposobów
@@ -36,7 +36,7 @@
     W głównej części pracy wysuwana jest propozycja stworzenia kanału ukrytego, opartego na ukrywaniu
     danych w długości pakietów protokołu UDP przesyłanych kanałem podstawowym.
     Przedstawiony protokół kanału ukrytego wspiera zarówno agregację jak i fragmentację
-    wiadomości podstawowych w celu transmisji wiadomości ukrytych.Przeprowadzone
+    wiadomości podstawowych w celu transmisji wiadomości ukrytych. Przeprowadzone
     zostały szczegółowe badania parametrów jakościowych takiego kanału w zależności
     od przyjętych parametrów protokołu kanału ukrytego. Podjęta została również
     analiza ingerencji w kanał podstawowy oraz wykrywalności kanału zorganizowanego w taki sposób.
@@ -57,7 +57,7 @@
     zawierających wiadomości podstawowe. W ramach tego celu zostaną wykonane:
     \begin{itemize}
         \item prezentacja steganografii, nauki o ukrywaniu wiadomości w różnego rodzaju nośnikach,
-            oraz steganoanalizy, nauki o wykrywaniu oraz ewentualnym niszczeniu kanałów
+            oraz steganoanalizy, nauki o wykrywaniu, wraz z ewentualnym niszczeniem kanałów
             ukrytej komunikacji, wraz z najczęściej używanymi pojęciami
         \item przedstawienie przykładowych, innych niż zaproponowany w pracy,
             sposobów organizacji kanałów ukrytych, z zakresu steganografii sieciowej,
@@ -67,7 +67,8 @@
             z opisem parametrów otrzymanego protokołu, oraz wyjaśnieniem pojęć
             użytych do jego opisu
         \item przeprowadzenie badań czynników wpływających na średnie opóźnienie
-            w odbiorze wiadomości podstawowych i ukrytych, wraz z analizą wniosków
+            w odbiorze wiadomości podstawowych i ukrytych, wynikających z wykorzystania
+            przedstawionego kanału ukrytego,, wraz z analizą wniosków
             z nich płynących
         \item przeprowadzenie analizy wykrywalności zaproponowanego kanału ukrytego,
             wraz z zaproponowaniem sposobów jej zmniejszenia
@@ -78,7 +79,7 @@
         \subsection{Podstawowe pojęcia}
         \emph{Steganografia} jest to nauka o przesyłaniu komunikatów w taki sposób, aby
         osoba mająca dostęp do kanału, którym prowadzona jest transmisja komunikatów
-        nie był w stanie zorientować się, że przesyłane komunikaty istnieją.
+        nie była w stanie zorientować się, że przesyłane komunikaty istnieją.
         Do ukrycia wiadomości ukrytych wykorzystuje się 
         \emph{nośniki steganograficzne}\cite{STEGANOGRAFIASIECIOWAART}.
         Jednymi z najczęściej wykorzystywanych nośników są multimedia takie jak
@@ -90,7 +91,7 @@
         zmodyfikować właściwości nośnika aby ukryć w nim wiadomość opisuje
         \emph{algorytm steganograficzny}. W ramach algorytmu steganograficznego
         opisuje się także przekształcenie odwrotne, które musi
-        wykonać odbiorca steganogramu w celu odzyskania wiadomości ukrytej.
+        wykonać odbiorca steganogramu, w celu odzyskania wiadomości ukrytej.
         Opcjonalnie zachowanie algorytmu steganograficznego może być modyfikowane przy pomocy specjalnego
         parametru, tak zwanego \emph{klucza}.  Dla takiej samej wiadomości ukrytej i nośnika
         wykorzystywanego do jej ukrycia, różne wartości klucza powodują, że algorytm
@@ -117,11 +118,11 @@
         powinno się stosować tam, gdzie konieczne jest zachowanie w tajemnicy
         faktu istnienia wiadomości lub faktu prowadzenia komunikacji. Jako przykład
         można tutaj podać komunikację pomiędzy różnego rodzaju służbami specjalnymi
-        podczas organizacji i prowadzenia akcji specjalnych na przykład odbijanie zakładników.
+        podczas organizacji i prowadzenia akcji specjalnych, na przykład odbijania zakładników.
         W przypadku gdyby przestępcy, przechwyciliby zaszyfrowaną komunikację
         pomiędzy oddziałami, mogliby nabrać podejrzeń, jeśli natomiast przechwycona
-        zostałaby niezaszyfrowana niewinnie wyglądająca komunikacje, nie powinna ona
-        budzić żadnych obaw. Steganografia wykorzystywana jest również do prowadzenia
+        zostałaby niezaszyfrowana, niewinnie wyglądająca komunikacja, nie powinna ona
+        wzbudzić żadnych obaw. Steganografia wykorzystywana jest również do prowadzenia
         działań wywiadowczych i anty wywiadowczych. Szpiedzy wykorzystują ją do
         bezpiecznej i nie wzbudzającej podejrzeń komunikacji z macierzystą agencją
         wywiadowczą.
@@ -162,16 +163,16 @@
         Oprócz tego usunięcie znaku wodnego powinno być trudne dla osób do tego nie
         uprawnionych. W przypadku, gdyby druga osoba skopiowała dzieło innej osoby,
         w którym ukryty był znak wodny, może on posłużyć prawowitemu autorowi w
-        sądzie do udowodnienia kto jest prawdziwym autorem.
+        sądzie do udowodnienia, kto jest prawdziwym autorem.
 
         Bardzo zbliżonym do znakowania zastosowaniem technik steganograficznych jest
         tworzenie "odcisków palca"(ang. \emph{fingerprinting}). Jest to specjalny
         typ znaku wodnego, unikalny dla każdej kopii dzieła(pliku). Dzięki odciskowi
-        palca możliwe jest zidentyfikowanie osoby winnej na przykład wycieku informacji
+        palca, możliwe jest zidentyfikowanie osoby winnej, na przykład wycieku informacji
         do mediów, lub też nielegalnie udostępniającej plik w Internecie. W przypadku,
         gdy jeden z nabywców filmu udostępnia go nielegalnie w Internecie, sprzedawca,
         który w każdej sprzedanej kopii umieścił unikany odcisk palca, może porównać
-        odcisk palca w udostępnianym pliku z zapisanymi wcześniej odciskami palców
+        odcisk palca w udostępnianym pliku, z zapisanymi wcześniej odciskami palców
         w kopiach sprzedanym poszczególnym klientom.
 
         Techniki ukrywania informacji wykorzystywane są także do rozbudowywania
@@ -204,8 +205,8 @@
         były woskiem, w którym można było utrwalić wiadomość, a następnie, gdy
         nie była ona już potrzebna, stopić wosk i otrzymać tabliczkę gotową do
         ponownego użycia. Grek Demaratos chcąc ostrzec Spartę przed atakiem Persów,
-        wyrył ostrzeżenie bezpośrednio w drewnie, następnie pokrywające je woskiem
-        i umieszczając w nim niewinnie brzmiącą wiadomość.
+        wyrył ostrzeżenie bezpośrednio w drewnie, następnie pokrył je woskiem
+        i zapisał na nim niewinnie brzmiącą wiadomość.
 
         W średniowieczu często stosowane były atramenty sympatyczne, czyli takie,
         które po zapisaniu wiadomości na papierze stawały się niewidoczne, a do
@@ -226,12 +227,12 @@
         W czasach, gdy w wielu krajach obowiązywała cenzura, powszechne było ukrywanie
         informacji w tekstach. Odbywało się to poprzez odpowiedni dobór słów,
         z których składał się tekst. Odczytywanie tak ukrytych wiadomości możliwe było
-        dzięki na przykład odczytywaniu drugiej litery każdego ze słów, bądź pierwszej
+        dzięki, na przykład odczytywaniu drugiej litery każdego ze słów, bądź pierwszej
         litery każdego ze zdań.
 
         Wspomniano wcześniej, że techniki steganograficzne wykorzystywane są do umieszczania
         odcisków palców w dokumentach. Warto tutaj przytoczyć sztuczkę zastosowaną
-        przez Margaret Thatcher poirytowaną częstymi wyciekami zdjęć tajnych dokumentów
+        przez Margaret Thatcher, poirytowaną częstymi wyciekami zdjęć tajnych dokumentów
         do prasy. Zażądała ona przeprogramowania oprogramowania do redagowania tych
         dokumentów, w taki sposób, aby w każdej kopii udostępnionej jej współpracownikom,
         poprzez zastosowanie różnych odstępów pomiędzy wyrazami, ukryć informację
@@ -241,14 +242,14 @@
         Wraz z rozwojem informatyki i komputerów pojawiły się nowe możliwości
         ukrywania danych. Pojawiło się zainteresowanie wykorzystaniem plików
         multimedialnych na przykład obrazów lub nagrań, jako nośnika dla wiadomości
-        ukrytych. Wiąże się to z powstaniem dziedziny zwanej steganografią sieciową.
-        Jednym z najpopularniejszych sposobów wykorzystywanych w tej dziedzinie
+        ukrytych. Wiąże się to z powstaniem dziedziny zwanej steganografią cyfrową.
+        Jednym z najpopularniejszych sposobów wykorzystywanych w tej dziedzinie,
         jest ukrywanie danych poprzez modyfikację najmniej istotnego bitu. Jest
-        to metoda wykorzystywana zarówno do plików graficznych\cite{LSBSTEGANGRAPHY}
+        to metoda wykorzystywana zarówno do plików graficznych\cite{LSBSTEGANGRAPHY},
         jak i dźwiękowych\cite{AUDIOLSBSTEGANGRAPHY}.
         Polega ona na modyfikacji najmniej znaczącego bitu opisującego kolor piksela
         (lub daną próbkę nagrania), w taki sposób, aby ukryć w nim część danych
-        ukrytych i aby jednocześnie zmiana w wyglądzie(lub brzmieniu) obraz(filmu)
+        ukrytych i aby jednocześnie zmiana w wyglądzie(lub brzmieniu) obraz(nagrania)
         była niedostrzegalna. Tak otrzymany steganogram może być łatwo rozpowszechniany
         w Internecie, a dostęp do niego może mieć duża grupa osób.
 
@@ -269,9 +270,9 @@
         konieczne jej odczytanie. Jeśli ponadto atakującemu uda się odczytać wiadomość
         ukrytą, zwiększa to poziom kompromitacji systemu.
 
-        Wyróżnia się dwie metody prowadzenie steganoanlizy: pasywną i aktywną.
+        Wyróżnia się dwie metody prowadzenie steganoanalizy: pasywną i aktywną.
         Celem metody pasywnej jest wykrycie istnienia wiadomości ukrytej. Każdy przekazywany
-        przez nadawcę komunikat jest analizowany pod względem zawierania tajnej wiadomości.
+        przez nadawcę komunikat, jest analizowany pod względem zawierania tajnej wiadomości.
         W przypadku, gdy taka wiadomość zostanie wykryta, komunikacja zostaje przerwana,
         w przeciwnym wypadku, wiadomość jest dostarczana do odbiorcy. Osoba lub system,
         który zajmuje się analizą przesyłanych wiadomości, nazwana jest \emph{agentem(ang. warden)}.
@@ -284,7 +285,8 @@
         agent może przeprowadzić \emph{steganografię śledczą, wywiadowczą(ang. forensic steganalysis)},
         w celu wydobycia treści wiadomości ukrytej. W takim przypadku nie musi on
         blokować komunikacji pomiędzy odbiorcą a nadawcą, co mogłoby spowodować,
-        że zorientowali by się oni, że bezpieczeństwo ich komunikacji może być zagrożone.
+        że zorientowali by się oni, że bezpieczeństwo ich komunikacji może być zagrożone,
+        a zamiast tego podsłuchiwać wymieniane przez nich wiadomości.
 
         W przypadku prowadzenie \emph{steganoanalizy aktywnej} agent ma więcej możliwości
         działania. W szczególności może on modyfikować wiadomości przesyłane pomiędzy
@@ -306,9 +308,9 @@
         wykorzystania kryptografii. Wobec zagrożenia użyciem steganografii, cenzorzy,
         stosują steganoanalizę, w celu wykrycia prób sekretnej komunikacji i jej zapobiegnięciu.
         Ze względu na specyfikę działania cenzora, zazwyczaj używa on steganoanalizy
-        aktywnej, aby upewnić się, że jakiekolwiek wiadomości ukryte zostaną zniszczone
+        aktywnej, aby upewnić się, że jakiekolwiek wiadomości ukryte zostaną zniszczone.
 
-        Steganoanliza jest powszechnie wykorzystywana w zastosowaniach militarnych.
+        Steganoanaliza jest powszechnie wykorzystywana w zastosowaniach militarnych.
         Historia wielu wojen pokazuje, że poznanie zawczasu planów, oraz pozycji
         wojsk przeciwnika, pozwala uzyskać nad nim znaczną przewagę. Jako przykład
         można tutaj przytoczyć załamanie wiadomości zaszyfrowanych niemiecką maszyną
@@ -327,7 +329,7 @@
         terroryści wykorzystywali metody powiązane ze staganografią, a obecnie wykorzystują
         je powszechnie\cite{TERRORISMANDSTEGANOGRAPHY}.
         Powoduje to, że służby zajmujące się utrzymaniem bezpieczeństwa wykorzystują
-        steganoanalizę do łapanie przestępców, oraz zapobieganiu ich działaniom.
+        steganoanalizę do łapania przestępców, oraz zapobieganiu ich działaniom.
 
         Najpowszechniejszym zastosowaniem steganoanalizy, podobnie jak kryptoanalizy,
         jest analizowanie oraz ocenianie nowych i już istniejących algorytmów steganograficznych.
@@ -336,11 +338,11 @@
         na przykład przy przesyłaniu tajnych wiadomości wojskowych, czy też przy znakowaniu
         utworów. Powoduje to, że poznanie mocnych i słabych stron algorytmów steganograficznych
         jest bardzo ważne. W celu oceny algorytmu, pod uwagę branych jest kilka czynników
-        Bezpieczeństwo, czyli trudność i ilość pracy jaką trzeba włożyć,
-        w badanie steganogramu, aby odkryć istnienie ukrytej wiadomości,
-        w ramach badania bezpieczeństwa, zazwyczaj sprawdza się, jak ciężko
+        bezpieczeństwo, czyli trudność i ilość pracy jaką trzeba włożyć,
+        w badanie steganogramu, aby odkryć istnienie ukrytej wiadomości.
+        Ponadto w ramach badania bezpieczeństwa, zazwyczaj sprawdza się, jak ciężko
         jest odczytać treść ukrytej wiadomości, po odkryciu jej istnienia.
-        Pojemność(bądź przepływność, w przypadku steganoanalizy sieciowej), czyli
+        Pojemność, czyli
         ilość informacji, które jest w stanie ukryć algorytm, w pojedynczej jednostce
         nośnika(na przykład w jednym obrazie, lub jednym pakiecie sieciowym). Badane
         jest także jak trudne jest usunięcie informacji ukrytej w steganogramie, przy
@@ -349,12 +351,12 @@
         \subsection{Przykłady zapobiegania wykorzystywaniu steganografii}
         Jak zostało wcześniej wspomniane, do wykrywania i zapobiegania wykorzystaniu stegangrafii
         wykorzystywane są różnego rodzaju techniki opracowane w ramach steganoanalizy.
-        Część ataków na alagorytmy steganograficzne jest podobna do ataków na
+        Część ataków na algorytmy steganograficzne jest podobna do ataków na
         algorytmy kryptograficzne. Steganografia stara się zapewnić dodatkowe bezpieczeństwo
         poprzez ukrycie wiadomości, w związku z tym jest podatna na dodatkowe ataki.
-        Podobnie jak w przypadku kryptografii, im większą ilością danych na temat
+        Podobnie jak w przypadku kryptografii, im większą ilość danych na temat
         algorytmu steganograficznego i wymienianych wiadomości posiada atakujący,
-        tym groźniejsze i bardziej wyrafinowane ataki jest w stanie on przeprowadzić.
+        tym groźniejsze i bardziej wyrafinowane ataki jest w stanie przeprowadzić.
         Wśród możliwych ataków wyróżniamy\cite{DISAPPEARINGCRYPTOEMBEDDINGMETDATA}:
         \begin{itemize}
             \item atak ze znanym steganogramem - atakujący ma dostęp jedynie do
@@ -410,13 +412,14 @@
     Warszawskiej, którzy wiele wnieśli w rozwój tej nauki\cite{STEGANOGRAFIASIECIOWAART}.
 
     Protokoły komunikacyjne są zazwyczaj
-    precyzyjnie specyfikowane w dokumentach RFC, jednak nawet najdokładniejsza
+    precyzyjnie specyfikowane, na przykład w dokumentach RFC, jednak nawet najdokładniejsza
     specyfikacja nie jest w stanie pokryć wszystkich przypadków brzegowych. Powoduje
     to, że w niektórych miejscach specyfikacja pozostawia swobodę implementacji protokołu,
     co w dalszej kolejności powoduje występowanie różnic pomiędzy konkretnymi
-    implementacjami, na przykład pomiędzy różnymi systemami operacyjnymi, ponadto
-    w niektórych systemach implementacja protokołów może być okrojona. Te czynnik
-    powodują, że pojawia się okazja do nadużyć i wykorzystaniu niespójności do organizowania
+    implementacjami, na przykład pomiędzy różnymi systemami operacyjnymi. Ponadto
+    w niektórych systemach implementacja protokołów może być okrojona, na przykład
+    ze względu na ograniczone zasoby sprzętowe. Te czynniki
+    powodują, że pojawia się okazja do nadużyć i wykorzystania niespójności do organizowania
     kanałów ukrytych.
 
     Mnogość istniejących protokołów pozwala na tworzenie różnorodnych protokołów
@@ -426,16 +429,16 @@
     się z dużym wysiłkiem(na przykład dla warstwy fizycznej lub warstwy danych -
     implementacja dedykowanych sterowników urządzeń sieciowych). Umożliwia to
     też budowę dużych systemów steganograficznych wykorzystujących jednocześnie
-    kilka kanałów ukrytych zorganizowanych na poziomie różnych warstw modelu ISO/OSI.
+    kilka kanałów ukrytych, zorganizowanych na poziomie różnych warstw modelu ISO/OSI.
     Zastosowanie kilku kanałów ukrytych stosowanych na przemian, może pomóc w zmniejszeniu
-    wykrywalności całego systemu poprzez minimalizowanie wywieranego wpływu na pojedynczy
+    wykrywalności całego systemu, poprzez minimalizowanie wywieranego wpływu na pojedynczy
     nośnik(protokół komunikacyjny). Wybór warstwy sieciowej, w której działa kanał ukryty
     ma wpływ między innymi na prawdopodobieństwo przypadkowego usunięcia wiadomości
     ukrytej w trakcie transmisji(na przykład poprzez budowę nowego pakietu na podstawie
     pakietu oryginalnego w czasie trasowania).
 
     W dalszej części rozdziału przedstawiono podział steganografii sieciowej
-    oraz zaprezentowane przykładowe kanały ukryte charakterystyczne dla danej
+    oraz zaprezentowane przykładowe kanały ukryte, charakterystyczne dla danej
     dziedziny.
     \section{Poprzez modyfikację pakietów} \label{MODYFIKACJAPAKIETOW}
         \subsection{Wykorzystanie nieużywanych pól nagłówków}
@@ -510,15 +513,15 @@
 
         Niekiedy, dopełnienie stosuje się w celu dopasowania długości pola nagłówka,
         do długości słowa maszynowego używanego przez dany system komputerowy. Może
-        to w istotny sposób ułatwić implementację sprzętową danego protokołu, co
-        przyspiesza jego działanie. Ponadto nawet programowe implementacje zyskują
+        to w istotny sposób ułatwić implementację sprzętową danego protokołu, lub
+        przyspieszyć jego działanie. Ponadto nawet programowe implementacje zyskują
         na szybkości, ponieważ komputery są zoptymalizowane pod względem operowania
         na danych o długości będącej wielokrotnością długości słowa maszynowego.
 
         Podobnie jak w przypadku pól nieużywanych, teoretycznie specyfikacja
         mówi jaką wartością powinno odbywać się dopełnianie pakietów, co więcej,
-        w przypadku dopełniania pakietów dla algorytmu kryptograficznego, zastosowane
-        dopełnienie może mieć wpływ na bezpieczeństwo szyfrogramu(złe dopełnienie narażone
+        w przypadku dopełniania pakietów dla algorytmu kryptograficznego, zastosowanie
+        nieodpowiedniego dopełnienienia może mieć wpływ na bezpieczeństwo szyfrogramu(złe dopełnienie narażone
         jest na atak "padding oracle attack"). Różnice w implementacji protokołów
         i sterowników urządzeń sieciowych, powodują, że dopełnienie można wykorzystać,
         jako miejsce ukrycia danych\cite{PADSTEG}
@@ -533,7 +536,7 @@
         \subsection{Ukrywanie danych w pakietach celowo uszkodzonych} \label{USZKODZONEPAKIETY}
         Obecnie popularne staje się wykorzystanie mechanizmów zapewniania niezawodności
         transmisji do organizacji kanałów ukrytych. Chodzi tutaj o mechanizmy
-        takie jak odrzucanie i retransmisja uszkodzonych pakietów.Przykładem wykorzystania takich
+        takie jak odrzucanie i retransmisja uszkodzonych pakietów. Przykładem wykorzystania takich
         mechanizmów jest umyślne tworzenie pakietów, w których suma kontrolna w nagłówku
         nie zgadza się z sumą kontrolną obliczoną dla treści wiadomości.
 
@@ -560,7 +563,7 @@
         dokonuje kontroli poprawności pakietu(sprawdza sumę kontrolną) i nie przekazuje
         dalej pakietów uszkodzonych.
 
-        Wykorzystanie celowow uszkodzonych pakietów najlepiej sprawdza się w
+        Wykorzystanie celowo uszkodzonych pakietów najlepiej sprawdza się w
         sieciach, w których do naturalnych uszkodzeń pakietów, nie związanych z
         istnieniem kanału ukrytego, dochodzi stosunkowo często. W związku z tym
         świetnie nadają się sieci bezprzewodowe oraz takie, w których występują
@@ -615,12 +618,12 @@
         Sposobem podobnym do poprzedniego jest interpretacja opóźnień pakietów,
         jako fragmenty pochodzące z danych ukrytych.\cite{IPDELAYCHANNEL} Ten sposób nie wymaga jednak próbkowania,
         ponieważ opóźnienie(rozumiane tutaj jako okres czasu pomiędzy odebraniem dwóch
-        kolejnych pakietów), może być precyzyjnie obliczony. Nadal jednak potrzebna
+        kolejnych pakietów), może być precyzyjnie obliczone. Nadal jednak potrzebna
         jest kwantyzacja, ze względu na wpływa warunków zewnętrznych, takich jak przeciążenia,
         na opóźnienie pakietów. Nadawca umyślnie wydłuża lub skraca czas pomiędzy
         wysłaniem kolejnych pakietów, w zależności od fragmentu danych ukrytych,
         które chce przetransmitować. Odbiorca po odebraniu pakietu oblicza czas jaki
-        upłynął od odebrania poprzedniego pakietu, następnie sprawdza, a następnie
+        upłynął od odebrania poprzedniego pakietu, następnie
         interpretuje opóźnienie jako fragment wiadomości ukrytej korzystając z
         przedziałów kwantyzacji.
 
@@ -639,7 +642,7 @@
 
         Zaletą obu przedstawionych w tej sekcji protokołów komunikacyjnych,
         jest możliwość wykorzystania szerokiego zestawu protokołów jako
-        źródeł wiadomości podstawowych. Przedstawione techniki są na ogólne i
+        źródeł wiadomości podstawowych. Przedstawione techniki są ogólne i
         nie stawiają żadnych wymagań protokołowi, który zostanie wykorzystany jako
         nośnik(brak wymagań co do określonych pól nagłówka, oraz co do typu transportowanych danych).
         W związku z tym, jako źródło wiadomości podstawowych może być wykorzystany
@@ -671,7 +674,7 @@
         Zastosowane przez autorów podejście opiera się na celowym opóźnianiu pakietów
         zawierających dane ukryte, zapisane w polu danych pakietu.
         Odbiorca wiadomości podstawowych odbierając pakiet
-        uszkodzony, odrzuca go, jednak odbiorca wiadomości wiedząc, że to właśnie
+        opóźniony, odrzuca go, jednak odbiorca wiadomości wiedząc, że to właśnie
         w nim znajduje się ukryta wiadomość, może ją odczytać.
 
         Pakiet zostaje rozpoznany jako opóźniony, nie tylko ze względu na celowe
@@ -681,7 +684,7 @@
         od warunków i opóźnienia naturalnie występującego w sieci komputerowej.
 
         Jak widać w celu realizacji kanału modyfikowany jest zarówno pakiet(pole danych,
-        pole nagłówka z czasem nadania) jak i właściwości strumienia pakietów(opóźnienie)
+        pole nagłówka z czasem nadania) jak i właściwości strumienia pakietów(opóźnienie).
         Jak wspomniano wcześniej, pozwala to na połączenie zalet obu opisywanych
         wcześniej sposobów organizacji kanałów ukrytych. Ponadto użycie pola danych
         do transmisji danych ukrytych, pozwala na stworzenie kanału ukrytego o
@@ -704,7 +707,7 @@
     podzielony na mniejsze pakiety, jak również kilka małych pakietów nie może zostać
     zaagregowanych w jeden większy, na przykład przez routery. W protokole TCP natomiast,
     każdy pakiet jest częścią dużego strumienia bajtów, w związku z czym pakiety mogą
-    być agregowane i fragmentowane w celu optymalizacji procesu transmisji. Protokołem
+    być one agregowane i fragmentowane w celu optymalizacji procesu transmisji. Protokołem
     łączącym datagramową naturę protokołu UDP i niezawodność transmisji oferowaną przez TCP jest
     SCTP\cite{SCTPRFC}. Datagramowa natura protokołu UDP pozwala na transmisję z użyciem
     węzłów pośredniczących, bez obawy o zniszczenie wiadomości ukrytej poprzez fragmentację
@@ -738,7 +741,7 @@
     podstawowych jak i ich długość są interpretowane jako parametr \(\lambda \) rozkładu
     Poissona.
 
-    Źródło wiadomości ukrytych(oznaczone na żółto) również charakteryzowane poprzez natężenie
+    Źródło wiadomości ukrytych(oznaczone na żółto) również charakteryzowane jest poprzez natężenie
     napływu wiadomości ukrytych. Pojedyncza wiadomość ukryta może składać się z wielu
     segmentów. Średnia liczba segmentów składających się na pojedynczą wiadomość
     jest kolejnym parametrem opisującym źródło wiadomości ukrytych. Jest to parametr
@@ -747,7 +750,7 @@
     natężenie napływu wiadomości ukrytych, oraz liczba segmentów pojedynczej wiadomości
     traktowane były jak parametr \(\lambda \) rozkładu Poissona. Rozkład wartości(treści)
     pojedynczego segmentu modelowana była rozkładem jednostajnym dyskretnym, w przedziale
-    \( [1, V_{US_{MAX}}]  \). Kanał podstawowy charakteryzowany jest także
+    \( [1, V_{SWU_{MAX}}]  \). Kanał podstawowy charakteryzowany jest także
     poprzez jego pojemność, wyrażona jest ona w bitach na sekundę. Ogranicza ona
     maksymalną ilość danych, możliwych do przesłania kanałem w jednostce czasu i
     w rezultacie może wpływać na opóźnienie wiadomości podstawowych i ukrytych.
