@@ -179,7 +179,7 @@ void Symulator::GenerateSymulationData() {
     // while (t < timeForGeneratingHiddenMessages || allHiddenMessages.size() < numberOfHiddenMessagesToGenerate)
     //     GenerateHiddenMessages(t++);
 
-    for (t = 0; allBasicMessages.size() < 30000; t++)
+    for (t = 0; allBasicMessages.size() < 8000; t++)
         GenerateBasicMessages(t);
 }
 

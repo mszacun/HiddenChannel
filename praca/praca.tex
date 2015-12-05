@@ -696,6 +696,103 @@
         DORZUCIC NAGLOWEK PROTOKOLU RTP
 
 \chapter{Projekt protokołu kanału ukrytego}
+    \section{Słownik używanych pojęć} \label{DICT}
+    \begin{itemize}
+        \item \emph{Kanał podstawowy(nośnik)} - kanał, w którym zarówno fakt transmisji,
+            jak również treść przesyłanych danych, jest widoczna dla osób postronnych,
+            wykorzystywany do realizacji kanału ukrytego
+
+        \item \emph{Wiadomość podstawowa (\(W_P\))} - wiadomość transmitowana kanałem
+            podstawowym
+
+        \item \emph{Kolejka wiadomości podstawowych( \( K_{WP} \) )} - kolejka, w
+                której przechowywane są, ze względu na brak możliwości natychmiastowej
+                transmisji, wiadomości podstawowe, jednostką pojemności kolejki
+                wiadomości podstawowych jest bajt
+
+        \item \emph{Kanał ukryty} - kanał umożliwiający transmisje danych w taki sposób,
+            aby osoba postronna obserwująca kanał transmisyjny nie była świadoma
+            nie tylko treści wiadomości, ale również faktu, że transmisja wiadomości ma miejsce
+
+        \item \emph{Wiadomość ukryta (\(W_U\))} - wiadomość transmitowana kanałem ukrytym
+
+        \item \emph{Kolejka wiadomości ukrytych ( \( K_{WU} \) )} - kolejka, w
+                której przechowywane są, ze względu na brak możliwości natychmiastowej
+                transmisji, wiadomości ukryte, jednostką pojemności kolejki
+                wiadomości podstawowych jest bit
+
+        \item \emph{Segment wiadomości ukrytej (\(S_{WU}\))} - fragment, porcja danych
+            wiadomości ukrytej, które transmitowane są (w sposób ukryty) w jednym
+            pakiecie przesyłanym za pomocą protokołu usługowego
+
+        \item \emph{Długość segmentu wiadomości ukrytej \( L_{SWU} \)} - liczba
+                bitów zawartych w jednym segmencie danych ukrytych
+
+        \item \emph{Wartość segmentu wiadomości ukrytej \( W_{SWU} \)} - wartość
+            liczbowa segmentu wiadomości ukrytej potraktowanego, jako liczba binarna,
+            na przykład dla segmentu wiadomości ukrytej o treści 11010011:
+            \( W_{SWU}(11010011) = 211 \)
+
+       \item \emph{Maksymalna wartość segmentu wiadomości ukrytej (\( Max_{W_{SWU}} \))} -
+           maksymalna wartość, jaką może przyjąć segment wiadomości ukrytej przy
+           założonej wartości długości segmentu wiadomości ukrytej, czyli wartość
+           segmentu wiadomości ukrytej, w którym wszystkie bity mają wartość 1,
+           na przykład dla \( D_{SWU} = 8 \), segment o wartości maksymalnej to
+           \( 11111111 \), a jego wartość to: \( Max_{W_{SWU}} = 255 \)
+
+       \item \emph{Fragmentacja pakietów} - procedura podziału jednego pakietu na
+           kilka mniejszych na przykład w celu równoważenia obciążenia poprzez
+           wysłanie mniejszych pakietów różnymi trasami
+
+       \item \emph{Agregacja pakietów} - procedura syntezy większego pakietu z
+           kilku małych pakietów na przykład w celu optymalizacji stosunku długości
+           nagłówka pakietu do długości danych
+
+       \item \emph{Błąd transmisji} - zjawisko polegające na odebraniu przez odbiorcę
+           pakietu lub segmentu zawierającego inną treść niż została w nim
+           umieszczona przez nadawcę, wyróżniamy błędy podstawieniowe, które
+           zmieniają wartość pojedynczych bitów wiadomości, lub błedy wtrąceniowe,
+           które powodują utratę, lub odbiór większej ilości bitów niż wysłał nadawca
+
+    \end{itemize}
+
+    \section{Założenia i ograniczenia projektowe}
+    W czasie projektowania protokołu a następnie jego badań przyjęto następujące założenia:
+    \begin{enumerate}
+        \item \emph{Pojemność kolejki wiadomości ukrytych i podstawowych jest nieograniczona} -
+            jak zostanie omówione w następnym rozdziale, działanie protokołu
+            kanału ukrytego wymaga kolejkowania zarówno wiadomości podstawowych
+            jak i ukrytych, w obecnej wersji protokół kanału ukrytego nie wspiera
+            żadnego mechanizmu radzenia sobie z przeciążeniami, w związku z tym
+            dla ułatwienia prowadzenia badań, założono nieskończoną pojemność obu kolejek
+
+        \item \emph{Wiadomość(zarówno podstawową jak i ukrytą) traktujemy, jako odebraną,
+            gdy wszystkie jej segmenty zostaną odebrane przez odbiornik} - jak powiedziano
+            wcześniej, wiadomości ukryte mogą składać się z więcej niż jednego segmentu,
+            natomiast jak zostanie powiedziane, wiadomości podstawowe mogą być fragmentowane
+            w celu transmisji pakietów z ukrytymi wiadomościami, aby umożliwić
+            obliczanie opóźnień zarówno wiadomości podstawowych jak i ukrytych,
+            zakłada się, że opóźnienie to czas pomiędzy napłynięciem wiadomości,
+            a odebraniem ostatniego jej segmentu
+
+        \item \emph{Komunikacja pomiędzy odbiorcą a nadawcą odbywa się bez błędów transmisji} -
+            jak wspomniano wcześniej, protokół UDP jest protokołem zawodnym, również
+            zaprojektowany protokół kanału ukrytego nie zapewnia mechanizmów niezawodnej
+            transmisji danych, w zawiązku z czym, aby nie komplikować metodologii
+            obliczania opóźnień poszczególnych wiadomości, związanych z utratą
+            pakietów je transportujących, założono, że w trakcie transmisji nie
+            występują żadne błędy, zarówno podstawieniowe jak i wtrąceniowe
+
+        \item \emph{Długość wiadomości ukrytej musi być wielokrotnością długości segmentu
+            wiadomości ukrytej (\(L_{SWU}\))} - długość każdego odebranego przez odbiorcę pakietu,
+            jest przez niego interpretowana jako wartość segmentu danych ukrytych o określonej
+            długości, w związku z tym konieczne jest zapewnienie, że wszystkie segmenty
+            wiadomości ukrytej są tej samej długości i są w pełni wypełnione, co czasami
+            wymaga zastosowania dopełnienia, przyjęcie tego założenie upraszcza protokół
+            kanału ukrytego, ponieważ odpowiedzialność za dopełnienie wiadomości ukrytych
+            spada na użytkownika kanału
+    \end{enumerate}
+
     \section{Opis otoczenia działania protokołu}
     Przedstawiony w dalszej części pracy protokół kanału ukrytego oparty jest o
     interpretację długości pakietów protokołu UDP jako fragmentów wiadomości ukrytej.
@@ -729,7 +826,7 @@
     ukrytego może funkcjonować równie dobrze w sieciach opartych o architekturę
     Token Ring jak i w sieci typu Ethernet.
 
-    ZASTANOWIC SIE, CZY TEGO NIE PRZENISC
+    \section{Model protokołu kanału ukrytego}
 
     Model kanału ukrytego został przedstawiony na rysunku \ref{HIDDENCHANNELMODEL}. W modelu tym zakłada się
     istnienie źródła danych podstawowych(oznaczone na schemacie na czerwono),
@@ -774,112 +871,124 @@
             \label{HIDDENCHANNELMODEL}
     \end{figure}
 
-    \section{Założenia i ograniczenia projektowe}
-    W czasie projektowania protokołu a następnie jego badań przyjęto następujące założenia:
-    \begin{enumerate}
-        \item \emph{Pojemność kolejki wiadomości ukrytych i podstawowych jest nieograniczona} -
-            jak zostanie omówione w następnym rozdziale, działanie protokołu
-            kanału ukrytego wymaga kolejkowania zarówno wiadomości podstawowych
-            jak i ukrytych, w obecnej wersji protokół kanału ukrytego nie wspiera
-            żadnego mechanizmu radzenia sobie z przeciążeniami, w związku z tym
-            dla ułatwienia prowadzenia badań założono nieskończoną pojemność obu kolejek
-
-        \item \emph{Wiadomość(zarówno podstawową jak i ukrytą) traktujemy, jako odebraną,
-            gdy wszystkie jej segmenty zostaną odebrane przez odbiornik} - jak powiedziano
-            wcześniej, wiadomości ukryte mogą składać się z więcej niż jednego segmentu,
-            natomiast jak zostanie powiedziane, wiadomości podstawowe mogą być fragmentowane
-            w celu transmisji pakietów z ukrytymi wiadomościami, aby umożliwić
-            obliczanie opóźnień zarówno wiadomości podstawowych jak i ukrytych,
-            zakłada się, że opóźnienie to czas pomiędzy napłynięciem wiadomości,
-            a odebraniem ostatniego jej segmentu
-
-        \item \emph{Komunikacja pomiędzy odbiorcą a nadawcą odbywa się bez błędów transmisji} -
-            jak wspomniano wcześniej, protokół UDP jest protokołem zawodnym, również
-            zaprojektowany protokół kanału ukrytego nie zapewnia mechanizmów niezawodnej
-            transmisji danych, w zawiązku z czym, aby nie komplikować metodologii
-            obliczania opóźnień poszczególnych wiadomości, związanych z utratą
-            pakietów je transportujących, założono, że w trakcie transmisji nie
-            występują żadne błędy, zarówno podstawieniowe jak i wtrąceniowe
-
-        \item \emph{Długość wiadomości ukrytej musi być wielokrotnością długości segmentu
-            wiadomości ukrytej (DSWU)} - długość każdego odebranego przez odbiorcę pakietu,
-            jest przez niego interpretowana jako wartość segmentu danych ukrytych o określonej
-            długości, w związku z tym konieczne jest zapewnienie, że wszystkie segmenty
-            wiadomości ukrytej są tej samej długości i są w pełni wypełnione, co czasami
-            wymaga zastosowania dopełnienia, przyjęcie tego założenie upraszcza protokół
-            kanału ukrytego, ponieważ odpowiedzialność za dopełnienie wiadomości ukrytych
-            spada na użytkownika kanału
-    \end{enumerate}
-    \section{Słownik używanych pojęć}
-    \begin{itemize}
-        \item \emph{Kanał podstawowy(nośnik)} - kanał, w którym zarówno fakt transmisji,
-            jak również treść przesyłanych danych, jest widoczna dla osób postronnych,
-            wykorzystywany do realizacji kanału ukrytego
-
-        \item \emph{Wiadomość podstawowa (WP)} - wiadomość transmitowana kanałem
-            podstawowym
-
-        \item \emph{Kolejka wiadomości podstawowych( \( K_{WP} \) )} - kolejka, w
-                której przechowywane są, ze względu na brak możliwości natychmiastowej
-                transmisji, wiadomości podstawowe, jednostką pojemności kolejki
-                wiadomości podstawowych jest bajt
-
-        \item \emph{Kanał ukryty} - kanał umożliwiający transmisje danych w taki sposób,
-            aby osoba postronna obserwująca kanał transmisyjny nie była świadoma
-            nie tylko treści wiadomości, ale również faktu, że transmisja wiadomości ma miejsce
-
-        \item \emph{Wiadomość ukryta (WU)} - wiadomość transmitowana kanałem ukrytym
-
-        \item \emph{Kolejka wiadomości ukrytych ( \( K_{WU} \) )} - kolejka, w
-                której przechowywane są, ze względu na brak możliwości natychmiastowej
-                transmisji, wiadomości ukryte, jednostką pojemności kolejki
-                wiadomości podstawowych jest bit
-
-        \item \emph{Segment wiadomości ukrytej (SWU)} - fragment, porcja danych
-            wiadomości ukrytej, które transmitowane są (w sposób ukryty) w jednym
-            pakiecie przesyłanym za pomocą protokołu usługowego
-
-        \item \emph{Długość segmentu wiadomości ukrytej \( D_{SWU} \)} - liczba
-                bitów zawartych w jednym segmencie danych ukrytych
-
-        \item \emph{Wartość segmentu wiadomości ukrytej \( W_{SWU} \)} - wartość
-            liczbowa segmentu wiadomości ukrytej potraktowanego, jako liczba binarna,
-            na przykład dla segmentu wiadomości ukrytej o treści 11010011:
-            \( W_{SWU}(11010011) = 211 \)
-
-       \item \emph{Maksymalna wartość segmentu wiadomości ukrytej (\( Max_{W_{SWU}} \))} -
-           maksymalna wartość, jaką może przyjąć segment wiadomości ukrytej przy
-           założonej wartości długości segmentu wiadomości ukrytej, czyli wartość
-           segmentu wiadomości ukrytej, w którym wszystkie bity mają wartość 1,
-           na przykład dla \( D_{SWU} = 8 \), segment o wartości maksymalnej to
-           \( 11111111 \), a jego wartość to: \( Max_{W_{SWU}} = 255 \)
-
-       \item \emph{Fragmentacja pakietów} - procedura podziału jednego pakietu na
-           kilka mniejszych na przykład w celu równoważenia obciążenia poprzez
-           wysłanie mniejszych pakietów różnymi trasami
-
-       \item \emph{Agregacja pakietów} - procedura syntezy większego pakietu z
-           kilku małych pakietów na przykład w celu optymalizacji stosunku długości
-           nagłówka pakietu do długości danych
-
-       \item \emph{Błąd transmisji} - zjawisko polegające na odebraniu przez odbiorcę
-           pakietu lub segmentu zawierającego inną treść niż została w nim
-           umieszczona przez nadawcę, wyróżniamy błędy podstawieniowe, które
-           zmieniają wartość pojedynczych bitów wiadomości, lub błedy wtrąceniowe,
-           które powodują utratę, lub odbiór większej ilości bitów niż wysłał nadawca
-
-    \end{itemize}
-    \section{Opis parametrów kanału ukrytego}
-    Przykładowa komunikacja przy pomocy kanału ukrytego wygląda następująco:
+    \section{Opis działania protokołu kanału ukrytego}
+    Protokół kanału ukrytego konfigurowany jest przy pomocy pojedynczego parametru -
+    długość segmentu wiadomości ukrytej \( L_{SWU} \), którego jednostką są bity.
+    Parametr ten mówi, na jakiej długości segmenty zostanie podzielona wiadomość
+    ukryta. Musi on zostać uzgodniony przez komunikujące się za pomocą kanału
+    ukrytego strony, przed rozpoczęciem komunikacji. Schemat podziału wiadomości
+    podstawowych jest przedstawiony na rysunku \ref{SEGMENTATION}, za długość
+    segmentu wiadomości ukrytej przyjęte zostało 10 bitów, w związku z tym każdy segment
+    ma właśnie taką długość, analogicznie wygląda to dla innych wartości parametru.
+    Ponadto na schemacie kolorem czerwonym zaznaczono dopełnienie, dzięki któremu
+    każdy z segmentów ma taką samą długość.  W przedstawionym przykładzie wiadomość
+    jest tekstem, w związku z czym, jako krok pośredni, kody ASCII liter, z których
+    jest złożona zostają zamienione na ciągi bitów. Jak wcześniej wspomniano, protokół
+    kanału ukrytego nie dopełnia segmentów, jest to zadanie użytkownika protokołu.
         \begin{figure}[h]
                 \centering
-                \includegraphics{komunikacja_kanalem_ukrytym_gotowa}
+                \includegraphics[scale=0.8]{podzial_na_segmenty}
+                \caption{Proces podziału wiadomości podstawowej na segmenty}
+                \label{SEGMENTATION}
+        \end{figure}
+
+    Po podziale, segmenty wiadomości ukrytej zostają umieszczone w kolejce wiadomości
+    ukrytych. Kolejka ta, jest standardową kolejką typu FIFO(first in, first out).
+    Do stworzenia pakietu przenoszącego segment danych ukrytych niezbędna jest
+    liczba bajtów danych pochodzących z wiadomości podstawowych, odpowiadająca
+    wartości segmentu danych ukrytych. Jeśli taka, lub większa, ilość danych jest dostępna,
+    możliwe jest utworzenie pakietu przenoszącego segment danych ukrytych, poprzez
+    stworzenie pakietu UDP, o długości odpowiadającej wartości transmitowanego segmentu danych
+    ukrytych, zawierającego dane z kolejki danych podstawowych. Dane służące do zbudowania
+    jednego pakietu przenoszącego dane ukryte, mogą pochodzić z wielu wiadomości
+    podstawowych, jak również jedna wiadomość podstawowa może zostać użyta do zbudowania
+    wielu pakietów z danymi ukrytymi. Jeśli danych podstawowych
+    w kolejce było więcej, niż potrzebne do transmisji danych ukrytych, niewykorzystane
+    dane podstawowe pozostają w kolejce, aby mogły być wykorzystane do transmisji
+    kolejnego segmentu wiadomości ukrytej.
+    W przypadku, gdy w kolejce wiadomości podstawowych nie ma wymaganej ilości
+    danych, wiadomość ukryta pozostaje w kolejce wiadomości ukrytych i oczekuje
+    na zgromadzenie danych podstawowych.
+
+    W sytuacji, gdy napłynie wiadomość podstawowa, jest ona dodawana do kolejki
+    wiadomości podstawowych, która również jest standardową kolejką typu FIFO.
+    Podobnie jak w przypadku napłynięcia wiadomości ukrytej, sprawdzana jest możliwość
+    transmisji pakietu z danymi ukrytymi. Może się ona odbyć, gdy w kolejce wiadomości
+    ukrytych oczekuje segment wiadomości ukrytej, a ilość danych w kolejce wiadomości
+    podstawowych(licząc nowo dodaną wiadomość podstawową), jest równa lub większa
+    od jego wartości. Jeśli ten warunek nie jest spełniony, wiadomości podstawowa
+    pozostaje w kolejce i oczekuje na wiadomość ukrytą.
+
+    Kolejkowanie wiadomości podstawowych, w przypadku znacznie intensywniejszego
+    napływu wiadomości podstawowych niż wiadomości ukrytych, może prowadzić do
+    występowania dużych opóźnień w kanale podstawowym, a w skrajnym przypadku,
+    gdy napływ wiadomości ukrytych ustaje całkowicie, całkowicie zablokować
+    komunikację w kanale podstawowym. Z powodu konstrukcji protokołu kanału
+    ukrytego, wysyłanie wiadomości podstawowych, bez danych ukrytych, jest niemożliwe.
+    Takie wiadomości mogłyby zostać błędnie zinterpretowane przez odbiornik wiadomości
+    ukrytych, jako fragmenty wiadomości ukrytych. Konieczne jest znalezienie mechanizmu,
+    który: (A) pozwala na funkcjonowanie kanału podstawowego i transmisję wiadomości
+    podstawowych, nawet wtedy, gdy napływ wiadomości ukrytych ustanie, oraz (B)
+    pozwoli odpowiednio oznaczyć pakiety nie zawierające danych ukrytych, tak aby ich długość
+    nie była interpretowana przez odbiorcę wiadomości ukrytych, jako ich fragment.
+
+    Dla przedstawianego protokołu kanału ukrytego, proponowane jest następujące
+    rozwiązanie. Każdy pakiet UDP wygenerowany przez protokół kanału ukrytego,
+    niesie informację o wartości dokładnie jednego segmentu wiadomości ukrytej.
+    Każdy z tych segmentów ma taką samą długość, regulowaną za pomocą parametru
+    protokołu ukrytego - długość segmentu wiadomości ukrytej(\( L_{SWU} \)). W sekcji \ref{DICT}
+    przedstawiono pojęcie maksymalnej wartości segmentu wiadomości ukrytej.
+    Z przedstawionego wcześniej mechanizmu
+    działania kanału ukrytego, wynika, że dla danej wartości parametru \( L_{SWU} \),
+    nigdy nie wygeneruje on pakietu UDP o długości większej, niż odpowiadająca parametrowi
+    \( L_{SWU} \) maksymalna wartość segmentu wiadomości ukrytej \( Max_{W_{SWU}} \).
+    Dla przypomnienia jest ona obliczana ze wzoru:
+    \begin{math}
+        Max_{W_{SWU}} = 2^{L_{SWU}} - 1
+    \end{math}.
+    Do przesyłania pakietów nie zawierających danych ukrytych, proponowane jest
+    wykorzystanie pakietów o długości większej niż maksymalna wartość segmentu
+    danych ukrytych, przy zadanej konfiguracji protokołu kanału ukrytego. W momencie,
+    gdy po napłynięciu wiadomości podstawowej, zostanie stwierdzony brak wiadomości
+    ukrytych oczekujących na transmisję, sprawdzane jest, czy w kolejce wiadomości
+    podstawowych ilość zgromadzonych danych(wraz z nowo przybyłą wiadomością), jest
+    większa niż \( Max_{W_{SWU}} \), jeśli tak, to cała zawartość kolejki wiadomości
+    podstawowych jest wysyłana jednym pakietem UDP. Odbiorca, widząc pakiet o długości
+    większej niż maksymalna wartość segmentu wiadomości ukrytej, wie, że nie powinien
+    jego długości interpretować jako fragmentu danych ukrytych.
+
+    Na rysunku \ref{COMMUNICATION} przedstawiono przebieg przykładowej komunikacji
+    za pomocą prezentowanego kanału ukrytego, przy założeniu, że \( L_{SWU} = 5 \) bitów.
+    Przy takiej konfiguracji:
+    \begin{math}
+        Max_{W_{SWU}} = 2^{L_{SWU}} - 1 = 2^5 - 1 = 31
+    \end{math}.
+    Na schemacie można zaobserwować, że dwa pierwsze pakiety wysłane przez nadawcę
+    są pakietami zawierającymi dane ukryte, w związku z czym odbiorca interpretuje
+    ich długość jako segment danych ukrytych. Ostatni wysłany pakiet został wysłany
+    po dłuższej przerwie, w trakcie której nie napływały wiadomości ukryte, a wiadomości
+    podstawowe były kolejkowane. Po zgromadzeniu wystarczającej ilości danych pochodzących
+    z wiadomości podstawowych, wysyłany jest pakiet nie zawierający danych ukrytych.
+    Zgodnie ze wcześniejszym opisem, ponieważ jego długość jest większa niż maksymalna
+    wartość segmentu danych ukrytych, odbiorca nie odczytuje z takiego pakietu
+    danych ukrytych.
+        \begin{figure}[h]
+                \centering
+                \includegraphics[scale=0.85]{komunikacja_kanalem_ukrytym_gotowa}
                 \caption{Przykładowa komunikacja kanałem ukrytym}
                 \label{COMMUNICATION}
         \end{figure}
 
-    \section{Opis działania protokołu kanału ukrytego}
-    \section{Schemat działania protokołu kanału ukrytego}
+    Schemat algorytmu działania protokołu kanału ukrytego, opisany w tej sekcji,
+    przedstawia rysunek \ref{CHANNELALGORITHM}. TEN SCHEMAT JEST NIECZYTELNY, DO
+    NARYSOWANIA OD NOWA
+
+        \begin{figure}[h]
+                \centering
+                \includegraphics[scale=0.2]{algorytm_protokolu_kanalu_ukrytego}
+                \caption{Schemat algorytmu kanału ukrytego}
+                \label{CHANNELALGORITHM}
+        \end{figure}
 
 \chapter{Badania optymalnych parametrów i jakości kanału ukrytego}
     \section{Zależność opóźnienia wiadomości ukrytych od natężenia napływu wiadomości podstawowych}
