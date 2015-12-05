@@ -176,10 +176,10 @@ Symulator::Symulator(unsigned int timeForGeneratingHiddenMessages,
 void Symulator::GenerateSymulationData() {
     int t = 0;
 
-    while (t < timeForGeneratingHiddenMessages || allHiddenMessages.size() < numberOfHiddenMessagesToGenerate)
-        GenerateHiddenMessages(t++);
+    // while (t < timeForGeneratingHiddenMessages || allHiddenMessages.size() < numberOfHiddenMessagesToGenerate)
+    //     GenerateHiddenMessages(t++);
 
-    for (t = 0; t < timeForGeneratingBasicMessages; t++)
+    for (t = 0; allBasicMessages.size() < 30000; t++)
         GenerateBasicMessages(t);
 }
 
@@ -221,7 +221,7 @@ void Symulator::GenerateBasicMessages(int time) {
 }
 
 StepEvents Symulator::Step() {
-    GenerateBasicMessages(currentTime);
+    //GenerateBasicMessages(currentTime);
     GenerateHiddenMessages(currentTime);
     std::vector<HiddenMessagePtr> hiddenMessagesArrived = AddArrivedHiddenMessages();
 
@@ -240,8 +240,7 @@ StepEvents Symulator::Step() {
 }
 
 bool Symulator::HasSymulationEnd() {
-    return HasAllMessagesBeenReceived(allHiddenMessages) &&
-        HasAllMessagesBeenReceived(allBasicMessages);
+    return allBasicMessages[allBasicMessages.size() - 20]->IsReceived();
 }
 
 std::vector<HiddenMessagePtr> Symulator::AddArrivedHiddenMessages() {

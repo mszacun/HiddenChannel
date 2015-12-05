@@ -1,4 +1,4 @@
-FLAGS=-std=c++11 -O3
+FLAGS=-std=c++11 -O2
 
 all: Symulator.o Models.o test.o main.o main2.o
 	g++ $(FLAGS) Models.o test.o Symulator.o -o test
