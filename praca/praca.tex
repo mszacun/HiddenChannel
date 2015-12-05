@@ -694,7 +694,102 @@
 
 \chapter{Projekt protokołu kanału ukrytego}
     \section{Opis otoczenia działania protokołu}
+    Przedstawiony w dalszej części pracy protokół kanału ukrytego oparty jest o
+    interpretację długości pakietów jako fragmentów wiadomości ukrytej.
+    Kanał ukryty przeznaczony jest do komunikacji typu punkt-punkt pomiędzy odbiorcą a nadawcą.
+    Jako protokół usługowy dla protokołu kanału ukrytego wybrany został protokół UDP. Kanał ukryty
+    może być wykorzystywany zarówno do komunikacji wewnątrz sieci lokalnej jak i
+    komunikacji pomiędzy urządzeniami znajdującymi się w różnych sieciach.
+    Protokół UDP jest protokołem datagramowym, co
+    oznacza, że każdy pakiet wysłany przez nadawcę jest traktowany jako całość, nie może zostać
+    podzielony na mniejsze pakiety, jak również kilka małych pakietów nie może zostać
+    zaagregowanych w jeden większy, na przykład przez routery. W protokole TCP natomiast,
+    każdy pakiet jest częścią dużego strumienia bajtów, w związku z czym pakiety mogą
+    być agregowane i fragmentowane w celu optymalizacji procesu transmisji. Protokołem
+    łączącym datagramową naturę protokołu UDP i niezawodność transmisji oferowaną przez TCP jest
+    SCTP\cite{SCTPRFC}. Datagramowa natura protokołu UDP pozwala na transmisję z użyciem
+    węzłów pośredniczących, bez obawy o zniszczenie wiadomości ukrytej poprzez fragmentację
+    lub agregację pakietów.
+
+    Z uwagi na to, że protokołem usługowym dla kanału ukrytego jest UDP, naturalnym jest
+    zastosowanie jako źródła wiadomości podstawowych protokołu, który również
+    natywnie wykorzystuje UDP do transmisji wiadomości, na przykład DNS lub TFTP.
+    Istnieje co prawda możliwość współpracy z protokołem wykorzystującym TCP, na przykład HTTP,
+    poprzez tunelowanie pakietów TCP w pakietach UDP, jednak nie jest to rozważane w tej
+    pracy. W związku z tym w dalszej jej części zakłada się, że źródłem wiadomości
+    podstawowych jest protokół oparty o UDP. Porady dotyczące wyboru konkretnego
+    protokołu są przedstawione w sekcji \ref{SUGESTIEPARAMETROW}. Sam protokół kanału
+    ukrytego jednak, nie jest zależny od żadnego konkretnego protokołu dostarczającego
+    wiadomości podstawowych, jest on traktowany jako czarna skrzynka. Jednym wymaganiem
+    jest wykorzystanie protokołu UDP do transmisji danych. Podobnie wygląda sytuacja,
+    jeśli chodzi o protokoły warstw niższych niż warstwa transportowa. Protokół kanału
+    ukrytego może funkcjonować równie dobrze w sieciach opartych o architekturę
+    Token Ring jak i w sieci typu Ethernet.
+
+    ZASTANOWIC SIE, CZY TEGO NIE PRZENISC
+
+    Model kanału ukrytego został przedstawiony na rysunku poniżej. W modelu tym zakłada się
+    istnienie źródła danych podstawowych, którym tak jak wcześniej opisano, jest
+    protokół wykorzystujący do transmisji danych protokół UDP. Źródło danych
+    charakteryzowane jest dwoma parametrami: średnim natężeniem, mówiącym
+    o tym ile wiadomości napływa w jednostce czasu, oraz średnim rozmiarem
+    pojedynczej wiadomości w bajtach. Podczas badań zarówno natężenie napływu wiadomości
+    podstawowych jak i ich długość są interpretowane jako parametr \(\lambda \) rozkładu
+    Poissona.
+
+    Źródło wiadomości ukrytych również charakteryzowane poprzez natężenie
+    napływu wiadomości ukrytych. Pojedyncza wiadomość ukryta może składać się z wielu
+    segmentów. Średnia liczba segmentów składających się na pojedynczą wiadomość
+    jest kolejnym parametrem opisującym źródło wiadomości ukrytych. Jest to parametr
+    nieco sztuczny, wprowadzony na potrzeby badań. Ostatnim parametrem charakteryzującym
+    wiadomości ukryte, jest maksymalna wartość(treść) segmentu. W trakcie badań
+    natężenie napływu wiadomości ukrytych, oraz liczba segmentów pojedynczej wiadomości
+    traktowane były jak parametr \(\lambda \) rozkładu Poissona. Rozkład wartości(treści)
+    pojedynczego segmentu modelowana była rozkładem jednostajnym dyskretnym, w przedziale
+    \( [1, V_{US_{MAX}}]  \)
+
+    Ostatnim elementem środowiska działania kanału ukrytego, jest opis kanału usługowego.
+    Charakteryzowany jest on poprzez podanie jego przepływności w bitach na sekundę.
+    Przepływność ta może ograniczać ilość danych możliwych do przesłania kanałem
+    w jednostce czasu i w rezultacie wpływać na opóźnienie zarówno wiadomości
+    podstawowych jak i ukrytych
+
     \section{Założenia i ograniczenia projektowe}
+    W czasie projektowania protokołu a następnie jego badań przyjęto następujące założenia:
+    \begin{enumerate}
+        \item \emph{Pojemność kolejki wiadomości ukrytych i podstawowych jest nieograniczona} -
+            jak zostanie omówione w następnym rozdziale, działanie protokołu
+            kanału ukrytego wymaga kolejkowania zarówno wiadomości podstawowych
+            jak i ukrytych, w obecnej wersji protokół kanału ukrytego nie wspiera
+            żadnego mechanizmu radzenia sobie z przeciążeniami, w związku z tym
+            dla ułatwienia prowadzenia badań założono nieskończoną pojemność obu kolejek
+
+        \item \emph{Wiadomość(zarówno podstawową jak i ukrytą) traktujemy, jako odebraną,
+            gdy wszystkie jej segmenty zostaną odebrane przez odbiornik} - jak powiedziano
+            wcześniej, wiadomości ukryte mogą składać się z więcej niż jednego segmentu,
+            natomiast jak zostanie powiedziane, wiadomości podstawowe mogą być fragmentowane
+            w celu transmisji pakietów z ukrytymi wiadomościami, aby umożliwić
+            obliczanie opóźnień zarówno wiadomości podstawowych jak i ukrytych,
+            zakłada się, że opóźnienie to czas pomiędzy napłynięciem wiadomości,
+            a odebraniem ostatniego jej segmentu
+
+        \item \emph{Komunikacja pomiędzy odbiorcą a nadawcą odbywa się bez błędów transmisji} -
+            jak wspomniano wcześniej, protokół UDP jest protokołem zawodnym, również
+            zaprojektowany protokół kanału ukrytego nie zapewnia mechanizmów niezawodnej
+            transmisji danych, w zawiązku z czym, aby nie komplikować metodologii
+            obliczania opóźnień poszczególnych wiadomości, związanych z utratą
+            pakietów je transportujących, założono, że w trakcie transmisji nie
+            występują żadne błędy, zarówno podstawieniowe jak i wtrąceniowe
+
+        \item \emph{Długość wiadomości ukrytej musi być wielokrotnością długości segmentu
+            wiadomości ukrytej (DSWU)} - długość każdego odebranego przez odbiorcę pakietu,
+            jest przez niego interpretowana jako wartość segmentu danych ukrytych o określonej
+            długości, w związku z tym konieczne jest zapewnienie, że wszystkie segmenty
+            wiadomości ukrytej są tej samej długości i są w pełni wypełnione, co czasami
+            wymaga zastosowania dopełnienia, przyjęcie tego założenie upraszcza protokół
+            kanału ukrytego, ponieważ odpowiedzialność za dopełnienie wiadomości ukrytych
+            spada na użytkownika kanału
+    \end{enumerate}
     \section{Słownik używanych pojęć}
     \section{Opis parametrów kanału ukrytego}
     \section{Opis działania protokołu kanału ukrytego}
@@ -720,7 +815,7 @@
 \chapter{Analiza wykrywalności kanału ukrytego}
     \section{Analiza ingerencji kanału ukrytego w kanał podstawowy}
     \section{Metody ataku na kanał ukryty}
-    \section{Sugestie doboru parametrów kanału ukrytego}
+    \section{Sugestie doboru parametrów kanału ukrytego} \label{SUGESTIEPARAMETROW}
     \section{Inne sposoby obrony przed wykryciem}
 
 \chapter{Podsumowanie i wnioski}
