@@ -695,10 +695,9 @@
 \chapter{Projekt protokołu kanału ukrytego}
     \section{Opis otoczenia działania protokołu}
     Przedstawiony w dalszej części pracy protokół kanału ukrytego oparty jest o
-    interpretację długości pakietów jako fragmentów wiadomości ukrytej.
+    interpretację długości pakietów protokołu UDP jako fragmentów wiadomości ukrytej.
     Kanał ukryty przeznaczony jest do komunikacji typu punkt-punkt pomiędzy odbiorcą a nadawcą.
-    Jako protokół usługowy dla protokołu kanału ukrytego wybrany został protokół UDP. Kanał ukryty
-    może być wykorzystywany zarówno do komunikacji wewnątrz sieci lokalnej jak i
+    Kanał ukryty może być wykorzystywany zarówno do komunikacji wewnątrz sieci lokalnej jak i
     komunikacji pomiędzy urządzeniami znajdującymi się w różnych sieciach.
     Protokół UDP jest protokołem datagramowym, co
     oznacza, że każdy pakiet wysłany przez nadawcę jest traktowany jako całość, nie może zostać
@@ -711,7 +710,8 @@
     węzłów pośredniczących, bez obawy o zniszczenie wiadomości ukrytej poprzez fragmentację
     lub agregację pakietów.
 
-    Z uwagi na to, że protokołem usługowym dla kanału ukrytego jest UDP, naturalnym jest
+    Z uwagi na to, że pakiety generowane przez protokół kanału ukrytego, to pakiety UDP,
+    wymagane jest
     zastosowanie jako źródła wiadomości podstawowych protokołu, który również
     natywnie wykorzystuje UDP do transmisji wiadomości, na przykład DNS lub TFTP.
     Istnieje co prawda możliwość współpracy z protokołem wykorzystującym TCP, na przykład HTTP,
@@ -728,8 +728,9 @@
 
     ZASTANOWIC SIE, CZY TEGO NIE PRZENISC
 
-    Model kanału ukrytego został przedstawiony na rysunku poniżej. W modelu tym zakłada się
-    istnienie źródła danych podstawowych, którym tak jak wcześniej opisano, jest
+    Model kanału ukrytego został przedstawiony na rysunku \ref{HIDDENCHANNELMODEL}. W modelu tym zakłada się
+    istnienie źródła danych podstawowych(oznaczone na schemacie na czerwono),
+    którym tak jak wcześniej opisano, jest
     protokół wykorzystujący do transmisji danych protokół UDP. Źródło danych
     charakteryzowane jest dwoma parametrami: średnim natężeniem, mówiącym
     o tym ile wiadomości napływa w jednostce czasu, oraz średnim rozmiarem
@@ -737,7 +738,7 @@
     podstawowych jak i ich długość są interpretowane jako parametr \(\lambda \) rozkładu
     Poissona.
 
-    Źródło wiadomości ukrytych również charakteryzowane poprzez natężenie
+    Źródło wiadomości ukrytych(oznaczone na żółto) również charakteryzowane poprzez natężenie
     napływu wiadomości ukrytych. Pojedyncza wiadomość ukryta może składać się z wielu
     segmentów. Średnia liczba segmentów składających się na pojedynczą wiadomość
     jest kolejnym parametrem opisującym źródło wiadomości ukrytych. Jest to parametr
@@ -746,13 +747,29 @@
     natężenie napływu wiadomości ukrytych, oraz liczba segmentów pojedynczej wiadomości
     traktowane były jak parametr \(\lambda \) rozkładu Poissona. Rozkład wartości(treści)
     pojedynczego segmentu modelowana była rozkładem jednostajnym dyskretnym, w przedziale
-    \( [1, V_{US_{MAX}}]  \)
+    \( [1, V_{US_{MAX}}]  \). Kanał podstawowy charakteryzowany jest także
+    poprzez jego pojemność, wyrażona jest ona w bitach na sekundę. Ogranicza ona
+    maksymalną ilość danych, możliwych do przesłania kanałem w jednostce czasu i
+    w rezultacie może wpływać na opóźnienie wiadomości podstawowych i ukrytych.
 
-    Ostatnim elementem środowiska działania kanału ukrytego, jest opis kanału usługowego.
-    Charakteryzowany jest on poprzez podanie jego przepływności w bitach na sekundę.
-    Przepływność ta może ograniczać ilość danych możliwych do przesłania kanałem
-    w jednostce czasu i w rezultacie wpływać na opóźnienie zarówno wiadomości
-    podstawowych jak i ukrytych
+    Oprócz źródeł wiadomości, na schemacie zaznaczono kolejki służące do przechowywania
+    wiadomości, zarówno podstawowych jak i ukrytych. Kolejka wiadomości podstawowych,
+    jest to pionowa kolejka znajdująca się pod źródłem wiadomości podstawowych.
+    Na schemacie przedstawiono wiadomości podstawowe znajdujące się w kolejce(zielone bloki),
+    liczba, którą opisana jest każda z wiadomości oznacza jej rozmiar w bajtach.
+
+    Kolejka wiadomości ukrytych znajduje się na prawo od źródła wiadomości ukrytych,
+    umieszczona w niej została pojedyncza wiadomość(blok z różową ramką), podzielona
+    na cztery segmenty, liczba opisująca segment, oznacza wartość tego segmentu
+
+    TUTAJ POWINIEN BYĆ SCHEMAT W LEPSZEJ JAKOŚCI
+
+    \begin{figure}[h]
+            \centering
+            \includegraphics[scale=0.99]{hidden_channel_model}
+            \caption{Model kanału ukrytego}
+            \label{HIDDENCHANNELMODEL}
+    \end{figure}
 
     \section{Założenia i ograniczenia projektowe}
     W czasie projektowania protokołu a następnie jego badań przyjęto następujące założenia:
@@ -791,7 +808,73 @@
             spada na użytkownika kanału
     \end{enumerate}
     \section{Słownik używanych pojęć}
+    \begin{itemize}
+        \item \emph{Kanał podstawowy(nośnik)} - kanał, w którym zarówno fakt transmisji,
+            jak również treść przesyłanych danych, jest widoczna dla osób postronnych,
+            wykorzystywany do realizacji kanału ukrytego
+
+        \item \emph{Wiadomość podstawowa (WP)} - wiadomość transmitowana kanałem
+            podstawowym
+
+        \item \emph{Kolejka wiadomości podstawowych( \( K_{WP} \) )} - kolejka, w
+                której przechowywane są, ze względu na brak możliwości natychmiastowej
+                transmisji, wiadomości podstawowe, jednostką pojemności kolejki
+                wiadomości podstawowych jest bajt
+
+        \item \emph{Kanał ukryty} - kanał umożliwiający transmisje danych w taki sposób,
+            aby osoba postronna obserwująca kanał transmisyjny nie była świadoma
+            nie tylko treści wiadomości, ale również faktu, że transmisja wiadomości ma miejsce
+
+        \item \emph{Wiadomość ukryta (WU)} - wiadomość transmitowana kanałem ukrytym
+
+        \item \emph{Kolejka wiadomości ukrytych ( \( K_{WU} \) )} - kolejka, w
+                której przechowywane są, ze względu na brak możliwości natychmiastowej
+                transmisji, wiadomości ukryte, jednostką pojemności kolejki
+                wiadomości podstawowych jest bit
+
+        \item \emph{Segment wiadomości ukrytej (SWU)} - fragment, porcja danych
+            wiadomości ukrytej, które transmitowane są (w sposób ukryty) w jednym
+            pakiecie przesyłanym za pomocą protokołu usługowego
+
+        \item \emph{Długość segmentu wiadomości ukrytej \( D_{SWU} \)} - liczba
+                bitów zawartych w jednym segmencie danych ukrytych
+
+        \item \emph{Wartość segmentu wiadomości ukrytej \( W_{SWU} \)} - wartość
+            liczbowa segmentu wiadomości ukrytej potraktowanego, jako liczba binarna,
+            na przykład dla segmentu wiadomości ukrytej o treści 11010011:
+            \( W_{SWU}(11010011) = 211 \)
+
+       \item \emph{Maksymalna wartość segmentu wiadomości ukrytej (\( Max_{W_{SWU}} \))} -
+           maksymalna wartość, jaką może przyjąć segment wiadomości ukrytej przy
+           założonej wartości długości segmentu wiadomości ukrytej, czyli wartość
+           segmentu wiadomości ukrytej, w którym wszystkie bity mają wartość 1,
+           na przykład dla \( D_{SWU} = 8 \), segment o wartości maksymalnej to
+           \( 11111111 \), a jego wartość to: \( Max_{W_{SWU}} = 255 \)
+
+       \item \emph{Fragmentacja pakietów} - procedura podziału jednego pakietu na
+           kilka mniejszych na przykład w celu równoważenia obciążenia poprzez
+           wysłanie mniejszych pakietów różnymi trasami
+
+       \item \emph{Agregacja pakietów} - procedura syntezy większego pakietu z
+           kilku małych pakietów na przykład w celu optymalizacji stosunku długości
+           nagłówka pakietu do długości danych
+
+       \item \emph{Błąd transmisji} - zjawisko polegające na odebraniu przez odbiorcę
+           pakietu lub segmentu zawierającego inną treść niż została w nim
+           umieszczona przez nadawcę, wyróżniamy błędy podstawieniowe, które
+           zmieniają wartość pojedynczych bitów wiadomości, lub błedy wtrąceniowe,
+           które powodują utratę, lub odbiór większej ilości bitów niż wysłał nadawca
+
+    \end{itemize}
     \section{Opis parametrów kanału ukrytego}
+    Przykładowa komunikacja przy pomocy kanału ukrytego wygląda następująco:
+        \begin{figure}[h]
+                \centering
+                \includegraphics{komunikacja_kanalem_ukrytym_gotowa}
+                \caption{Przykładowa komunikacja kanałem ukrytym}
+                \label{COMMUNICATION}
+        \end{figure}
+
     \section{Opis działania protokołu kanału ukrytego}
     \section{Schemat działania protokołu kanału ukrytego}
 
