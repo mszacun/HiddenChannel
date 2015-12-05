@@ -62,7 +62,7 @@
 
                 function getSymulationParamsFromHash() {
                     return document.location.hash === "" ? {} :
-                        JSON.parse(document.location.hash.substring(1));
+                        JSON.parse(decodeURI(document.location.hash.substring(1)));
                 }
 
                 function isAnimationRequested()

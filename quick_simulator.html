@@ -22,7 +22,7 @@
         <script>
             function getSymulationParamsFromHash() {
                 return document.location.hash === "" ? {} :
-                    JSON.parse(document.location.hash.substring(1));
+                    JSON.parse(encodeURI(document.location.hash.substring(1)();
             }
 
                 function calculateAvgDelay(messages) {
