@@ -179,8 +179,8 @@ void Symulator::GenerateSymulationData() {
     // while (t < timeForGeneratingHiddenMessages || allHiddenMessages.size() < numberOfHiddenMessagesToGenerate)
     //     GenerateHiddenMessages(t++);
 
-    for (t = 0; allBasicMessages.size() < 20000; t++)
-        GenerateBasicMessages(t);
+    // for (t = 0; allBasicMessages.size() < 20000; t++)
+    //     GenerateBasicMessages(t);
 }
 
 void Symulator::GenerateHiddenMessages(int time) {
@@ -221,7 +221,7 @@ void Symulator::GenerateBasicMessages(int time) {
 }
 
 StepEvents Symulator::Step() {
-    //GenerateBasicMessages(currentTime);
+    GenerateBasicMessages(currentTime);
     GenerateHiddenMessages(currentTime);
     std::vector<HiddenMessagePtr> hiddenMessagesArrived = AddArrivedHiddenMessages();
 

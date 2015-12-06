@@ -44,9 +44,10 @@ int main(int argc, const char *argv[])
                 timeForGeneratingBasicMessages, hiddenDataSegmentLength, channelBandwidth,
                 hiddenDataAppearance, basicDataAppearance, basicDataLength, hiddenMessageSegmentLength,
                 hiddenDataSegmentValue);
-        sym.GenerateSymulationData();
+        //sym.GenerateSymulationData();
 
-        while (!sym.HasSymulationEnd()) {
+        int time = 0;
+        while (time++ < timeForSymulation) {
             //std::cout << StepToString(sym.Step()) << std::endl;
             sym.Step();
         }
