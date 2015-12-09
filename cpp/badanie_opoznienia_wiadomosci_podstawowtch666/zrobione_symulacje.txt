@@ -1,0 +1,5 @@
+wszystkie po 100 dlugosci -> ewentualne natezenie 1 do poprawy, z mniejszym krokiem
+
+length 30 naplyw 9
+length 30 naplyw 5
+length 400 naply 9

@@ -20,10 +20,10 @@ def main():
     studied_param_value = 0.1
     studied_param_last_value = 10
     studied_param_name = 'hiddenDataAppearance'
-    number_of_simulations = 100
-    time_for_simulation = 1000
+    number_of_simulations = 350
+    time_for_simulation = 15000
 
-    with open(studied_param_name + 'length_400_apperance_9.csv', 'w') as result_file:
+    with open(studied_param_name + 'length_400_apperance_9_quick.csv', 'w') as result_file:
         while studied_param_value < studied_param_last_value:
             params = {
                 'hiddenDataAppearance': '-----',
