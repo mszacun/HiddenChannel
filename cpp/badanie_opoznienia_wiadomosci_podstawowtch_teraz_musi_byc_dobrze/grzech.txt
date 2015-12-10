@@ -1,0 +1,5 @@
+* stare problemy z symulacja oparta na ilosci wiadomosci zamiast na czasie
+* jak rozwiazac problem wiadomosci, ktore nie dotarly do odbiorcy
+* porownanie sterowanie opoznieniem pakietow do PWM, rozmowa o probkowaniu predkosci transmisji
+* rozmowa o ocenie
+

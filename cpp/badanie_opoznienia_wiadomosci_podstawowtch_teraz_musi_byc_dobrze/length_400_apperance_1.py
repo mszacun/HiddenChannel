@@ -1,7 +1,7 @@
 import subprocess
 
 def get_paramater_step(current_value):
-    return 0.02
+    return 0.01
 
 def make_simulation(params):
     args = "./symulator --timeForGeneratingHiddenMessages {timeForGeneratingHiddenMessages} --numberOfHiddenMessagesToGenerate {numberOfHiddenMessagesToGenerate} --timeForGeneratingBasicMessages {timeForGeneratingBasicMessages} --hiddenDataSegmentLength {hiddenDataSegmentLength} --channelBandwidth {channelBandwidth} --hiddenDataAppearance {hiddenDataAppearance} --basicDataAppearance {basicDataAppearance} --basicDataLength {basicDataLength} --hiddenMessageSegmentLength {hiddenMessageSegmentLength} --hiddenDataSegmentValue {hiddenDataSegmentValue} --numberOfSymulations {numberOfSymulations} --timeForSimulation {timeForSimulation}".format(**params)
@@ -20,8 +20,8 @@ def main():
     studied_param_value = 0.1
     studied_param_last_value = 10
     studied_param_name = 'hiddenDataAppearance'
-    number_of_simulations = 350
-    time_for_simulation = 15000
+    number_of_simulations = 50
+    time_for_simulation = 5000
 
     with open(studied_param_name + 'length_400_apperance_1_quick.csv', 'w') as result_file:
         while studied_param_value < studied_param_last_value:
@@ -31,7 +31,7 @@ def main():
                 'hiddenDataSegmentLength': 12,
                 'hiddenDataSegmentValue': 100,
                 'basicDataAppearance': 1,
-                'basicDataLength': 250,
+                'basicDataLength': 400,
                 'timeForGeneratingHiddenMessages': 0,
                 'numberOfHiddenMessagesToGenerate': 5,
                 'timeForGeneratingBasicMessages': 0,

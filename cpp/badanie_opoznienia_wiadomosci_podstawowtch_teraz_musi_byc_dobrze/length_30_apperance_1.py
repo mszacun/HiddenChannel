@@ -23,12 +23,12 @@ def main():
     number_of_simulations = 50
     time_for_simulation = 5000
 
-    with open(studied_param_name + 'length_30_apperance_1.csv', 'w') as result_file:
+    with open(studied_param_name + 'length_30_apperance_1_quick.csv', 'w') as result_file:
         while studied_param_value < studied_param_last_value:
             params = {
                 'hiddenDataAppearance': '-----',
                 'channelBandwidth': 1000,
-                'hiddenDataSegmentLength': 13,
+                'hiddenDataSegmentLength': 12,
                 'hiddenDataSegmentValue': 100,
                 'basicDataAppearance': 1,
                 'basicDataLength': 30,
