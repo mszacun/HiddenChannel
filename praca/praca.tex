@@ -683,7 +683,7 @@
         w aplikacjach VOiP, lub strumieniujących multimedia(muzykę, filmy).
 
         W pracy \cite{VOIPSTEGANOGRAPHY} w celu organizacji kanału ukrytego wykorzystany
-        jest protokół RTP(Real-Time Transfer Protocol), jako przykład aplikacji
+        jest protokół RTP(\emph{Real-Time Transfer Protocol}), jako przykład aplikacji
         wykorzystującej ten protokół wybrano aplikację typu VOiP. W tego typu aplikacjach,
         jeśli odbiorca odbierze pakiet, który jest znacznie opóźniony w stosunku
         do innych pakietów, uznaje się, że informacje w nim zawarte są bezwartościowe,
@@ -868,8 +868,8 @@
     wiadomości ukryte, jest maksymalna wartość(treść) segmentu. W trakcie badań
     natężenie napływu wiadomości ukrytych, oraz liczba segmentów pojedynczej wiadomości
     traktowane były jak parametr \(\lambda \) rozkładu Poissona. Rozkład wartości(treści)
-    pojedynczego segmentu modelowana była rozkładem jednostajnym dyskretnym, w przedziale
-    \( [1, V_{SWU_{MAX}}]  \). Kanał podstawowy charakteryzowany jest także
+    pojedynczego segmentu modelowany był rozkładem Poissona, gdzie parametrem \(\lambda\) była
+    średnia wartość segmentu. Kanał podstawowy charakteryzowany jest także
     poprzez jego pojemność, wyrażona jest ona w bitach na sekundę. Ogranicza ona
     maksymalną ilość danych, możliwych do przesłania kanałem w jednostce czasu i
     w rezultacie może wpływać na opóźnienie wiadomości podstawowych i ukrytych.
@@ -1010,24 +1010,269 @@
                 \label{CHANNELALGORITHM}
         \end{figure}
 
-\chapter{Badania optymalnych parametrów i jakości kanału ukrytego}
-    \section{Zależność opóźnienia wiadomości ukrytych od natężenia napływu wiadomości podstawowych}
-        \subsection{Metodologia i cel badania}
-        \subsection{Obserwacje}
-        \subsection{Wnioski}
-        % napisz tak bardziej ogólnie, że różnymi parametrami pakietów ukrytych można
-        % osiągnąć zmniejszenie i zwiększenie opóźnienia
+\chapter{Badania ilościowych charakterystyk kanału ukrytego i kanału podstawowego dla zaproponowanego protokołu kanału ukrytego}
+    \section{Wprowadzenie - zakres i cel eksperymentów symulacyjnych}
+    Zaplanowane i omawiane w dalszych częściach tego rozdziału eksperymenty symulacyjne,
+    polegające na badaniu ilościowych zależności wybranych charakterystyka kanałów
+    ukrytego i podstawowego oraz środowiska komunikacyjnego, są uzasadnione konstrukcją
+    protokołu kanału ukrytego.
 
-    \section{Zależność opóźnienia wiadomości podstawowych od natężenia napływu wiadomości ukrytych} \label{OPOZNIENEPODSTAWOWYCHODUKRYTYCH}
-        \subsection{Metodologia i cel badania}
-        \subsection{Obserwacje}
-        \subsection{Wnioski}
+    Celem eksperymentów symulacyjnych jest ilościowa weryfikacja oczekiwanych właściwości
+    opracowanego protokołu kanału ukrytego, w tym:
+    \begin{itemize} \itemsep1pt \parskip0pt \parsep0pt
+        \item wpływu różnic intensywności źródeł wiadomości podstawowych i ukrytych na
+            efektywność transferu wiadomości ukrytych
+        \item wpływu różnic intensywności źródeł wiadomości podstawowych i ukrytych na
+            efektywność transferu wiadomości podstawowych
+        \item wpływu różnic długości wiadomości podstawowych i ukrytych na efektywność
+            transferu wiadomości podstawowych
+        \item wrażliwości protokołu kanału podstawowego na zaproponowany protokół
+            kanału ukrytego
+    \end{itemize}
 
-    \section{Zależność opóźnienia wiadomości podstawowych od natężenia napływu wiadomości podstawowych} \label{BADANIEDLUGOSCISEGMENTUDANYCHUKRYTYCH}
-        \subsection{Metodologia i cel badania}
-        \subsection{Obserwacje}
-        \subsection{Wnioski}
+    Oznaczenia:
+    \begin{itemize} \itemsep1pt \parskip0pt \parsep0pt
+        \item \( R_{WU} \) - średnia intensywność napływu wiadomości ukrytych (parametr rozkładu Poissona)
+        \item \( L_{WU} \) - średnia długość wiadomości ukrytej (liczba segmentów - parametr rozkładu Poissona)
+        \item \( V_{WU} \) - średnia wartość segmentu wiadomości ukrytej
+        \item \( R_{WP} \) - średnia intensywność napływu wiadomości podstawowych (parametr rozkładu Poissona)
+        \item \( L_{WP} \) - średnia długość wiadomości podstawowej (liczba bajtów - parametr rozkładu Poissona)
+        \item \( C_P \) - pojemność kanału podstawowego (w bajtach na sekundę)
+        \item \( D_{WU} \) - średnie opóźnienie wiadomości ukrytych
+        \item \( D_{WP} \) - średnie opóźnienie wiadomości podstawowych
+        \item \( L_{SWU} \) - długość segmentu danych ukrytych (parametr kanału ukrytego)
+    \end{itemize}
 
+    \section{Zależność średniego opóźnienia wiadomości ukrytych od intensywności napływu wiadomości podstawowych}
+        \subsection{Cel badania}
+            Celem eksperymentu było zbadanie zależności pomiędzy intensywnością
+            napływu wiadomości podstawowych, a opóźnieniem wiadomości ukrytych.
+            Badania zostały przeprowadzone dla różnych średnich długości wiadomości
+            podstawowych, co pozwoliło zaobserwować również wpływ tego parametru
+            na średnie opóźnienie wiadomości ukrytych
+
+            Badana zależność wyraża się wzorem: \\
+                $$ D_{WU} = f(R_{WP} | L_{WP}, L_{SWU}, C_P, V_{WU}, L_{WU}, R_{WU}) $$
+            \begin{table}[h]
+                \centering
+                \begin{tabular}{ | l | r | l | }
+                    \hline
+                    {\bfseries Parametr} & \multicolumn{1}{|l|}{{\bfseries Wartość parametru}} & {\bfseries Jednostka} \\ \hline
+                    \( R_{WU} \) & 4 & wiadomość / sekundę \\ \hline
+                    \( L_{WU} \) & 1 & segment / wiadomość \\ \hline
+                    \( V_{WU} \) & 100 & \\ \hline
+                    \( C_P \) & 1000 & bajty / sekundę \\ \hline
+                    \( L_{SWU} \) & 16 & bity \\ \hline
+                    \( R_{WP} \) & \multicolumn{1}{|l|}{zmienna w trakcie symulacji} & wiadomość / sekundę \\ \hline
+                    \( L_{WP} \) & zmienna w kolejnych eksperymentach & bajt \\ \hline
+                \end{tabular}
+                \caption{Wartości parametrów użyte w trakcie badań}
+            \end{table}
+        \subsection{Przebieg badania i wnioski}
+            Parametry symulacji zostały dobrane w taki sposób, aby dane podstawowe
+            były wykorzystywane głównie do transmisji danych ukrytych, co osiągnięto
+            dzięki wysokiej wartości parametru Długość segmentu wiadomości ukrytej.
+            Badanie polegało na symulacji działania protokołu ukrytego przez okres czasu
+            \( T = 5000 \) i generowanie wiadomości podstawowych oraz ukrytych zgodnie
+            z przyjętymi parametrami. Po zakończeniu symulacji, zostało obliczone
+            średnie opóźnienie wiadomości ukrytych, które dotarły do adresata, wiadomości
+            ukryte, które po zakończeniu symulacji pozostały w kolejce wiadomości
+            ukrytych nie były brane pod uwagę przy obliczaniu średniego opóźnienia.
+            Symulacja została powtórzona \( N = 100 \) razy, a wyniki z poszczególnych
+            symulacji uśredniono i pokazano na wykresie \ref{OPOZNIENIEUKRYTYCHODPODSTAWOWYCH}
+
+            Wiadomość ukryta nie może zostać wysłana, dopóki w kolejce wiadomości
+            podstawowych nie będzie wystarczająco danych do jej wysłania, jeśli ten
+            warunek nie jest spełniony, wiadomość ukryta oczekuje w kolejce wiadomości
+            ukrytych, a jej opóźnienie rośnie. Z badań wynika, że gdy intensywność
+            napływu wiadomości podstawowych jest znacznie mniejsze od intensywności
+            napływu wiadomości ukrytych, średnie opóźnienie wiadomości ukrytych jest
+            bardzo duże. W takim przypadku, mała zmiana intensywności napływu wiadomości
+            podstawowych ma duży wpływ na opóźnienie wiadomości ukrytych. Badania
+            pokazały, że również długość wiadomości podstawowych ma wpływ na to opóźnienie.
+            Przy krótszych wiadomościach podstawowych, potrzeba ich więcej, aby móc
+            transmitować pakiet z wiadomością ukrytą. Powoduje to, że aby utrzymać
+            opóźnienie wiadomości ukrytych na tym samym poziomie, zmniejszając rozmiar
+            wiadomości podstawowych, należy zwiększyć intensywność ich napływu.
+
+            W przypadku, gdy opóźnienie wiadomości ukrytych ma duże znaczenie,
+            nie ma wielu możliwości działania, zmniejszenie wartości parametru Długość
+            segmentu wiadomości ukrytej spowoduje, że odbiorca szybciej otrzyma
+            pojedyncze segmenty wiadomości, jednak ponieważ wiadomość traktujemy jako odebraną,
+            po odebraniu wszystkich jej segmentów, opóźnienie całej wiadomości
+            nie ulegnie zmianie.
+
+        \begin{figure}[h]
+                \centering
+                \includegraphics[scale=0.6]{opoznienieukrytychodpodstawowych}
+                \caption{Zależność średniego opóźnienia wiadomości ukrytych od
+                    intensywności napływu wiadomości podstawowych}
+                \label{OPOZNIENIEUKRYTYCHODPODSTAWOWYCH}
+        \end{figure}
+
+    \section{Zależność średniego opóźnienia wiadomości podstawowych od intensywności napływu wiadomości ukrytych} \label{OPOZNIENEPODSTAWOWYCHODUKRYTYCH}
+        \subsection{Cel badania}
+            Celem eksperymentu było zbadanie zależności pomiędzy intensywnością
+            napływu wiadomości ukrytych, a opóźnieniem wiadomości podstawowych.
+            Badania zostały przeprowadzone dla różnych średnich długości wiadomości
+            podstawowych oraz intensywności ich napływu, co pozwoliło zaobserwować
+            zróżnicowane zachowanie kanału ukrytego w zależności od wartości tych
+            parametrów
+
+            Badana zależność wyraża się wzorem: \\
+                $$ D_{WP} = f(R_{WU} | L_{WP}, L_{SWU}, C_P, V_{WU}, L_{WU}, R_{WU}) $$
+            \begin{table}[h]
+                \centering
+                \begin{tabular}{ | l | r | l | }
+                    \hline
+                    {\bfseries Parametr} & \multicolumn{1}{|l|}{{\bfseries Wartość parametru}} & {\bfseries Jednostka} \\ \hline
+                    \( R_{WU} \) & \multicolumn{1}{|l|}{zmienna w trakcie symulacji} & wiadomość / sekundę \\ \hline
+                    \( L_{WU} \) & 1 & segment / wiadomość \\ \hline
+                    \( V_{WU} \) & 100 & \\ \hline
+                    \( C_P \) & 1000 & bajty / sekundę \\ \hline
+                    \( L_{SWU} \) & 12 & bity \\ \hline
+                    \( R_{WP} \) & zmienna w kolejnych eksperymentach & wiadomość / sekundę \\ \hline
+                    \( L_{WP} \) & zmienna w kolejnych eksperymentach & bajt \\ \hline
+                \end{tabular}
+                \caption{Wartości parametrów użyte w trakcie badań}
+            \end{table}
+        \subsection{Przebieg badania i wnioski}
+            Różnorodność wybranych do eksperymentu wartości parametru Średnia długość
+            wiadomości podstawowej w stosunku do wartości segmentów wiadomości ukrytych,
+            spowodowała powstanie trzech sposobów postępowania z wiadomościami podstawowymi:
+            a) konieczność agregacji kilku wiadomości podstawowych w celu transmisji pakietu z danymi ukrytymi,
+            b) dopasowanie długości wiadomości podstawowych do wartości segmentów wiadomości ukrytych,
+            c) konieczność fragmentacji wiadomości podstawowych, których długość wystarcza
+            do transmisji kilku segmentów danych ukrytych. Różnorodność ta przekłada
+            się na zróżnicowanie krzywych otrzymanych podczas badania zależności.
+
+            Aby wytłumaczyć zaobserwowane zależności, zostanie wprowadzone równanie
+            mówiące o równowadze napływu danych ukrytych i napływu danych podstawowych:
+            \begin{equation} \label{ROWNANIEROWNOWAGI}
+            R_{WP} * L_{WP} = R_{WU} * L_{WU} * V_{WU}
+            \end{equation}
+            Gdy obie strony równania są sobie w przybliżeniu równe, nie ma konieczności
+            kolejkowania wiadomości podstawowych ani ukrytych. Jeśli lewa strona jest
+            większa od prawej, oznacza to, że napływająca liczba bajtów wiadomości podstawowych
+            jest większa, niż wymagana do transmisji napływających danych ukrytych,
+            w związku z czym, są one kolejkowane. W przypadku, gdy prawa strona jest
+            większa od lewej, oznacza to, że napływająca liczba bajtów wiadomości
+            podstawowych jest niewystarczająca do transmisji wszystkich napływających
+            wiadomości ukrytych, w związku z czym muszą one zostać dodane do kolejki
+            wiadomości ukrytych.
+
+            Wiadomość podstawowa może wydostać się z kolejki wiadomości podstawowych
+            na dwa sposoby:
+            \begin{enumerate}
+                \item w pakiecie z danymi ukrytymi - sytuacja, gdy w kolejce
+                    wiadomości ukrytych znajduje się segment, do transmisji którego
+                    wiadomość podstawowa może być wykorzystana, sposób ten wymaga
+                    napływu wiadomości ukrytych
+                \item w pakiecie bez danych ukrytych - sytuacja, gdy w kolejce wiadomości
+                    podstawowych uzbiera się więcej bajtów danych, niż wynosi
+                    maksymalna wartość segmentu danych ukrytych, jest ona wtedy
+                    opróżniana, a wszystkie znajdujące się w niej dane transmitowane
+                    są pakietem bez danych ukrytych
+            \end{enumerate}
+
+            Dzięki drugiemu sposobowi, otrzymane krzywe są ograniczone od góry,
+            ma on kluczowe znaczenie, gdy lewa strona równania \ref{ROWNANIEROWNOWAGI} jest większa od prawej.
+            W takim przypadku
+            opóźnienie wiadomości podstawowych zależy od czasu, jaki musi upłynąć,
+            zanim zaagregowana zostanie wystarczająca ilość danych podstawowych.
+            Czas ten jest tym krótszy im większe jest natężenie napływu wiadomości
+            i im dłuższe są napływające wiadomości. Jest to widoczne na wykresie
+            \ref{OPOZNIENIEPODSTAWOWYCHODUKRYTYCH}(na przykład żółta krzywa zaczyna
+            się wyżej niż pomarańczowa).
+
+            Wraz ze wzrostem intensywności napływu wiadomości ukrytych, wzrasta udział
+            pierwszego sposobu opuszczania kolejki przez wiadomości podstawowe.
+            W skutek tego stopniowo spada średnie opóźnienie wiadomości podstawowych,
+            spadek ten znacznie przyspiesza, obie strony równania zaczynają się wyrównywać.
+            Po wyrównaniu się stron równania \ref{ROWNANIEROWNOWAGI},
+            opóźnienie wiadomości podstawowych stabilizuje się, a dalsze zwiększanie
+            intensywności napływu wiadomości ukrytych nie zmniejsza go.
+
+        \begin{figure}[h]
+                \centering
+                \includegraphics[scale=0.6]{opoznieniepodstawowychodnatezeniaukrytych}
+                \caption{Zależność średniego opóźnienia wiadomości ukrytych od
+                    intensywności napływu wiadomości podstawowych}
+                \label{OPOZNIENIEPODSTAWOWYCHODUKRYTYCH}
+        \end{figure}
+
+
+
+    \section{Zależność średniego opóźnienia wiadomości podstawowych od natężenia napływu wiadomości podstawowych} \label{BADANIEDLUGOSCISEGMENTUDANYCHUKRYTYCH}
+        \subsection{Cel badania}
+            Liczba bajtów wymaganych do wysłania pakietu bez danych ukrytych,
+            jest zależna od maksymalnej wartości segmentu wiadomości ukrytej, która
+            z kolei zależy od parametru konfiguracyjnego kanału ukrytego -- Długość segmentu wiadomości ukrytej
+            Celem eksperymentu było zbadanie i pokazanie wpływu tego parametru
+            na opóźnienie wiadomości podstawowych w warunkach niskiej intensywności
+            napływu wiadomości ukrytych. W tym celu zbadano zależność pomiędzy
+            opóźnieniem wiadomości podstawowych, a intensywnością ich napływu.
+
+            Badana zależność wyraża się wzorem: \\
+                $$ D_{WP} = f(R_{WP} | L_{WP}, R_{WP}, L_{SWU}, C_P, V_{WU}, L_{WU}) $$
+            \begin{table}[h]
+                \centering
+                \begin{tabular}{ | l | r | l | }
+                    \hline
+                    {\bfseries Parametr} & \multicolumn{1}{|l|}{{\bfseries Wartość parametru}} & {\bfseries Jednostka} \\ \hline
+                    \( R_{WU} \) & 0.5 & wiadomość / sekundę \\ \hline
+                    \( L_{WU} \) & 1 & segment / wiadomość \\ \hline
+                    \( V_{WU} \) & 5 & \\ \hline
+                    \( C_P \) & 1000 & bajty / sekundę \\ \hline
+                    \( L_{SWU} \) & zmienna w kolejnych eksperymentach & bity \\ \hline
+                    \( R_{WP} \) & zmienna w trakcie symulacji & wiadomość / sekundę  \\ \hline
+                    \( L_{WP} \) & 5 & bajt \\ \hline
+                \end{tabular}
+                \caption{Wartości parametrów użyte w trakcie badań}
+            \end{table}
+        \subsection{Przebieg badań i wnioski}
+            Parametry symulacji zostały dobrane w taki sposób, aby spowodować
+            wprowadzenie dużego opóźnienia do kanału podstawowego. Mała intensywność
+            napływu wiadomości ukrytych, wraz z małą liczbą segmentów w pojedynczej
+            wiadomości oraz ponadto mała średnia wartość pojedynczego segmentu
+            wiadomości ukrytej, powoduje, że prawa strona równania \ref{ROWNANIEROWNOWAGI}
+            jest mała. Sprawia to, że wiadomości podstawowe muszą być kolejkowane i
+            w konsekwencji transmitowane głównie w pakietach bez danych ukrytych.
+
+            W lewej części wykresu, gdy intensywność napływu wiadomości podstawowych
+            jest niższa niż wiadomości ukrytych, średnie opóźnienie wiadomości
+            podstawowych jest małe, ponieważ wszystkie wiadomości podstawowe transmitowane
+            są w pakietach zawierających dane ukryte. Gdy intensywność napływu wiadomości
+            podstawowych jest większa niż wiadomości ukrytych, muszą być one kolejkowane,
+            w związku z czym ich średnie opóźnienie wzrasta. Należy zauważyć, że
+            niektóre wiadomości ukryte wymagają do transmisji kilku wiadomości
+            podstawowych(na przykład wiadomości ukryte składające się z kilku segmentów),
+            przez co liczba wiadomości podstawowych, które opuszczają kolejkę wiadomości
+            podstawowych w jednostce czasu nie jest stała. Powoduje to, że pomimo,
+            że wiadomości podstawowe napływają intensywniej niż wiadomości ukryte,
+            niektóre z wiadomości podstawowych, które normalnie musiałyby zostać
+            wysłane w pakiecie bez danych ukrytych, zostają wysłane w pakietach
+            z danymi ukrytymi, w związku z czym kolejka wiadomości podstawowych
+            ulega opróżnieniu. Im większa jest intensywność napływu wiadomości
+            podstawowych, tym rzadziej opisana sytuacja ma miejsce, co powoduje
+            wzrost średniego opóźnienia wiadomości podstawowych, aż do wartości
+            maksymalnej, ograniczonej przez mechanizm pakietów bez danych ukrytych.
+
+            Dalszy wzrost intensywności napływu wiadomości podstawowych powoduje
+            spadek średniego ich opóźnienia. Związane jest to z tym, że im intensywniej
+            napływają wiadomości podstawowe, tym mniej czasu jest potrzebne na uzbieranie
+            wystarczającej ilości danych do wysłania pakietu bez danych ukrytych.
+
+            Przeprowadzone badania pokazują, że im mniejsza jest wartość parametru
+            kanału ukrytego -- Długość segmentu danych ukrytych -- tym mniejsze
+            jest maksymalne średnie opóźnienie wiadomości podstawowych, niezależnie
+            od ich napływu. Warto zwrócić uwagę, że przy skrajnie małej wartości tego
+            parametru, intensywność napływu wiadomości podstawowych wywiera mały
+            wpływ na ich średnie opóźnienie. Dzieje się tak, ponieważ praktycznie
+            każda wiadomość podstawowa ma wtedy rozmiar większy niż maksymalna wartość
+            segmentu wiadomości ukrytej, w związku z czym, jeśli nie ma segmentu
+            danych ukrytych oczekującego na wysłanie, może ona natychmiastowo
+            zostać wysłana w pakiecie nie zawierającym danych ukrytych.
 
 \chapter{Analiza wykrywalności kanału ukrytego}
     \section{Analiza ingerencji kanału ukrytego w kanał podstawowy}
@@ -1129,7 +1374,7 @@
        na sposób interpretacji długości pakietów UDP przez odbiorcę danych ukrytych,
        na przykład pakiety o długościach odpowiednio 4 i 12 bajtów, \( L_{SWU} = 4 \)
        zostaną zinterpretowane jako \( 0100 1100 \), natomiast dla \( L_{SWU} = 5 \)
-       jako \( 00100 01100 \), przykład ten pokazuje, że aby odczytać zawartość wiadomości
+       jako \( 00100 01100 \), co pokazuje, że aby odczytać zawartość wiadomości
        ukrytych, atakujący musi poznać wartość klucza użytego w algorytmie protokołu
        kanału ukrytego.
 

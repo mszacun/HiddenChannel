@@ -113,6 +113,8 @@ std::vector<PacketPtr> Channel::GetPacketsThatReachTarget() {
 std::vector<PacketPtr> HiddenChannel::Execute() {
     std::vector<PacketPtr> generatedPackets;
 
+    std::cout << "Ilosc daych podstawowych: " << basicMessagesQueue.GetAviableDataLength() << std::endl;
+    std::cout << "Wymagana ilosc danych podstawowych: " << hiddenMessageQueue.GetDataAmountNeeded() << std::endl;
     while (CanSendHiddenPacket()) {
         HiddenMessageSegment segmentInfo = hiddenMessageQueue.GetSegmentToSend();
         DataSources dataSources = basicMessagesQueue.GetData(segmentInfo.segment);
