@@ -42,7 +42,7 @@
     metod komunikacji, w~sposób utrudniający wykrycie istnienia wymienianych komunikatów.
     Niniejsza praca zawiera krótki przegląd przykładowych sposobów
     realizacji kanałów ukrytych na potrzeby transmisji danych w~sieciach komputerowych.
-    w~głównej części pracy wysuwana jest propozycja stworzenia kanału ukrytego, opartego na ukrywaniu
+    W~głównej części pracy wysuwana jest propozycja stworzenia kanału ukrytego, opartego na ukrywaniu
     danych w~długości pakietów protokołu UDP przesyłanych kanałem podstawowym.
     Przeprowadzone
     zostały szczegółowe badania parametrów jakościowych takiego kanału, w~zależności
@@ -79,7 +79,7 @@
 \chapter{Cel i~zakres pracy}
     Celem niniejszej pracy jest przedstawienie zaprojektowanego protokołu kanału
     ukrytego, działającego w~sieciach komputerowych i~ opartego o~ukrywanie wiadomości za pomocą długości pakietów UDP
-    zawierających wiadomości podstawowe. w~ramach tego celu zostaną wykonane:
+    zawierających wiadomości podstawowe. W~ramach tego celu zostaną wykonane:
     \begin{itemize}
         \item prezentacja steganografii, nauki o~ukrywaniu wiadomości w~różnego rodzaju nośnikach,
             oraz steganoanalizy, nauki o~wykrywaniu, wraz z ewentualnym niszczeniem, kanałów
@@ -114,7 +114,7 @@
         czyli tak zwanym \emph{steganogramem}, nie wzbudza on w~niej podejrzeń,
         że może on przenosić jakieś ukryte dane. Procedurę mówiącą w~jaki sposób
         zmodyfikować właściwości nośnika aby ukryć w~nim wiadomość opisuje
-        \emph{algorytm steganograficzny}. w~ramach algorytmu steganograficznego
+        \emph{algorytm steganograficzny}. W~ramach algorytmu steganograficznego
         opisuje się także przekształcenie odwrotne, które musi
         wykonać odbiorca steganogramu, w~celu odzyskania wiadomości ukrytej.
         Opcjonalnie zachowanie algorytmu steganograficznego może być modyfikowane przy pomocy specjalnego
@@ -132,8 +132,8 @@
         Obecnie zainteresowanie steganografią rośnie i~znajduje ona coraz więcej
         zastosowań w~różnych dziedzinach. Podstawowym celem w~jakim stosowana jest
         steganografia jest zabezpieczenie przed dostępem do wiadomości osób do tego nie
-        upoważnionych. w~większości przypadków, wykorzystywana jest do tego
-        kryptografia. w~odróżnieniu od steganografii, kryptografia nie stara się
+        upoważnionych. W~większości przypadków, wykorzystywana jest do tego
+        kryptografia. W~odróżnieniu od steganografii, kryptografia nie stara się
         ukryć faktu istnienia wiadomości, tylko za pomocą algorytmów kryptograficznych
         przekształcić ją w~taki sposób, aby nie możliwe było jej odczytanie bez posiadania
         klucza. Osoba, która przechwyci zaszyfrowaną komunikację nie może co prawda
@@ -144,7 +144,7 @@
         faktu istnienia wiadomości lub faktu prowadzenia komunikacji. Jako przykład
         można tutaj podać komunikację pomiędzy różnego rodzaju służbami specjalnymi
         podczas organizacji i~prowadzenia akcji specjalnych, na przykład odbijania zakładników.
-        w~przypadku gdyby przestępcy, przechwyciliby zaszyfrowaną komunikację
+        W~przypadku gdyby przestępcy, przechwyciliby zaszyfrowaną komunikację
         pomiędzy oddziałami, mogliby nabrać podejrzeń, jeśli natomiast przechwycona
         zostałaby niezaszyfrowana, niewinnie wyglądająca komunikacja, nie powinna ona
         wzbudzić żadnych obaw. Steganografia wykorzystywana jest również do prowadzenia
@@ -159,7 +159,7 @@
         wypadku jedynym środkiem umożliwiającym bezpieczną komunikację. Ponadto
         dzięki jej zastosowaniu, możliwe jest użycie zabronionych algorytmów szyfrujących,
         co dodatkowo zabezpiecza komunikację, ponieważ cenzor nie jest świadomy
-        istnienia zaszyfrowanej wiadomości. w~niektórych krajach użycie kryptografii
+        istnienia zaszyfrowanej wiadomości. W~niektórych krajach użycie kryptografii
         może być dozwolone, jednak mogą być narzucone ograniczenia, na algorytmy
         kryptograficzne, które mogą być wykorzystywane, lub też na maksymalną
         długość klucza kryptograficznego. Może to rodzić podejrzenia, że ustawodawca
@@ -186,7 +186,7 @@
         jednak nadal musi być on "ukryty", to znaczy być zawarty w~nośnej, jednak
         nie przeszkadzać w~jej odbiorze, na przykład w~oglądaniu oznakowanego obrazu.
         Oprócz tego usunięcie znaku wodnego powinno być trudne dla osób do tego nie
-        uprawnionych. w~przypadku, gdyby druga osoba skopiowała dzieło innej osoby,
+        uprawnionych. W~przypadku, gdyby druga osoba skopiowała dzieło innej osoby,
         w~którym ukryty był znak wodny, może on posłużyć prawowitemu autorowi w
         sądzie do udowodnienia, kto jest prawdziwym autorem.
 
@@ -194,7 +194,7 @@
         tworzenie "odcisków palca" (ang. \emph{fingerprinting}). Jest to specjalny
         typ znaku wodnego, unikalny dla każdej kopii dzieła (pliku). Dzięki odciskowi
         palca, możliwe jest zidentyfikowanie osoby winnej, na przykład wycieku informacji
-        do mediów, lub też nielegalnie udostępniającej plik w~Internecie. w~przypadku,
+        do mediów, lub też nielegalnie udostępniającej plik w~Internecie. W~przypadku,
         gdy jeden z nabywców filmu udostępnia go nielegalnie w~Internecie, sprzedawca,
         który w~każdej sprzedanej kopii umieścił unikalny odcisk palca, może porównać
         odcisk palca w~udostępnianym pliku, z zapisanymi wcześniej odciskami palców
@@ -233,7 +233,7 @@
         wyrył ostrzeżenie bezpośrednio w~drewnie, następnie pokrył je woskiem
         i~zapisał na nim niewinnie brzmiącą wiadomość.
 
-        w~średniowieczu często stosowane były atramenty sympatyczne, czyli takie,
+        W~średniowieczu często stosowane były atramenty sympatyczne, czyli takie,
         które po zapisaniu wiadomości na papierze stawały się niewidoczne, a~do
         odczytania ukrytej wiadomości konieczne było "wywołanie" dokumentu. Procedura
         wywoływania była różna w~zależności od substancji, która została użyta jako
@@ -242,14 +242,14 @@
         były nadal wykorzystywane w~czasie obu wojen światowych.
 
         Jedna z ciekawszych technik steganograficznych została zaprezentowana przez
-        niemieckiego matematyka Gaspari Schotti\cite{NUTYSTEGANOGRAFIA},
+        niemieckiego matematyka Gaspari Schottiego\cite{NUTYSTEGANOGRAFIA},
         który zaproponował kodowanie liter za pomocą nut. Każdej literze alfabetu
         odpowiadała jedna nuta, różniąca się od innych pod względem wysokości
         dźwięku i~czasu jego trwania. Dla osoby nie znającej się na muzyce, tak zakodowana
         wiadomość wygląda na zwykły utwór muzyczny, jednak gdyby zagrać ją na instrumencie
         muzycznym, najprawdopodobniej nie byłyby to miłe uchu dźwięki.
 
-        w~czasach, gdy w~wielu krajach obowiązywała cenzura, powszechne było ukrywanie
+        W~czasach, gdy w~wielu krajach obowiązywała cenzura, powszechne było ukrywanie
         informacji w~tekstach. Odbywało się to poprzez odpowiedni dobór słów,
         z których składał się tekst. Odczytywanie tak ukrytych wiadomości możliwe było
         dzięki, na przykład odczytywaniu drugiej litery każdego ze słów, bądź pierwszej
@@ -288,7 +288,7 @@
         Podobnie jak kryptografii towarzyszy kryptoanaliza, tak i~steganografii
         towarzyszy nauka zwana \emph{steganoanalizą}. Zajmuje się ona badaniem
         nośników, pod kątem przenoszenia przez nie danych ukrytych, ponadto badane
-        są sposoby niszczenia danych ukrytych. w~kryptografii system uznaje się
+        są sposoby niszczenia danych ukrytych. W~kryptografii system uznaje się
         za \emph{skompromitowany}, gdy kryptologowi uda się odczytać zaszyfrowaną wiadomość.
         Dla steganografii poprzeczka jest podniesiona, do jej skompromitowania wystarczy,
         że dowiedzione zostanie, że wiadomość ukryta istnieje w~nośnej, nie jest
@@ -298,7 +298,7 @@
         Wyróżnia się dwie metody prowadzenie steganoanalizy: pasywną i~aktywną.
         Celem metody pasywnej jest wykrycie istnienia wiadomości ukrytej. Każdy przekazywany
         przez nadawcę komunikat, jest analizowany pod względem zawierania tajnej wiadomości.
-        w~przypadku, gdy taka wiadomość zostanie wykryta, komunikacja zostaje przerwana,
+        W~przypadku, gdy taka wiadomość zostanie wykryta, komunikacja zostaje przerwana,
         w~przeciwnym wypadku, wiadomość jest dostarczana do odbiorcy. Osoba lub system,
         który zajmuje się analizą przesyłanych wiadomości, nazwana jest \emph{agentem (ang. warden)}.
         Steganoanaliza pasywna dzieli się na dwie grupy, \emph{steganoanaliza kierowana (ang. targeted)}, gdy
@@ -307,17 +307,17 @@
         niego sposób prowadzenia analizy, oraz \emph{steganoanalizę ślepą (ang. blind)},
         gdy musi on stosować ogólne sposoby analizy, które są w~stanie wykryć różnego
         rodzaju algorytmy steganograficzne. Po wykryciu obecności wiadomości ukrytej,
-        agent może przeprowadzić \emph{steganografię śledczą, wywiadowczą (ang. forensic steganalysis)},
-        w~celu wydobycia treści wiadomości ukrytej. w~takim przypadku nie musi on
+        agent może przeprowadzić \emph{steganografię śledczą, inaczej wywiadowczą (ang. forensic steganalysis)},
+        w~celu wydobycia treści wiadomości ukrytej. W~takim przypadku nie musi on
         blokować komunikacji pomiędzy odbiorcą a~nadawcą, co mogłoby spowodować,
         że zorientowali by się oni, że bezpieczeństwo ich komunikacji może być zagrożone,
         a~zamiast tego podsłuchiwać wymieniane przez nich wiadomości.
 
-        w~przypadku prowadzenie \emph{steganoanalizy aktywnej} agent ma więcej możliwości
-        działania. w~szczególności może on modyfikować wiadomości przesyłane pomiędzy
+        W~przypadku prowadzenia \emph{steganoanalizy aktywnej} agent ma więcej możliwości
+        działania. W~szczególności może on modyfikować wiadomości przesyłane pomiędzy
         nadawcą a~odbiorcą. Jego celem nie koniecznie musi być wykrycie, czy wiadomość
         ukryta istnieje, ale na przykład upewnienie się, że na pewno nie dotrze ona
-        do odbiorcy. w~związku z tym, nawet jeśli błędnie nie wykryje on wiadomości ukrytej,
+        do odbiorcy. W~związku z tym, nawet jeśli błędnie nie wykryje on wiadomości ukrytej,
         może on modyfikować wiadomość podstawową, starając się usunąć wiadomość ukrytą,
         ale nadal zachowując sens i~znaczenie wiadomości podstawowej. Tego typu analiza
         najczęściej skierowana jest przeciwko omówionym wcześniej znakom wodnym,
@@ -344,7 +344,7 @@
         i~ocalone zostało około 30 milinów ludzi. Poprzez niszczenie ukrytych wiadomości wroga,
         w~konsekwencji zakłócając komunikację i~powodując dezorganizację we wrogich oddziałach,
         również można pogorszyć jego sytuację.
-        w~związku z tym, wywiad wojskowy wykorzystuje zarówno techniki opracowane w
+        W~związku z tym, wywiad wojskowy wykorzystuje zarówno techniki opracowane w
         ramach steganoanalizy pasywnej, wywiadowczej i~aktywnej.
 
         Niestety możliwość wymiany wiadomości bez wzbudzania podejrzeń bywa nadużywana.
@@ -362,7 +362,7 @@
         a~niekiedy bezpieczeństwo zapewniane przez te algorytmy jest kluczowe, jak
         na przykład przy przesyłaniu tajnych wiadomości wojskowych, czy też przy znakowaniu
         utworów. Powoduje to, że poznanie mocnych i~słabych stron algorytmów steganograficznych
-        jest bardzo ważne. w~celu oceny algorytmu, pod uwagę branych jest kilka czynników
+        jest bardzo ważne. W~celu oceny algorytmu, pod uwagę branych jest kilka czynników
         bezpieczeństwo, czyli trudność i~ilość pracy jaką trzeba włożyć,
         w~badanie steganogramu, aby odkryć istnienie ukrytej wiadomości.
         Ponadto w~ramach badania bezpieczeństwa, zazwyczaj sprawdza się, jak ciężko
@@ -432,7 +432,7 @@
     Wraz z rozwojem i~coraz powszechniejszym wykorzystaniem komputerów i~sieci
     komputerowych, prężnie rozwija się dziedzina steganografii zwana steganografią
     sieciową. Do tworzenia kanałów umożliwiających transmisję wiadomości ukrytych
-    wykorzystuje ona protokoły komunikacyjne i~wpływa na ich działanie. w~kontekście
+    wykorzystuje ona protokoły komunikacyjne i~wpływa na ich działanie. W~kontekście
     steganografii sieciowej warto wyróżnić zasługi polskich naukowców z Politechniki
     Warszawskiej, którzy wiele wnieśli w~rozwój tej nauki\cite{STEGANOGRAFIASIECIOWAART}.
 
@@ -471,11 +471,11 @@
         implementacjami powodują powstanie możliwości organizacji kanałów ukrytych.
         Często zdarza się, że protokoły komunikacyjne wymagają rozbudowy o~nowe,
         funkcjonalności, o~których nie pomyśleli, bądź nawet nie byli świadomi
-        ich twórcy na etapie projektowania. w~momencie, gdy protokół jest obecny
+        ich twórcy na etapie projektowania. W~momencie, gdy protokół jest obecny
         na rynku od dawna i~jest szeroko używany (dokument RFC opisujący protokół TCP
         powstał w~1981 roku\cite{TCPRFC}), wprowadzanie do niego drastycznych zmian,
         powodujących niekompatybilność z istniejącymi implementacjami, nie jest
-        najlepszym pomysłem. w~związku z tym, autorzy protokołów często wprowadzają
+        najlepszym pomysłem. W~związku z tym, autorzy protokołów często wprowadzają
         do nagłówków tych protokołów nadmiarowe pola, zarezerwowane do wykorzystania
         w~przyszłości. Takie pola nie są wykorzystywane przez aktualne implementacje
         protokołów, co pozwala na wykorzystanie ich w~celu transmisji ukrytych danych.
@@ -483,7 +483,7 @@
         Jeden z najpopularniejszych protokołów komunikacyjnych używany do niezawodnej
         transmisji danych - TCP, jest przykładem protokołu zawierającego pola zarezerwowane (Rys. \ref{TCPHEADER}).
         Wykorzystanie tego pola pozwala na stworzenie kanału ukrytego pozwalającego
-        na transmisję 6 bitów tajnych danych w~każdym pakiecie TCP. w~przypadku protokołu
+        na transmisję 6 bitów tajnych danych w~każdym pakiecie TCP. W~przypadku protokołu
         IP, który jest głównym protokołem wykorzystywanym w~Internecie, możemy wykorzystać: pole
         opisujące używaną wersję protokołu (4 bity), nie zarejestrowane wartości pola Typ Usługi (2 bity),
         oraz pierwszy bit pola Flagi (1 bit) (Rys. \ref{IPHEADER})\cite{IPRFC}.
@@ -529,7 +529,7 @@
         Dopełnienie pakietu jest konieczne, gdy protokół zakłada, z góry ustaloną długość
         całego pakietu, lub któregoś z pól nagłówka. Takie założenia spotykane są
         w~protokołach, w~których można z dużą dokładnością z góry przewidzieć jaką długość
-        będą miały transmitowane dane. w~przypadku, gdy długość danych może oscylować
+        będą miały transmitowane dane. W~przypadku, gdy długość danych może oscylować
         wokół przewidzianej wartości, należy założyć długość pakietu (nagłówka)
         nieco większą niż oszacowana. Gdy długość danych do transmisji jest krótsza niż
         założona długość pakietu (nagłówka), konieczne jest zastosowanie dopełnienia.
@@ -572,7 +572,7 @@
 
         Inny pomysł polega
         na umieszczeniu danych ukrytych w~polu danych pakietu, i~sfałszowaniu sumy
-        kontrolnej. w~takiej sytuacji pakiet wygląda na uszkodzony, w~związku z tym
+        kontrolnej. W~takiej sytuacji pakiet wygląda na uszkodzony, w~związku z tym
         dla podsłuchującego i~dla odbiorcy wiadomości podstawowych wydaje się
         on nie przenosić żadnych użytecznych danych. Odbiorca wiadomości ukrytych,
         widząc, że to właśnie w~takich pakietach znajdują się wiadomości ukryte,
@@ -588,7 +588,7 @@
 
         Wykorzystanie celowo uszkodzonych pakietów najlepiej sprawdza się w
         sieciach, w~których do naturalnych uszkodzeń pakietów, nie związanych z
-        istnieniem kanału ukrytego, dochodzi stosunkowo często. w~związku z tym
+        istnieniem kanału ukrytego, dochodzi stosunkowo często. W~związku z tym
         świetnie nadają się sieci bezprzewodowe oraz takie, w~których występują
         częste zakłócenia. Przykład implementacji kanału ukrytego, wykorzystującego
         ukrywanie informacji w~polu danych uszkodzonych pakietów, w~sieci WIFI
@@ -603,7 +603,7 @@
         Odróżnia to metody przedstawione w~tej części rozdziału, od poprzednio
         przedstawionych.
 
-        w~celu organizacji kanału ukrytego wyznaczane są odpowiednie zakresy prędkości, oraz ich
+        W~celu organizacji kanału ukrytego wyznaczane są odpowiednie zakresy prędkości, oraz ich
         interpretacja. Odbiorca co ustalony czas, dokonuje próbkowania prędkości
         transmisji. Odczytana wartość jest porównana z umówionymi wcześniej zakresami,
         w~zależności, w~którym z tych zakresów jest ona zawarta, interpretowane jest to
@@ -647,13 +647,13 @@
         przedziałów kwantyzacji.
 
         Przepływność tak uzyskanego kanału zależy od długości i~ilości wybranych
-        przedziałów kwantyzacji. w~związku z tym, jest ona niższa od możliwej do
+        przedziałów kwantyzacji. W~związku z tym, jest ona niższa od możliwej do
         uzyskania przy pomocy wcześniej przedstawionego sposobu, ze względu na brak
         możliwości regulacji okresu próbkowania, który jest tutaj nieobecny. Poza tą różnicą, oba sposoby mają
         wiele wspólnego. Podobnie jak w~poprzednim przypadku, wyznaczenie długości
         przedziałów kwantyzacji powinno być poprzedzone zbadaniem opóźnień występujących
         naturalnie w~środowisku sieciowym, ponieważ nakładają się one na opóźniania
-        wprowadzone przez nadawcę. w~związku z tym taki kanał ukryty również wrażliwy jest
+        wprowadzone przez nadawcę. W~związku z tym taki kanał ukryty również wrażliwy jest
         na nagłe zmiany charakterystyk pracy sieci komputerowej, jednak w~mniejszym
         stopniu niż kanał oparty na modulacji prędkości transmisji. Równie dobrze
         nadaje się on do komunikacji, gdy pomiędzy odbiorcą a~nadawcą znajdują się
@@ -664,7 +664,7 @@
         źródeł wiadomości podstawowych. Przedstawione techniki są ogólne i
         nie stawiają żadnych wymagań protokołowi, który zostanie wykorzystany jako
         nośnik (brak wymagań co do określonych pól nagłówka, oraz co do typu transportowanych danych).
-        w~związku z tym, jako źródło wiadomości podstawowych może być wykorzystany
+        W~związku z tym, jako źródło wiadomości podstawowych może być wykorzystany
         praktycznie każdy protokół, pod warunkiem odpowiedniego skonfigurowania
         protokołu kanału ukrytego.
 
@@ -684,9 +684,9 @@
         protokoły strumieniowej transmisji danych, wykorzystywane między innymi
         w~aplikacjach VOiP, lub strumieniujących multimedia (muzykę, filmy).
 
-        w~pracy \cite{VOIPSTEGANOGRAPHY} w~celu organizacji kanału ukrytego wykorzystany
+        W~pracy \cite{VOIPSTEGANOGRAPHY} w~celu organizacji kanału ukrytego wykorzystany
         jest protokół RTP (\emph{Real-Time Transfer Protocol}), jako przykład aplikacji
-        wykorzystującej ten protokół wybrano aplikację typu VOiP. w~tego typu aplikacjach,
+        wykorzystującej ten protokół wybrano aplikację typu VOiP. W~tego typu aplikacjach,
         jeśli odbiorca odbierze pakiet, który jest znacznie opóźniony w~stosunku
         do innych pakietów, uznaje się, że informacje w~nim zawarte są bezwartościowe,
         ponieważ jest za późno, aby użyć ich do procedury rekonstrukcji głosu.
@@ -749,10 +749,10 @@
             wiadomości ukrytej, które transmitowane są (w sposób ukryty) w~jednym
             pakiecie przesyłanym za pomocą protokołu usługowego
 
-        \item \emph{Długość segmentu wiadomości ukrytej \( L_{SWU} \)} - liczba
+        \item \emph{Długość segmentu wiadomości ukrytej (\( L_{SWU} \))} - liczba
                 bitów zawartych w~jednym segmencie danych ukrytych
 
-        \item \emph{Wartość segmentu wiadomości ukrytej \( W_{SWU} \)} - wartość
+        \item \emph{Wartość segmentu wiadomości ukrytej (\( W_{SWU} \))} - wartość
             liczbowa segmentu wiadomości ukrytej potraktowanego, jako liczba binarna,
             na przykład dla segmentu wiadomości ukrytej o~treści 11010011:
             \( W_{SWU}(11010011) = 211 \)
@@ -761,27 +761,27 @@
            maksymalna wartość, jaką może przyjąć segment wiadomości ukrytej przy
            założonej wartości długości segmentu wiadomości ukrytej, czyli wartość
            segmentu wiadomości ukrytej, w~którym wszystkie bity mają wartość 1,
-           na przykład dla \( D_{SWU} = 8 \), segment o~wartości maksymalnej to
+           na przykład dla \( L_{SWU} = 8 \), segment o~wartości maksymalnej to
            \( 11111111 \), a~jego wartość to: \( Max_{W_{SWU}} = 255 \)
 
        \item \emph{Fragmentacja pakietów} - procedura podziału jednego pakietu na
-           kilka mniejszych na przykład w~celu równoważenia obciążenia poprzez
+           kilka mniejszych, na przykład w~celu równoważenia obciążenia poprzez
            wysłanie mniejszych pakietów różnymi trasami
 
        \item \emph{Agregacja pakietów} - procedura syntezy większego pakietu z
-           kilku małych pakietów na przykład w~celu optymalizacji stosunku długości
+           kilku małych pakietów, na przykład w~celu optymalizacji stosunku długości
            nagłówka pakietu do długości danych
 
        \item \emph{Błąd transmisji} - zjawisko polegające na odebraniu przez odbiorcę
            pakietu lub segmentu zawierającego inną treść niż została w~nim
            umieszczona przez nadawcę, wyróżniamy błędy podstawieniowe, które
-           zmieniają wartość pojedynczych bitów wiadomości, lub błedy wtrąceniowe,
+           zmieniają wartość pojedynczych bitów wiadomości, lub błędy wtrąceniowe,
            które powodują utratę, lub odbiór większej ilości bitów niż wysłał nadawca
 
     \end{itemize}
 
     \section{Założenia i~ograniczenia projektowe}
-    w~czasie projektowania protokołu a~następnie jego badań przyjęto następujące założenia:
+    W~czasie projektowania protokołu, a~następnie jego badań przyjęto następujące założenia:
     \begin{enumerate}
         \item \emph{Pojemność kolejki wiadomości ukrytych i~podstawowych jest nieograniczona} -
             jak zostanie omówione w~następnym rozdziale, działanie protokołu
@@ -826,7 +826,7 @@
     Protokół UDP jest protokołem datagramowym, co
     oznacza, że każdy pakiet wysłany przez nadawcę jest traktowany jako całość, nie może zostać
     podzielony na mniejsze pakiety, jak również kilka małych pakietów nie może zostać
-    zaagregowanych w~jeden większy, na przykład przez routery. w~protokole TCP natomiast,
+    zaagregowanych w~jeden większy, na przykład przez routery. W~protokole TCP natomiast,
     każdy pakiet jest częścią dużego strumienia bajtów, w~związku z czym pakiety mogą
     być one agregowane i~fragmentowane w~celu optymalizacji procesu transmisji. Protokołem
     łączącym datagramową naturę protokołu UDP i~niezawodność transmisji oferowaną przez TCP jest
@@ -840,7 +840,7 @@
     natywnie wykorzystuje UDP do transmisji wiadomości, na przykład DNS lub TFTP.
     Istnieje co prawda możliwość współpracy z protokołem wykorzystującym TCP, na przykład HTTP,
     poprzez tunelowanie pakietów TCP w~pakietach UDP, jednak nie jest to rozważane w~tej
-    pracy. w~związku z tym w~dalszej jej części zakłada się, że źródłem wiadomości
+    pracy. W~związku z tym w~dalszej jej części zakłada się, że źródłem wiadomości
     podstawowych jest protokół oparty o~UDP. Porady dotyczące wyboru konkretnego
     protokołu są przedstawione w~sekcji \ref{SUGESTIEPARAMETROW}. Sam protokół kanału
     ukrytego jednak, nie jest zależny od żadnego konkretnego protokołu dostarczającego
@@ -852,7 +852,7 @@
 
     \section{Model protokołu kanału ukrytego}
 
-    Model kanału ukrytego został przedstawiony na rysunku \ref{HIDDENCHANNELMODEL}. w~modelu tym zakłada się
+    Model kanału ukrytego został przedstawiony na rysunku \ref{HIDDENCHANNELMODEL}. W~modelu tym zakłada się
     istnienie źródła danych podstawowych (oznaczone na schemacie na czerwono),
     którym tak jak wcześniej opisano, jest
     protokół wykorzystujący do transmisji danych protokół UDP. Źródło danych
@@ -867,7 +867,7 @@
     segmentów. Średnia liczba segmentów składających się na pojedynczą wiadomość
     jest kolejnym parametrem opisującym źródło wiadomości ukrytych. Jest to parametr
     nieco sztuczny, wprowadzony na potrzeby badań. Ostatnim parametrem charakteryzującym
-    wiadomości ukryte, jest maksymalna wartość (treść) segmentu. w~trakcie badań
+    wiadomości ukryte, jest maksymalna wartość (treść) segmentu. W~trakcie badań
     natężenie napływu wiadomości ukrytych, oraz liczba segmentów pojedynczej wiadomości
     traktowane były jak parametr \(\lambda \) rozkładu Poissona. Rozkład wartości (treści)
     pojedynczego segmentu modelowany był rozkładem Poissona, gdzie parametrem \(\lambda\) była
@@ -903,7 +903,7 @@
     segmentu wiadomości ukrytej przyjęte zostało 10 bitów, w~związku z tym każdy segment
     ma właśnie taką długość, analogicznie wygląda to dla innych wartości parametru.
     Ponadto na schemacie kolorem czerwonym zaznaczono dopełnienie, dzięki któremu
-    każdy z segmentów ma taką samą długość.  w~przedstawionym przykładzie wiadomość
+    każdy z segmentów ma taką samą długość. W~przedstawionym przykładzie wiadomość
     jest tekstem, w~związku z czym, jako krok pośredni, kody ASCII liter, z których
     jest złożona zostają zamienione na ciągi bitów. Jak wcześniej wspomniano, protokół
     kanału ukrytego nie dopełnia segmentów, jest to zadanie użytkownika protokołu.
@@ -928,11 +928,11 @@
     w~kolejce było więcej, niż potrzebne do transmisji danych ukrytych, niewykorzystane
     dane podstawowe pozostają w~kolejce, aby mogły być wykorzystane do transmisji
     kolejnego segmentu wiadomości ukrytej.
-    w~przypadku, gdy w~kolejce wiadomości podstawowych nie ma wymaganej ilości
+    W~przypadku, gdy w~kolejce wiadomości podstawowych nie ma wymaganej ilości
     danych, wiadomość ukryta pozostaje w~kolejce wiadomości ukrytych i~oczekuje
     na zgromadzenie danych podstawowych.
 
-    w~sytuacji, gdy napłynie wiadomość podstawowa, jest ona dodawana do kolejki
+    W~sytuacji, gdy napłynie wiadomość podstawowa, jest ona dodawana do kolejki
     wiadomości podstawowych, która również jest standardową kolejką typu FIFO.
     Podobnie jak w~przypadku napłynięcia wiadomości ukrytej, sprawdzana jest możliwość
     transmisji pakietu z danymi ukrytymi. Może się ona odbyć, gdy w~kolejce wiadomości
@@ -958,7 +958,7 @@
     rozwiązanie. Każdy pakiet UDP wygenerowany przez protokół kanału ukrytego,
     niesie informację o~wartości dokładnie jednego segmentu wiadomości ukrytej.
     Każdy z tych segmentów ma taką samą długość, regulowaną za pomocą parametru
-    protokołu ukrytego - długość segmentu wiadomości ukrytej (\( L_{SWU} \)). w~sekcji \ref{DICT}
+    protokołu ukrytego - długość segmentu wiadomości ukrytej (\( L_{SWU} \)). W~sekcji \ref{DICT}
     przedstawiono pojęcie maksymalnej wartości segmentu wiadomości ukrytej.
     Z przedstawionego wcześniej mechanizmu
     działania kanału ukrytego, wynika, że dla danej wartości parametru \( L_{SWU} \),
@@ -970,14 +970,14 @@
     \end{math}.
     Do przesyłania pakietów nie zawierających danych ukrytych, proponowane jest
     wykorzystanie pakietów o~długości większej niż maksymalna wartość segmentu
-    danych ukrytych, przy zadanej konfiguracji protokołu kanału ukrytego. w~momencie,
+    danych ukrytych, przy zadanej konfiguracji protokołu kanału ukrytego. W~momencie,
     gdy po napłynięciu wiadomości podstawowej, zostanie stwierdzony brak wiadomości
     ukrytych oczekujących na transmisję, sprawdzane jest, czy w~kolejce wiadomości
     podstawowych ilość zgromadzonych danych (wraz z nowo przybyłą wiadomością), jest
     większa niż \( Max_{W_{SWU}} \), jeśli tak, to cała zawartość kolejki wiadomości
     podstawowych jest wysyłana jednym pakietem UDP. Odbiorca, widząc pakiet o~długości
     większej niż maksymalna wartość segmentu wiadomości ukrytej, wie, że nie powinien
-    jego długości interpretować jako fragmentu danych ukrytych. w~dalszej części
+    jego długości interpretować jako fragmentu danych ukrytych. W~dalszej części
     pracy, pakiety wygenerowane w~ten sposób nazywane będą \emph{pakietami bez danych ukrytych}.
 
     Na rysunku \ref{COMMUNICATION} przedstawiono przebieg przykładowej komunikacji
@@ -1089,7 +1089,7 @@
             ukrytych, a~jej opóźnienie rośnie. Z badań wynika, że gdy intensywność
             napływu wiadomości podstawowych jest znacznie mniejsze od intensywności
             napływu wiadomości ukrytych, średnie opóźnienie wiadomości ukrytych jest
-            bardzo duże. w~takim przypadku, mała zmiana intensywności napływu wiadomości
+            bardzo duże. W~takim przypadku, mała zmiana intensywności napływu wiadomości
             podstawowych ma duży wpływ na opóźnienie wiadomości ukrytych. Badania
             pokazały, że również długość wiadomości podstawowych ma wpływ na to opóźnienie.
             Przy krótszych wiadomościach podstawowych, potrzeba ich więcej, aby móc
@@ -1097,7 +1097,7 @@
             opóźnienie wiadomości ukrytych na tym samym poziomie, zmniejszając rozmiar
             wiadomości podstawowych, należy zwiększyć intensywność ich napływu.
 
-            w~przypadku, gdy opóźnienie wiadomości ukrytych ma duże znaczenie,
+            W~przypadku, gdy opóźnienie wiadomości ukrytych ma duże znaczenie,
             nie ma wielu możliwości działania, zmniejszenie wartości parametru Długość
             segmentu wiadomości ukrytej spowoduje, że odbiorca szybciej otrzyma
             pojedyncze segmenty wiadomości, jednak ponieważ wiadomość traktujemy jako odebraną,
@@ -1157,7 +1157,7 @@
             kolejkowania wiadomości podstawowych ani ukrytych. Jeśli lewa strona jest
             większa od prawej, oznacza to, że napływająca liczba bajtów wiadomości podstawowych
             jest większa, niż wymagana do transmisji napływających danych ukrytych,
-            w~związku z czym, są one kolejkowane. w~przypadku, gdy prawa strona jest
+            w~związku z czym, są one kolejkowane. W~przypadku, gdy prawa strona jest
             większa od lewej, oznacza to, że napływająca liczba bajtów wiadomości
             podstawowych jest niewystarczająca do transmisji wszystkich napływających
             wiadomości ukrytych, w~związku z czym muszą one zostać dodane do kolejki
@@ -1179,7 +1179,7 @@
 
             Dzięki drugiemu sposobowi, otrzymane krzywe są ograniczone od góry,
             ma on kluczowe znaczenie, gdy lewa strona równania \ref{ROWNANIEROWNOWAGI} jest większa od prawej.
-            w~takim przypadku
+            W~takim przypadku
             opóźnienie wiadomości podstawowych zależy od czasu, jaki musi upłynąć,
             zanim zaagregowana zostanie wystarczająca ilość danych podstawowych.
             Czas ten jest tym krótszy im większe jest natężenie napływu wiadomości
@@ -1189,7 +1189,7 @@
 
             Wraz ze wzrostem intensywności napływu wiadomości ukrytych, wzrasta udział
             pierwszego sposobu opuszczania kolejki przez wiadomości podstawowe.
-            w~skutek tego stopniowo spada średnie opóźnienie wiadomości podstawowych,
+            W~skutek tego stopniowo spada średnie opóźnienie wiadomości podstawowych,
             spadek ten znacznie przyspiesza, obie strony równania zaczynają się wyrównywać.
             Po wyrównaniu się stron równania \ref{ROWNANIEROWNOWAGI},
             opóźnienie wiadomości podstawowych stabilizuje się, a~dalsze zwiększanie
@@ -1212,7 +1212,7 @@
             z kolei zależy od parametru konfiguracyjnego kanału ukrytego -- Długość segmentu wiadomości ukrytej
             Celem eksperymentu było zbadanie i~pokazanie wpływu tego parametru
             na opóźnienie wiadomości podstawowych w~warunkach niskiej intensywności
-            napływu wiadomości ukrytych. w~tym celu zbadano zależność pomiędzy
+            napływu wiadomości ukrytych. W~tym celu zbadano zależność pomiędzy
             opóźnieniem wiadomości podstawowych, a~intensywnością ich napływu.
 
             Badana zależność wyraża się wzorem: \\
@@ -1241,7 +1241,7 @@
             jest mała. Sprawia to, że wiadomości podstawowe muszą być kolejkowane i
             w~konsekwencji transmitowane głównie w~pakietach bez danych ukrytych.
 
-            w~lewej części wykresu, gdy intensywność napływu wiadomości podstawowych
+            W~lewej części wykresu, gdy intensywność napływu wiadomości podstawowych
             jest niższa niż wiadomości ukrytych, średnie opóźnienie wiadomości
             podstawowych jest małe, ponieważ wszystkie wiadomości podstawowe transmitowane
             są w~pakietach zawierających dane ukryte. Gdy intensywność napływu wiadomości
@@ -1295,7 +1295,7 @@
         zostało podyktowane chęcią uzyskania kompromisu pomiędzy przepływnością
         kanału ukrytego (zwiększoną dzięki kolejkowaniu wiadomości podstawowych),
         a~jego wykrywalnością (zmniejszoną, dzięki zastosowaniu pakietów nie przenoszących danych ukrytych).
-        w~rzadkich
+        W~rzadkich
         przypadkach zdarza się, że długość pakietu zawierającego wiadomość podstawową
         odpowiada wartości segmentu danych ukrytych, który ma być transmitowany,
         możliwe jest wtedy wysłanie takiego pakietu bez żadnych zmian i~wprowadzania
@@ -1308,10 +1308,10 @@
         wynika, że największe opóźnienia w~kanale podstawowym
         występują wtedy, gdy zarówno natężenie napływu danych podstawowych, jak i~ukrytych, jest małe.
         Natężenie napływu wiadomości ukrytych musi być mniejsze niż wiadomości podstawowych.
-        w~takiej sytuacji niewielka liczba wiadomości podstawowych jest w~stanie
+        W~takiej sytuacji niewielka liczba wiadomości podstawowych jest w~stanie
         opuścić kolejkę w pakiecie zawierającym dane ukryte, a~czas potrzebny do
-        zaagregowania wystarczającej ilości danych do zbudowania pakietu nie
-        zawierającego danych ukrytych jest duży. w~skrócie można powiedzieć, że
+        zagregowania wystarczającej ilości danych do zbudowania pakietu nie
+        zawierającego danych ukrytych jest duży. W~skrócie można powiedzieć, że
         im mniejsze jest natężenie napływu danych ukrytych w~stosunku do natężenia
         napływu wiadomości podstawowych, tym większe średnie opóźnienie jest wprowadzane
         do kanału podstawowego. Jak pokazano w~sekcji \ref{BADANIEDLUGOSCISEGMENTUDANYCHUKRYTYCH},
@@ -1348,7 +1348,7 @@
        Taki system mógłby wykryć zarówno opóźnienia jak i~modyfikacje długości
        pakietów w~kanale podstawowym wprowadzone przez protokół kanału ukrytego.
        Ograniczeniem zastosowania tego typu systemów w~wykrywaniu przedstawianego kanału
-       ukrytego, jest zapotrzebowanie na zasoby. w~przypadku steganoanalizy ślepej
+       ukrytego, jest zapotrzebowanie na zasoby. W~przypadku steganoanalizy ślepej
        konieczne jest analizowanie każdego pakietu transmitowanego w~sieci, posiadanie
        informacji o~zastosowany kanale ukrytym, pozwala na ograniczenie analizy jedynie
        do pakietów UDP, których nadal może być dużo.
@@ -1357,7 +1357,7 @@
        Przeciwko kanałowi ukrytemu można zastosować aktywny atak steganograficzny
        oparty na ponownej fragmentacji pakietów zmodyfikowanych przez protokół
        kanału ukrytego i~transmitowanych kanałem podstawowym. Pomimo, że według
-       specyfikacji RFC protkół UDP jest protokołem datagramowym i~pakiet powinien
+       specyfikacji RFC protokół UDP jest protokołem datagramowym i~pakiet powinien
        zostać odebrany przez nadawcę dokładnie w~takiej postaci jak został wysłany przez
        nadawcę, to jeśli atakujący wie, w~jak można podzielić lub zagregować
        pakiety protokołu kanału podstawowego, w~taki sposób, aby nie wpłynęło to na
@@ -1379,7 +1379,7 @@
        nie dostaje żadnej informacji zwrotnej mówiącej, czy atak się powiódł. Gdyby
        poprzez taki atak, zostałaby wykonana na przykład retransmisja błędnie odebranej
        wiadomości, byłby to ewidentny dowód na to, że ukryty kanał jest wykorzystywany.
-       w~tym kontekście brak obsługi błędów przez kanał ukryty można traktować więc
+       W~tym kontekście brak obsługi błędów przez kanał ukryty można traktować więc
        jako zaletę.
 
        \subsection{Odczytywanie wiadomości ukrytych}
@@ -1406,13 +1406,13 @@
        dozwolonych wartości klucza: \( L_{SWU} \in N \land L_{SWU} \in [1, 16] \),
        co pozwala na zastosowanie ataku siłowego w~celu złamania klucza.
 
-       w~dziedzinie zapewniania bezpieczeństwa komunikacji, ustalanie wartości
-       klucza od zawsze stanowiło duży problem. w~tym celu zostały opracowane
+       W~dziedzinie zapewniania bezpieczeństwa komunikacji, ustalanie wartości
+       klucza od zawsze stanowiło duży problem. W~tym celu zostały opracowane
        dedykowane algorytmy, na przykład algorytm Diffiego-Hellmana. Zastosowanie
        ich w~przypadku steganografii może stanowić problem. Należy tutaj przypomnieć,
        że podstawowym celem steganografii jest ukrycie faktu istnienie tajnej wiadomości.
        Wykorzystaniu wcześniej wspomnianych algorytmów wymiany kluczy towarzyszy
-       wymiana charakterystycznych dla tych algorytmów pakietów danych. w~przypadku
+       wymiana charakterystycznych dla tych algorytmów pakietów danych. W~przypadku
        wykrycia tego typu pakietów przez podsłuchującego może się on domyślić,
        że istnieje jakaś tajna wiadomość i~na przykład zablokować komunikację lub
        zastosować techniki przedstawione w~poprzedniej sekcji. Pod tym względem
@@ -1434,7 +1434,7 @@
     \section{Sugestie doboru parametrów kanału ukrytego} \label{SUGESTIEPARAMETROW}
        Z dotychczasowych rozważań na temat wykrywalności kanału ukrytego, wynika,
        że głównym sposobem wykrycia jego wykorzystywania jest analiza jego ingerencji
-       w~kanał podstawowy. w~związku z tym podjęcie kroków minimalizujących stopień
+       w~kanał podstawowy. W~związku z tym podjęcie kroków minimalizujących stopień
        tej ingerencji może znacznie utrudnić potencjalnemu atakującemu wykrycie
        wiadomości ukrytych.
 
@@ -1474,7 +1474,7 @@
        Jeśli nie jest możliwe znalezienie protokołu kanału podstawowego, którego
        charakterystyki odpowiadają zapotrzebowaniu danych ukrytych, zaleca się
        wykorzystanie jednego z mniej znanych protokołów komunikacyjnych. Przykładem
-       tego typu aplikacji są gry komputerowe, oferujące rozgrywkę online. w~tej
+       tego typu aplikacji są gry komputerowe, oferujące rozgrywkę online. W~tej
        branży nie ma ustandaryzowanych protokołów komunikacyjnych, ponadto gry na
        tyle się od siebie różnią, że zazwyczaj każda z nich implementuje własny
        protokół komunikacyjny. Do komunikacji często wykorzystywany jest protokół
@@ -1597,7 +1597,7 @@
     \begin{itemize}
         \item podatność na atak siłowy - mała liczebność zbioru możliwych do zastosowania
             kluczy steganograficznych powoduje, że może być on łatwo złamany,
-            przy użyciu najprostszego ataku stegnograficznego, polegającego
+            przy użyciu najprostszego ataku steganograficznego, polegającego
             na przeglądzie jego wszystkich możliwych wartości
         \item konieczność dostosowania konfiguracji kanału do środowiska - protokół
             kanału ukrytego nie dostarcza domyślnych wartości parametrów konfiguracyjnych, a
