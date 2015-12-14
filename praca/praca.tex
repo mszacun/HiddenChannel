@@ -1274,6 +1274,14 @@
             danych ukrytych oczekującego na wysłanie, może ona natychmiastowo
             zostać wysłana w pakiecie nie zawierającym danych ukrytych.
 
+        \begin{figure}[h]
+                \centering
+                \includegraphics[scale=0.6]{opoznieniepodstawowychodpodstawowych}
+                \caption{Zależność średniego opóźnienia wiadomości podstawowych od
+                    intensywności napływu wiadomości podstawowych}
+                \label{OPOZNIENIEPODSTAWOWYCHODPODSTAWOWYCH}
+        \end{figure}
+
 \chapter{Analiza wykrywalności kanału ukrytego}
     \section{Analiza ingerencji kanału ukrytego w kanał podstawowy}
         Prezentowany mechanizm działania kanału ukrytego silnie wpływa na, i zmienia
@@ -1355,7 +1363,16 @@
        powoduje, że odbiorca interpretuje jego długość jako błędny fragment danych
        ukrytych w stosunku do tego, który nadał nadawca. Powoduje to, że komunikacja
        kanałem ukrytym staje się utrudniona, lub nawet niemożliwa, i atakujący osiąga
-       swój cel. Należy zauważyć, że dzięki braku obsługi błędów w kanale ukrytym
+       swój cel. Na rysunku \ref{UDANYATAKAKTYWNY} przedstawiono udany atak tego typu,
+       gdzie atakującemu(Ewa), poprzez agregację dwóch pakietów,
+       udaje się zablokować komunikację pomiędzy Alicją i Bobem.
+        \begin{figure}[h]
+                \centering
+                \includegraphics[scale=0.7]{udany_atak}
+                \caption{Udany atak aktywny na protokół kanału ukrytego}
+                \label{UDANYATAKAKTYWNY}
+        \end{figure}
+       Należy zauważyć, że dzięki braku obsługi błędów w kanale ukrytym
        i brak jego reakcji w odpowiedzi na błędy w trakcie transmisji danych, atakujący
        nie dostaje żadnej informacji zwrotnej mówiącej, czy atak się powiódł. Gdyby
        poprzez taki atak, zostałaby wykonana na przykład retransmisja błędnie odebranej
