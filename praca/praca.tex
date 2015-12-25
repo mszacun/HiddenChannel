@@ -375,7 +375,7 @@
         wykorzystywane są różnego rodzaju techniki opracowane w~ramach steganoanalizy.
         Część ataków na algorytmy steganograficzne jest podobna do ataków na
         algorytmy kryptograficzne. Steganografia stara się zapewnić dodatkowe bezpieczeństwo
-        poprzez ukrycie wiadomości, w~związku z tym jest podatna na dodatkowe ataki.
+        poprzez ukrycie wiadomości, co powoduje, że jest podatna na dodatkowe ataki.
         Podobnie jak w~przypadku kryptografii, im większą ilość danych na temat
         algorytmu steganograficznego i~wymienianych wiadomości posiada atakujący,
         tym groźniejsze i~bardziej wyrafinowane ataki jest w~stanie przeprowadzić.
@@ -788,45 +788,6 @@
 
     \end{itemize}
 
-    \section{Założenia i~ograniczenia projektowe}
-    Na potrzeby protokołu kanału ukrytego i~jego badań przyjęto następujące założenia
-    dotyczące modelu systemu komunikacyjnego, złożonego z~kanału komunikacyjnego
-    podstawowego i~wbudowanego kanału komunikacyjnego ukrytego:
-    \begin{enumerate}
-        \item \emph{Pojemność kolejki wiadomości ukrytych i~podstawowych jest nieograniczona} -
-            jak zostanie omówione w~następnym rozdziale, działanie protokołu
-            kanału ukrytego wymaga kolejkowania zarówno wiadomości podstawowych
-            jak i~ukrytych. W~obecnej wersji protokół kanału ukrytego nie wspiera
-            żadnego mechanizmu radzenia sobie z przeciążeniami, w~związku z tym
-            dla ułatwienia prowadzenia badań, założono nieskończoną pojemność obu kolejek.
-
-        \item \emph{Wiadomość (zarówno podstawową jak i~ukrytą) traktujemy, jako odebraną,
-            gdy wszystkie jej segmenty zostaną odebrane przez odbiornik} - jak powiedziano
-            wcześniej, wiadomości ukryte mogą składać się z więcej niż jednego segmentu,
-            natomiast jak zostanie powiedziane, wiadomości podstawowe mogą być fragmentowane
-            w~celu transmisji pakietów z ukrytymi wiadomościami. Aby umożliwić
-            obliczanie opóźnień zarówno wiadomości podstawowych jak i~ukrytych,
-            zakłada się, że opóźnienie to czas pomiędzy napłynięciem wiadomości,
-            a~odebraniem ostatniego jej segmentu.
-
-        \item \emph{Komunikacja pomiędzy odbiorcą a~nadawcą odbywa się bez błędów komunikacji} -
-            jak wspomniano wcześniej, protokół UDP jest protokołem zawodnym.
-            Zaprojektowany protokół kanału ukrytego również nie zapewnia mechanizmów niezawodnej
-            transmisji danych. Aby nie komplikować metodologii
-            obliczania opóźnień poszczególnych wiadomości, związanych z utratą
-            pakietów je transportujących, założono, że w~trakcie transmisji nie
-            występują żadne błędy, zarówno podstawieniowe jak i~wtrąceniowe.
-
-        \item \emph{Długość wiadomości ukrytej jest wielokrotnością długości segmentu
-            wiadomości ukrytej (\(L_{SWU}\))} - długość każdego odebranego przez odbiorcę pakietu,
-            jest przez niego interpretowana jako wartość segmentu danych ukrytych o~określonej
-            długości. Powoduje to konieczność zapewnienia, że wszystkie segmenty
-            wiadomości ukrytej są tej samej długości i~są w~pełni wypełnione, co czasami
-            wymaga zastosowania dopełnienia. Przyjęcie tego założenie upraszcza protokół
-            kanału ukrytego, ponieważ odpowiedzialność za dopełnienie wiadomości ukrytych
-            spada na użytkownika kanału.
-    \end{enumerate}
-
     \section{Opis otoczenia działania protokołu}
     W~proponowanym protokole kanału ukrytego długość pola danych pakietu protokołu UDP
     jest równa:
@@ -855,12 +816,14 @@
 
     \section{Model protokołu kanału ukrytego}
 
-    Model kanału ukrytego został przedstawiony na rysunku \ref{HIDDENCHANNELMODEL}.
+    Model protokołu kanału ukrytego został przedstawiony na rysunku \ref{HIDDENCHANNELMODEL}.
     Oznaczone na nim zostały:
     \begin{itemize}
-        \item Źródło danych podstawowych -
-    charakteryzowane jest dwoma parametrami: średnim natężeniem, to jest średnią liczbą
-    wiadomości napływających w jednostce czasu, oraz średnią długością wiadomości (w~bajtach).
+        \item Źródło danych podstawowych - charakteryzowane jest dwoma rozkładami:
+            \begin{itemize}
+                \item natężenia napływu wiadomości podstawowych
+                \item długości wiadomości podstawowych (w bajtach)
+            \end{itemize}
         \item Kolejka wiadomości podstawowych - pionowa kolejka znajdująca się pod
     źródłem wiadomości podstawowych, zawiera w sobie wiadomości podstawowe,
     każda z wiadomości opisana jest przez długość wiadomości podstawowej.
@@ -983,7 +946,7 @@
     Zgodnie ze wcześniejszym opisem, ponieważ jego długość jest większa niż maksymalna
     wartość segmentu danych ukrytych, odbiorca nie odczytuje z takiego pakietu
     segmentu wiadomości ukrytej.
-        \begin{figure}[h]
+        \begin{figure}[tp]
                 \centering
                 \includegraphics[scale=0.85]{komunikacja_kanalem_ukrytym_gotowa}
                 \caption{Przykładowa komunikacja kanałem ukrytym}
@@ -993,12 +956,51 @@
     Schemat algorytmu działania protokołu kanału ukrytego, opisany w~tej sekcji,
     przedstawia rysunek \ref{CHANNELALGORITHM}.
 
-        \begin{figure}[h]
+        \begin{figure}[tp]
                 \centering
                 \includegraphics[scale=0.60, angle=90]{algorytm_kanalu_ukrytego}
                 \caption{Schemat algorytmu kanału ukrytego}
                 \label{CHANNELALGORITHM}
         \end{figure}
+
+    \section{Założenia i~ograniczenia projektowe}
+    Na potrzeby protokołu kanału ukrytego i~jego badań przyjęto następujące założenia
+    dotyczące modelu systemu komunikacyjnego, złożonego z~kanału komunikacyjnego
+    podstawowego i~wbudowanego kanału komunikacyjnego ukrytego:
+    \begin{enumerate}
+        \item \emph{Pojemność kolejki wiadomości ukrytych i~podstawowych jest nieograniczona} -
+            jak zostało powiedziane, działanie opisywanego protokołu
+            kanału ukrytego wymaga kolejkowania zarówno wiadomości podstawowych
+            jak i~ukrytych. W~obecnej wersji protokół kanału ukrytego nie wspiera
+            żadnego mechanizmu radzenia sobie z przeciążeniami, w~związku z tym
+            dla ułatwienia prowadzenia badań, założono nieskończoną pojemność obu kolejek.
+
+        \item \emph{Wiadomość (zarówno podstawową jak i~ukrytą) traktujemy, jako odebraną,
+            gdy wszystkie jej segmenty zostaną odebrane przez odbiornik} - jak powiedziano
+            wcześniej, wiadomości ukryte mogą składać się z więcej niż jednego segmentu,
+            natomiast jak zostanie powiedziane, wiadomości podstawowe mogą być fragmentowane
+            w~celu transmisji pakietów z ukrytymi wiadomościami. Aby umożliwić
+            obliczanie opóźnień zarówno wiadomości podstawowych jak i~ukrytych,
+            zakłada się, że opóźnienie to czas pomiędzy napłynięciem wiadomości,
+            a~odebraniem ostatniego jej segmentu.
+
+        \item \emph{Komunikacja pomiędzy odbiorcą a~nadawcą odbywa się bez błędów komunikacji} -
+            jak wspomniano wcześniej, protokół UDP jest protokołem zawodnym.
+            Zaprojektowany protokół kanału ukrytego również nie zapewnia mechanizmów niezawodnej
+            transmisji danych. Aby nie komplikować metodologii
+            obliczania opóźnień poszczególnych wiadomości, związanych z utratą
+            pakietów je transportujących, założono, że w~trakcie transmisji nie
+            występują żadne błędy, zarówno podstawieniowe jak i~wtrąceniowe.
+
+        \item \emph{Długość wiadomości ukrytej jest wielokrotnością długości segmentu
+            wiadomości ukrytej (\(L_{SWU}\))} - długość każdego odebranego przez odbiorcę pakietu,
+            jest przez niego interpretowana jako wartość segmentu danych ukrytych o~określonej
+            długości. Powoduje to konieczność zapewnienia, że wszystkie segmenty
+            wiadomości ukrytej są tej samej długości i~są w~pełni wypełnione, co czasami
+            wymaga zastosowania dopełnienia. Przyjęcie tego założenie upraszcza protokół
+            kanału ukrytego, ponieważ odpowiedzialność za dopełnienie wiadomości ukrytych
+            spada na użytkownika kanału.
+    \end{enumerate}
 
 \chapter{Badania ilościowych charakterystyk kanału ukrytego i~kanału podstawowego dla zaproponowanego protokołu kanału ukrytego}
     \section{Wprowadzenie - zakres i~cel eksperymentów symulacyjnych}
@@ -1020,13 +1022,23 @@
             kanału ukrytego;
     \end{itemize}
 
+    Podczas badań rozkłady:
+    \begin{itemize} \itemsep1pt \parskip0pt \parsep0pt
+        \item intensywności napływu wiadomości ukrytych,
+        \item długości wiadomości ukrytych,
+        \item wartości segmentów wiadomości ukrytych,
+        \item intensywności napływu wiadomości podstawowych,
+        \item długości wiadomości podstawowych
+    \end{itemize}
+    modelowane były za pomocą rozkładów Poissona. \\
+
     Oznaczenia:
     \begin{itemize} \itemsep1pt \parskip0pt \parsep0pt
-        \item \( R_{WU} \) - średnia intensywność napływu wiadomości ukrytych (parametr rozkładu Poissona);
-        \item \( L_{WU} \) - średnia długość wiadomości ukrytej (liczba segmentów - parametr rozkładu Poissona);
-        \item \( V_{SWU} \) - średnia wartość segmentu wiadomości ukrytej;
-        \item \( R_{WP} \) - średnia intensywność napływu wiadomości podstawowych (parametr rozkładu Poissona);
-        \item \( L_{WP} \) - średnia długość wiadomości podstawowej (liczba bajtów - parametr rozkładu Poissona);
+        \item \( R_{WU} \) - średnia intensywność napływu wiadomości ukrytych (parametr \(\lambda\) rozkładu Poissona);
+        \item \( L_{WU} \) - średnia długość wiadomości ukrytej (liczba segmentów - parametr \(\lambda\) rozkładu Poissona);
+        \item \( V_{SWU} \) - średnia wartość segmentu wiadomości ukrytej (parametr \(\lambda\) rozkładu Poissona);
+        \item \( R_{WP} \) - średnia intensywność napływu wiadomości podstawowych (parametr \(\lambda\) rozkładu Poissona);
+        \item \( L_{WP} \) - średnia długość wiadomości podstawowej (liczba bajtów - parametr \(\lambda\) rozkładu Poissona);
         \item \( C_P \) - pojemność kanału podstawowego (w bajtach na sekundę);
         \item \( D_{WU} \) - średnie opóźnienie wiadomości ukrytych;
         \item \( D_{WP} \) - średnie opóźnienie wiadomości podstawowych;
@@ -1156,7 +1168,7 @@
                 \item w~pakiecie bez segmentu wiadomości ukrytej - sytuacja, gdy suma długości wiadomości
                     podstawowych w kolejce jest większa od
                     maksymalnej wartość segmentu wiadomości ukrytej i kolejka segmentów wiadomości
-                    ukrytych jest pusta. Wszystkie wiadomości w kolejce wiadomości
+                    ukrytych jest pusta. Wszystkie wiadomości w~kolejce wiadomości
                     podstawowych są agregowane i wysyłane w jednym pakiecie UDP;
             \end{enumerate}
 
@@ -1257,7 +1269,7 @@
             kanału ukrytego -- ,,długość segmentu danych ukrytych'' -- tym mniejsze
             jest maksymalne średnie opóźnienie wiadomości podstawowych, niezależnie
             od intensywności ich napływu. Warto zwrócić uwagę, że przy skrajnie małej wartości tego
-            parametru, średnie opóźnienie wiadomości podstawowych w coraz mniejszym stopniu
+            parametru, średnie opóźnienie wiadomości podstawowych w~coraz mniejszym stopniu
             zależy od intensywności napływu wiadomości podstawowych. Dzieje się tak, ponieważ długość praktycznie
             każdej wiadomości podstawowej jest większa większa od maksymalnej wartości
             segmentu wiadomości ukrytej, w~związku z tym, jeśli
@@ -1307,7 +1319,7 @@
         jest transmitowana bezzwłocznie (pod warunkiem, że przepływność kanału podstawowego
         jest większa od intensywności źródła wiadomości podstawowych). W takich przypadkach
         wiadomość podstawowa nie jest zmieniana i sposób obsługi nie wnosi dodatkowego
-        opóźnienia. W ogólnym przypadku, zaproponowany sposób obsługi segmentów wiadomości
+        opóźnienia. W~ogólnym przypadku, zaproponowany sposób obsługi segmentów wiadomości
         ukrytych zmienia charakterystyki strumienia wiadomości podstawowych.
         Sposób oddziaływania kanału ukrytego na strumień wiadomości podstawowych
         może być podstawą do konstruowania ataków na protokół kanału ukrytego,
@@ -1343,8 +1355,8 @@
 
     \section{Metody ataku na protokół kanału ukrytego}
        W~tej sekcji zostaną przedstawione metody ataku na zaproponowany protokół kanału ukrytego. Omówione
-       zostaną zarówno techniki będące w~arsenale steganoanalizy aktywnej jak i
-       pasywnej. Rozważane są metody wykorzystujące wiedzę na temat metody organizacji kanału ukrytego
+       zostaną zarówno techniki będące w~arsenale steganoanalizy aktywnej jak
+       i~pasywnej. Rozważane są metody wykorzystujące wiedzę na temat metody organizacji kanału ukrytego
        i~sposobów jego ingerencji w~strumień wiadomości podstawowych, które zostały
        przedstawione w~poprzedniej sekcji, jak również metody ślepe (\emph{ang. blind}).
 
@@ -1413,7 +1425,7 @@
        kanału ukrytego.
 
        Zbiór wartości tego
-       klucza jest z góry ograniczony przez specyfikację protokołu UDP, w którym
+       klucza jest z góry ograniczony przez specyfikację protokołu UDP, w~którym
        definiowana jest maksymalna długość datagramu (16 bitowe pole).
        Wynika z tego maksymalna długość pakietu UDP: \(2^{16} - 1 = 65535\) bajtów. Jest to również maksymalna
        wartość segmentu wiadomości ukrytej, jaki może być transmitowany pojedynczym
