@@ -1,7 +1,9 @@
-\documentclass[a4paper, twoside, 12pt]{report}
+\documentclass[a4paper, twoside, openright, 12pt]{report}
 
 \usepackage{titlesec}
 \usepackage{polski}
+\usepackage{setspace}
+\usepackage{emptypage}
 \usepackage[english, polish]{babel}
 \usepackage{graphicx}
 \usepackage{pdfpages}
@@ -28,6 +30,53 @@
 \begin{document}
 
 \includepdf{stronatytulowa.pdf}
+\null\newpage
+\includepdf{motto.pdf}
+\cleardoublepage
+
+\thispagestyle{empty}
+\begin{center}
+    \vfill
+    \doublespacing
+    \Large{Promotor} \\
+    \singlespacing
+    ..........................................................................................................
+    \doublespacing
+    \small\emph{(prof. dr hab. inż. Adam Grzech)} \\
+    \large{Ocena} \\
+    ............................................................................ \\
+    \vspace{15mm}
+    \Large{Recenzent} \\
+    \singlespacing
+    ..........................................................................................................
+    \doublespacing
+    \small\emph{(dr inż. Grzegorz Kołaczek)} \\
+    \large{Ocena} \\
+    ............................................................................ \\
+
+    \vspace{15mm}
+    \Large{Komisja egzaminacyjna} \\
+    \singlespacing
+    \begin{tabular}{c c c}
+    .................................. &  .................................. & .................................. \\
+    \doublespacing
+    \footnotesize\emph{(dr hab. inż. Leszek Borzemski, prof. PWr)} & \footnotesize\emph{(dr inż Jolanta Wrzuszczak-Noga)} & \footnotesize\emph{(dr inż. Ziemowit Nowak)}\\
+    \end{tabular}
+    \\
+    \hfill \\
+    \large{Ocena} \\
+    \hfill \\
+    ............................................................................ \\
+
+    \vspace{15mm}
+    \Large{Redaktor naczelny} \\
+    \singlespacing
+    ..........................................................................................................
+    \doublespacing
+    \small\emph{(Barbara Kęsik)} \\
+    \vfill
+\end{center}
+\cleardoublepage
 
 
 \begin{abstractpage}
